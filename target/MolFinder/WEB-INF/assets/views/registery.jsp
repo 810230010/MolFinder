@@ -17,7 +17,8 @@
 </head>
 
 <body>
-<div class="col-lg-6 col-lg-offset-2" style="margin-top: 200px;" >
+<jsp:include page="/WEB-INF/assets/views/common/header.jsp" flush="true"/>
+<div class="col-lg-6 col-lg-offset-2" style="margin-top: 100px;" >
     <div class="ibox">
         <div class="ibox-title col-lg-offset-7"><h4>精细化网站注册</h4></div>
 
@@ -108,6 +109,6 @@
 
     </div>
 </div>
-
+<jsp:include page="/WEB-INF/assets/views/common/footer.jsp" flush="true"/>
 </body>
 </html>
