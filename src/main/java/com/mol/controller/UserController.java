@@ -15,9 +15,18 @@ public class UserController {
     private static Logger log = Logger.getLogger(UserController.class);
     @Autowired
     private UserService userService;
+
+    /**
+     * 注册页面
+     * @return
+     */
     @RequestMapping("/registerPage")
     public String view2register(){
         return "registery";
     }
 
+    @RequestMapping("/indexPage")
+    public String view2index(){
+        return "/index";
+    }
 }
