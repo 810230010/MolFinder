@@ -7,6 +7,19 @@
 
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
+<div class="hr-line-dashed" style="margin-top: 10px"></div>
+<div class="menus" style="font-size: 24px;font-weight: 600;margin-bottom: 140px">
+    <div class="row1">
+        <div class="col-md-4 text-right"><a href="#">实单</a></div>
+        <div class="col-md-4 text-center"><a href="#">询单</a></div>
+        <div class="col-md-4 text-left"><a href="#">原料采购</a></div>
+    </div>
+    <div class="row2" style="margin-top: 40px">
+        <div class="col-md-4 text-right"><a href="#">发布实单</a></div>
+        <div class="col-md-4 text-center"><a href="#">发布询单</a></div>
+        <div class="col-md-4 text-left"><a href="#">原料供应</a></div>
+    </div>
+</div>
 <div id="myCarousel" class="carousel slide">
     <!-- 轮播（Carousel）指标 -->
     <ol class="carousel-indicators">
@@ -32,7 +45,7 @@
     <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
 </div>
 <!--定制实单-->
-<div class="col-lg-12 text-center real-bill"><h3><i class="fa fa-building-o"></i>定制实单</h3></div>
+<div class="col-lg-12 text-center real-bill"><h3><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
 <div class="row text-center" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <div class="col-md-6">
         <a href="#" class="thumbnail" style="text-decoration: none">
@@ -129,7 +142,7 @@
 </div>
 
 <!--定制询单-->
-<div class="col-lg-12 text-center enquiry-bill"><h3><i class="fa fa-question-circle-o"></i>定制询单</h3></div>
+<div class="col-lg-12 text-center enquiry-bill"><h3><i class="fa fa-question-circle-o" style="color: red"></i>定制询单</h3></div>
 <div class="row text-center enquiry-main" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <div class="col-md-6">
         <a href="#" class="thumbnail" style="text-decoration: none">
