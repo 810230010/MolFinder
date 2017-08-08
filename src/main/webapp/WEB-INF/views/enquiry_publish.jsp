@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/static/css/plugins/semantic/semantic.min.css">
     <!-- 文件上传 -->
     <link href="/static/css/plugins/webuploader/webuploader.css" media="all" rel="stylesheet" type="text/css"/>
+
+
 </head>
 <style>
 ul li{height:24px}
@@ -142,8 +144,6 @@ ul li:nth-child(even){ margin-left:20px}
 <!-- 文件上传 -->
 <script src="/static/js/plugins/webuploader/webuploader.min.js" type="text/javascript"></script>
 
-<!--layer-->
-<script src="/static/js/plugins/layer/layer.js" type="text/javascript"></script>
 <script>
     $(function(){
         /*init webuploader*/

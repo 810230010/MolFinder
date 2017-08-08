@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>头部页面</title>
+
     <link href="/static/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
