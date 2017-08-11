@@ -1,14 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 江建平
-  Date: 2017/8/8
-  Time: 14:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>实单详情</title>
+    <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
+    <%@include file="/WEB-INF/views/common/resource_js.jsp"%>
     <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
 </head>
 <body>
@@ -69,7 +64,7 @@
                         <p><strong>其他要求</strong>：货到检测合格付款</p>
                     </div>
                     <div class="col-md-4" style="border-right: 1px dashed grey">
-                        <p><strong>CAS号</strong>： 1896159-87-7</p>
+                        <p><strong>CAS号</strong>：1896159-87-7</p>
                         <p><strong>英文名称</strong>： N,1-Dimethyl-1h-pyrazol-4-aminedihydrochloride</p>
                         <p><strong>中文名称</strong>：</p>
                         <p><strong>其他要求</strong>：货到检测合格付款</p>

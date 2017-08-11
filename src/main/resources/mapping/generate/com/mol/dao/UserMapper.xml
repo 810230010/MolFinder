@@ -10,9 +10,11 @@
     <result column="district" property="district" jdbcType="VARCHAR" />
     <result column="credit" property="credit" jdbcType="INTEGER" />
     <result column="credit_rank" property="creditRank" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, phone, email, is_certificated, password, district, credit, credit_rank
+    user_id, phone, email, is_certificated, password, district, credit, credit_rank, 
+    create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -27,10 +29,12 @@
   <insert id="insert" parameterType="com.mol.entity.User" >
     insert into t_user (user_id, phone, email, 
       is_certificated, password, district, 
-      credit, credit_rank)
+      credit, credit_rank, create_time
+      )
     values (#{userId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{isCertificated,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
-      #{credit,jdbcType=INTEGER}, #{creditRank,jdbcType=VARCHAR})
+      #{credit,jdbcType=INTEGER}, #{creditRank,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mol.entity.User" >
     insert into t_user
@@ -59,6 +63,9 @@
       <if test="creditRank != null" >
         credit_rank,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -84,6 +91,9 @@
       </if>
       <if test="creditRank != null" >
         #{creditRank,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -111,6 +121,9 @@
       <if test="creditRank != null" >
         credit_rank = #{creditRank,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -122,7 +135,8 @@
       password = #{password,jdbcType=VARCHAR},
       district = #{district,jdbcType=VARCHAR},
       credit = #{credit,jdbcType=INTEGER},
-      credit_rank = #{creditRank,jdbcType=VARCHAR}
+      credit_rank = #{creditRank,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

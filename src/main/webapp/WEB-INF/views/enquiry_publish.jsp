@@ -2,10 +2,14 @@
 <html>
 <head>
     <title>Title</title>
+    <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" href="/static/css/plugins/semantic/semantic.min.css">
     <!-- 文件上传 -->
     <link href="/static/css/plugins/webuploader/webuploader.css" media="all" rel="stylesheet" type="text/css"/>
+    <%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+    <script src="/static/js/plugins/layer/layer.js"></script>
+
 
 
 </head>

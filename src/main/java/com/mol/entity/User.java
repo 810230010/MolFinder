@@ -1,5 +1,7 @@
 package com.mol.entity;
 
+import java.util.Date;
+
 public class User {
     private Integer userId;
 
@@ -16,6 +18,8 @@ public class User {
     private Integer credit;
 
     private String creditRank;
+
+    private Date createTime;
 
     public Integer getUserId() {
         return userId;
@@ -79,5 +83,13 @@ public class User {
 
     public void setCreditRank(String creditRank) {
         this.creditRank = creditRank == null ? null : creditRank.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

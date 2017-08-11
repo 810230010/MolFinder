@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mol.dao.RealOrderMapper" >
+  <!--查询首页实单-->
+  <select id="getRealOrderList" resultType="com.mol.entity.RealOrder">
+    select real_order_id, cas_no, buy_amount, purity, price_between, submit_deadline, image, join_count, end_time
+    from t_real_order limit 6
+  </select>
+</mapper>
