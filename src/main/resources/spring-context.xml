@@ -56,7 +56,7 @@
     </bean>
 
     <!--自定义读取配置文件类-->
-    <bean id="myPropertyConfigurer" class="com.mol.common.util.PropertiesReader">
+    <bean id="myPropertyConfigurer" class="com.mol.common.util.PropertyReader">
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">

@@ -21,8 +21,9 @@ public class RealDetailDTO {
     private Date beginTime;
     private Date endTime;
     private String diagramRequire;
-    private Boolean makeBill;
+    private String makeBill;
     private String image;
     private String referDoc;
     private Integer joinCount;
+    private String remark;
 }

@@ -21,7 +21,7 @@
     </div>
 
     <div class="row2" style="margin-top: 40px">
-        <div class="col-md-4 text-right"><a href="#">发布实单</a></div>
+        <div class="col-md-4 text-right"><a href="/real/realPublishPage">发布实单</a></div>
         <div class="col-md-4 text-center"><a href="#">发布询单</a></div>
         <div class="col-md-4 text-left"><a href="#">原料供应</a></div>
     </div>
@@ -56,7 +56,7 @@
 <div class="row text-center" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <c:forEach var="item" items="${realList}">
         <div class="col-md-6 model">
-        <a href="#" class="thumbnail" style="text-decoration: none">
+        <a href="/real/realDetailPage?realOrderId=${item.realOrderId}" class="thumbnail" style="text-decoration: none">
             <div class="description" style="height: 200px">
                 <div class="img col-md-4">
                    <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>
@@ -131,7 +131,7 @@
     <div class="hr-line-dashed"></div>
 </div>
 
-<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="true"/>
+<%@include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 <script>
     $(function(){

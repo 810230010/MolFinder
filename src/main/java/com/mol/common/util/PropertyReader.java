@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * Created by 江建平 on 2017/7/9.
  */
-public class PropertiesReader extends PropertyPlaceholderConfigurer {
+public class PropertyReader extends PropertyPlaceholderConfigurer {
     private static Map<String, String> propertyMap;
     @Override
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)

@@ -3,6 +3,7 @@ package com.mol.dao;
 import com.mol.common.dao.BaseDao;
 import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface RealOrderMapper{
      * @param realOrderId
      * @return
      */
-    RealDetailDTO getRealDetail(Integer realOrderId);
+    RealDetailDTO getRealDetail(@Param("realOrderId") Integer realOrderId);
 }

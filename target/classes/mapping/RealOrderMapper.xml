@@ -6,4 +6,8 @@
     select real_order_id, cas_no, buy_amount, purity, price_between, submit_deadline, image, join_count, end_time
     from t_real_order limit 6
   </select>
+  <!--实单详情-->
+  <select id="getRealDetail" resultType="com.mol.dto.RealDetailDTO">
+    select * from t_real_order where real_order_id = #{realOrderId}
+  </select>
 </mapper>

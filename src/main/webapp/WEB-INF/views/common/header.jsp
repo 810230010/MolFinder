@@ -1,16 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false" %>
-<html>
-<head>
-    <title>头部页面</title>
 
 
-</head>
-
-<body>
 <div class="col-lg-12 top-left-slogan" style="background-color: #354b56">
-    <div class="col-lg-2 col-lg-offset-3 top-nav-left pull-left" style="color: white;line-height: 44px;height: 44px">专注定制合成</div>
+    <div class="col-lg-2 col-lg-offset-3 pull-left" style="color: white;line-height: 44px;height: 44px">专注定制合成</div>
     <div class="col-lg-4 pull-right">
         <c:choose>
             <c:when test="${!empty currentUser}">
@@ -32,7 +26,7 @@
 </div>
 <div class="top-logo" style="height: 200px; background: white; width: 66%;margin: 0 auto">
     <div class="col-md-8 logo">
-        <img src="/static/img/logo.png"/>
+        <a href="/index/indexPage"><img src="/static/img/logo.png"/></a>
     </div>
     <a href="#" style="text-decoration: none; color: black">
     <div class="col-md-4 text-left" style="margin-top: 20px">
@@ -45,8 +39,6 @@
     </div>
     </a>
 </div>
-</body>
-<script>
 
-</script>
-</html>
+
+
