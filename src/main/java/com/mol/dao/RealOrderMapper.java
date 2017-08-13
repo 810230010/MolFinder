@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by 江建平 on 2017/8/10.
  */
-public interface RealOrderMapper{
+public interface RealOrderMapper extends BaseDao<RealOrder, Integer>{
     /**
      * 查询首页的实单列表
      * @return

@@ -113,7 +113,26 @@
                             </select>
                            </span>
                         </div>
-
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">实单价格:</label>
+                        <div class="input-group col-sm-4" style="position:relative;left: 20px">
+                            <input type="text" class="input-sm form-control" name="lowPrice">
+                            <span class="input-group-addon">-</span>
+                            <input type="text" class="input-sm form-control" name="highPrice">
+                            <span class="input-group-addon">元</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">期望交货期:</label>
+                        <div class="input-group col-sm-4" style="position:relative;left: 20px">
+                            <input type="text" class="input-sm form-control" name="lowPrice">
+                            <span class="input-group-addon">-</span>
+                            <input type="text" class="input-sm form-control" name="highPrice">
+                            <span class="input-group-addon">周</span>
+                        </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
@@ -130,7 +149,6 @@
                                 <option>MS</option>
                                 <option>Optical rotation</option>
                                 <option>ee</option>
-
                             </select>
                         </div>
                     </div>
@@ -145,12 +163,13 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">报价截止日期:</label>
+                        <label class="col-sm-3 control-label">抢单截止日期:</label>
                         <div class="col-sm-7">
                             <button id="1" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(1)">1天</button>
                             <button id="2" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(2)">2天</button>
                             <button id="3" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(3)">3天</button>
                             <input type="hidden" id="days"/>
+                            <input type="hidden" id=""/>
                         </div>
                     </div>
                     <div class="ibox-title">
@@ -171,8 +190,8 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <p><input type="checkbox">可付订单价<input type="text" style="width: 60px">%至网站作保证金(默认0.5%)</p>
-                                            <p><input type="checkbox">提前交货可奖励订单价<input type="text" style="width: 60px">%/天(默认0.5)</p>
+                                            <p><input id="item1" type="checkbox">可付订单价<input id="content1" type="text" style="width: 60px">%至网站作保证金(默认0.5%)</p>
+                                            <p><input id="item2" type="checkbox">提前交货可奖励订单价<input id="content2" type="text" style="width: 60px">%/天(默认0.5)</p>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +203,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">其他要求:</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" style="height:120px"></textarea>
+                            <textarea id="remark" class="form-control" style="height:120px"></textarea>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -234,24 +253,52 @@
                 var img = $("#previewImg").val();
                 var purity = $("#purity").val();
                 var buyAmount = $("#amount").val() + $(".weight").val();
-                alert(buyAmount)
-//            $.ajax({
-//                url: "/user/checkLogin",
-//                data: {password: password, phone: phone},
-//                success: function(result){
-//                    if(result.code == 200){
-//                        swal("成功！", "登陆成功", "success");
-//                        setTimeout(function () {
-//                            window.location.href = "/index/indexPage";
-//                        },2000)
-//                    }else{
-//                        layer.msg("用户名或密码错误");
-//                    }
-//                },
-//                error: function(result){
-//                    alert("系统出错")
-//                }
-//            })
+                var diagram = $(".diagram").val();
+                var makebill = $(".bill").val();
+                var endTime = $("#days").val();
+                var guaranteend = $("#item1").is(':checked');
+                var reward = $("#item2").is(':checked')
+                var remark = $("#remark").val();
+                if(guaranteend == true && $("#content1").val() != ""){
+                    var guaranteeMoney = $("#content1").val();
+                }else if(guaranteend == true && $("#content1").val() == ""){
+                    var guaranteeMoney = "0.5%";
+                }else{
+                    var guaranteeMoney = null;
+                }
+                if(reward == true && $("#content2").val() != ""){
+                    var rewardMoney = $("#content2").val();
+                }else if(reward == true && $("#content2").val() == ""){
+                    var rewardMoney = "0.5%";
+                }else{
+                    var guaranteeMoney = null;
+                }
+
+            $.ajax({
+                url: "/real/publishReal",
+                data: {
+                    userId: ${currentUser.userId},
+                    casNo: casNo,
+                    englishName: enName,
+                    chineseName: chName,
+                    buyAmount: buyAmount,
+                    purity: purity,
+
+                },
+                success: function(result){
+                    if(result.code == 200){
+                        swal("成功！", "登陆成功", "success");
+                        setTimeout(function () {
+                            window.location.href = "/index/indexPage";
+                        },2000)
+                    }else{
+                        layer.msg("用户名或密码错误");
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
             },
             invalidHandler: function(form, validator) {return false;}
         });
@@ -263,6 +310,7 @@
         $("#"+days).addClass('active');
         removeOtherSelectedStyle(days);
        var deadLine = dateFtt("yyyy-MM-dd hh:mm:ss",addDays(new Date(), days));
+       $("#days").val(deadLine);
        var show = "截止日期:" + deadLine;
         layer.tips(show, '#'+days, {
             tips: 3,

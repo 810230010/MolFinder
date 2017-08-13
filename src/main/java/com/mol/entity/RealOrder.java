@@ -1,10 +1,5 @@
 package com.mol.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mol.common.util.JsonDateUtil;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 public class RealOrder {
@@ -32,7 +27,7 @@ public class RealOrder {
 
     private String diagramRequire;
 
-    private Boolean makeBill;
+    private String makeBill;
 
     private Double guaranteeMoneyPercent;
 
@@ -41,6 +36,8 @@ public class RealOrder {
     private String image;
 
     private String referDoc;
+
+    private String remark;
 
     private Integer joinCount;
 
@@ -125,7 +122,7 @@ public class RealOrder {
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+
     public Date getEndTime() {
         return endTime;
     }
@@ -142,12 +139,12 @@ public class RealOrder {
         this.diagramRequire = diagramRequire == null ? null : diagramRequire.trim();
     }
 
-    public Boolean getMakeBill() {
+    public String getMakeBill() {
         return makeBill;
     }
 
-    public void setMakeBill(Boolean makeBill) {
-        this.makeBill = makeBill;
+    public void setMakeBill(String makeBill) {
+        this.makeBill = makeBill == null ? null : makeBill.trim();
     }
 
     public Double getGuaranteeMoneyPercent() {
@@ -180,6 +177,14 @@ public class RealOrder {
 
     public void setReferDoc(String referDoc) {
         this.referDoc = referDoc == null ? null : referDoc.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public Integer getJoinCount() {
