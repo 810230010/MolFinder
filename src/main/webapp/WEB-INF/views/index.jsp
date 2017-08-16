@@ -7,7 +7,9 @@
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link rel="stylesheet" href="/static/css/index.css">
-    <%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/plugins/layer/layer.js"></script>
 </head>
 
 <body>
@@ -15,15 +17,15 @@
 <div class="hr-line-dashed" style="margin-top: 10px"></div>
 <div class="menus" style="font-size: 24px;font-weight: 600;margin-bottom: 140px">
     <div class="row1">
-        <div class="col-md-4 text-right"><a href="#">实单</a></div>
-        <div class="col-md-4 text-center"><a href="#">询单</a></div>
-        <div class="col-md-4 text-left"><a href="#">原料采购</a></div>
+        <div class="col-md-4 text-right"><a>实单</a></div>
+        <div class="col-md-4 text-center"><a>询单</a></div>
+        <div class="col-md-4 text-left"><a class="authority" url="/material/materialPurchase">原料采购</a></div>
     </div>
 
     <div class="row2" style="margin-top: 40px">
-        <div class="col-md-4 text-right"><a href="/real/realPublishPage">发布实单</a></div>
-        <div class="col-md-4 text-center"><a href="#">发布询单</a></div>
-        <div class="col-md-4 text-left"><a href="#">原料供应</a></div>
+        <div class="col-md-4 text-right"><a class="authority" url="/real/realPublishPage">发布实单</a></div>
+        <div class="col-md-4 text-center"><a class="authority" url="/enquiry/enquiryPublishPage">发布询单</a></div>
+        <div class="col-md-4 text-left"><a class="authority" url="/material/materialSupply">原料供应</a></div>
     </div>
 </div>
 <div id="myCarousel" class="carousel slide">
@@ -139,7 +141,13 @@
         $("#myCarousel").carousel('cycle');
         //获得实单列表
         updateEndTime();
-
+        $(".authority").click(function(){
+            if($(".register").text() == '注册'){
+                layer.msg('请先登录');
+                return;
+            }
+            window.location.href = $(this).attr("url");
+        });
     });
 
     //倒计时函数

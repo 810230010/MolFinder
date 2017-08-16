@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
             return result;
         }
         user.setCreateTime(new Date());
+        userMapper.insertSelective(user);
         return result;
     }
 

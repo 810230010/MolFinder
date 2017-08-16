@@ -14,18 +14,19 @@
     <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="diagram_require" property="diagramRequire" jdbcType="VARCHAR" />
-    <result column="make_bill" property="makeBill" jdbcType="BIT" />
+    <result column="make_bill" property="makeBill" jdbcType="VARCHAR" />
     <result column="guarantee_money_percent" property="guaranteeMoneyPercent" jdbcType="DOUBLE" />
     <result column="reward_money_percent" property="rewardMoneyPercent" jdbcType="DOUBLE" />
     <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="refer_doc" property="referDoc" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="join_count" property="joinCount" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     real_order_id, user_id, cas_no, english_name, chinese_name, buy_amount, purity, price_between, 
     submit_deadline, begin_time, end_time, diagram_require, make_bill, guarantee_money_percent, 
-    reward_money_percent, image, refer_doc, join_count, state
+    reward_money_percent, image, refer_doc, remark, join_count, state
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -43,15 +44,15 @@
       purity, price_between, submit_deadline, 
       begin_time, end_time, diagram_require, 
       make_bill, guarantee_money_percent, reward_money_percent, 
-      image, refer_doc, join_count, 
-      state)
+      image, refer_doc, remark, 
+      join_count, state)
     values (#{realOrderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{casNo,jdbcType=VARCHAR}, 
       #{englishName,jdbcType=VARCHAR}, #{chineseName,jdbcType=VARCHAR}, #{buyAmount,jdbcType=VARCHAR}, 
       #{purity,jdbcType=VARCHAR}, #{priceBetween,jdbcType=VARCHAR}, #{submitDeadline,jdbcType=VARCHAR}, 
       #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{diagramRequire,jdbcType=VARCHAR}, 
-      #{makeBill,jdbcType=BIT}, #{guaranteeMoneyPercent,jdbcType=DOUBLE}, #{rewardMoneyPercent,jdbcType=DOUBLE}, 
-      #{image,jdbcType=VARCHAR}, #{referDoc,jdbcType=VARCHAR}, #{joinCount,jdbcType=INTEGER}, 
-      #{state,jdbcType=VARCHAR})
+      #{makeBill,jdbcType=VARCHAR}, #{guaranteeMoneyPercent,jdbcType=DOUBLE}, #{rewardMoneyPercent,jdbcType=DOUBLE}, 
+      #{image,jdbcType=VARCHAR}, #{referDoc,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{joinCount,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mol.entity.RealOrder" >
     insert into t_real_order
@@ -62,55 +63,58 @@
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="casNo != null" >
+      <if test="casNo != null and casNo != ''" >
         cas_no,
       </if>
-      <if test="englishName != null" >
+      <if test="englishName != null and englishName != ''" >
         english_name,
       </if>
-      <if test="chineseName != null" >
+      <if test="chineseName != null and chineseName != ''" >
         chinese_name,
       </if>
-      <if test="buyAmount != null" >
+      <if test="buyAmount != null and buyAmount != ''" >
         buy_amount,
       </if>
-      <if test="purity != null" >
+      <if test="purity != null and purity != ''">
         purity,
       </if>
-      <if test="priceBetween != null" >
+      <if test="priceBetween != null and priceBetween != ''" >
         price_between,
       </if>
-      <if test="submitDeadline != null" >
+      <if test="submitDeadline != null and submitDeadline != ''" >
         submit_deadline,
       </if>
-      <if test="beginTime != null" >
+      <if test="beginTime != null and beginTime != ''" >
         begin_time,
       </if>
-      <if test="endTime != null" >
+      <if test="endTime != null and endTime != ''" >
         end_time,
       </if>
-      <if test="diagramRequire != null" >
+      <if test="diagramRequire != null and diagramRequire != ''" >
         diagram_require,
       </if>
-      <if test="makeBill != null" >
+      <if test="makeBill != null and makeBill != ''" >
         make_bill,
       </if>
-      <if test="guaranteeMoneyPercent != null" >
+      <if test="guaranteeMoneyPercent != null and guaranteeMoneyPercent != ''" >
         guarantee_money_percent,
       </if>
-      <if test="rewardMoneyPercent != null" >
+      <if test="rewardMoneyPercent != null and rewardMoneyPercent != ''" >
         reward_money_percent,
       </if>
-      <if test="image != null" >
+      <if test="image != null and image != ''" >
         image,
       </if>
-      <if test="referDoc != null" >
+      <if test="referDoc != null and referDoc != ''" >
         refer_doc,
       </if>
-      <if test="joinCount != null" >
+      <if test="remark != null and remark != ''" >
+        remark,
+      </if>
+      <if test="joinCount != null and joinCount != ''" >
         join_count,
       </if>
-      <if test="state != null" >
+      <if test="state != null and state != ''" >
         state,
       </if>
     </trim>
@@ -152,7 +156,7 @@
         #{diagramRequire,jdbcType=VARCHAR},
       </if>
       <if test="makeBill != null" >
-        #{makeBill,jdbcType=BIT},
+        #{makeBill,jdbcType=VARCHAR},
       </if>
       <if test="guaranteeMoneyPercent != null" >
         #{guaranteeMoneyPercent,jdbcType=DOUBLE},
@@ -165,6 +169,9 @@
       </if>
       <if test="referDoc != null" >
         #{referDoc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="joinCount != null" >
         #{joinCount,jdbcType=INTEGER},
@@ -211,7 +218,7 @@
         diagram_require = #{diagramRequire,jdbcType=VARCHAR},
       </if>
       <if test="makeBill != null" >
-        make_bill = #{makeBill,jdbcType=BIT},
+        make_bill = #{makeBill,jdbcType=VARCHAR},
       </if>
       <if test="guaranteeMoneyPercent != null" >
         guarantee_money_percent = #{guaranteeMoneyPercent,jdbcType=DOUBLE},
@@ -224,6 +231,9 @@
       </if>
       <if test="referDoc != null" >
         refer_doc = #{referDoc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="joinCount != null" >
         join_count = #{joinCount,jdbcType=INTEGER},
@@ -247,11 +257,12 @@
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       diagram_require = #{diagramRequire,jdbcType=VARCHAR},
-      make_bill = #{makeBill,jdbcType=BIT},
+      make_bill = #{makeBill,jdbcType=VARCHAR},
       guarantee_money_percent = #{guaranteeMoneyPercent,jdbcType=DOUBLE},
       reward_money_percent = #{rewardMoneyPercent,jdbcType=DOUBLE},
       image = #{image,jdbcType=VARCHAR},
       refer_doc = #{referDoc,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       join_count = #{joinCount,jdbcType=INTEGER},
       state = #{state,jdbcType=VARCHAR}
     where real_order_id = #{realOrderId,jdbcType=INTEGER}

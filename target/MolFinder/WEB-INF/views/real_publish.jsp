@@ -60,7 +60,7 @@
                 <h4>基本要求</h4>
             </div>
             <div class="ibox-content">
-                <form class="form-horizontal" id="form">
+                <form class="form-horizontal" id="form" onsubmit="return false">
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="cas">CAS号:</label>
                         <div class="col-sm-7">
@@ -88,7 +88,7 @@
                             <div id="preview">
                                 <img id="imghead" border="0" src="/static/img/add_icon.png" width="90" height="90" onclick="$('#previewImg').click();">
                             </div>
-                            <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                            <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" name="previewImg">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -118,9 +118,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">实单价格:</label>
                         <div class="input-group col-sm-4" style="position:relative;left: 20px">
-                            <input type="text" class="input-sm form-control" name="lowPrice">
+                            <input id="lowPrice" type="text" class="input-sm form-control" name="lowPrice">
                             <span class="input-group-addon">-</span>
-                            <input type="text" class="input-sm form-control" name="highPrice">
+                            <input id="highPrice" type="text" class="input-sm form-control" name="highPrice">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
@@ -128,9 +128,9 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">期望交货期:</label>
                         <div class="input-group col-sm-4" style="position:relative;left: 20px">
-                            <input type="text" class="input-sm form-control" name="lowPrice">
+                            <input id="beginWeek" type="text" class="input-sm form-control" name="lowPrice">
                             <span class="input-group-addon">-</span>
-                            <input type="text" class="input-sm form-control" name="highPrice">
+                            <input id="endWeek" type="text" class="input-sm form-control" name="highPrice">
                             <span class="input-group-addon">周</span>
                         </div>
                     </div>
@@ -169,7 +169,6 @@
                             <button id="2" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(2)">2天</button>
                             <button id="3" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(3)">3天</button>
                             <input type="hidden" id="days"/>
-                            <input type="hidden" id=""/>
                         </div>
                     </div>
                     <div class="ibox-title">
@@ -226,10 +225,10 @@
 <script src="/static/js/preview.js" type="text/javascript"></script>
 <!--bootstrap select-->
 <script src="/static/js/plugins/select2/select2.full.min.js" type="text/javascript"></script>
+<!--jquery validate-->
 <script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="/static/js/plugins/validate/messages_zh.js"></script>
-
-
+<script src="/static/js/ajaxfileupload.js"></script>
 </body>
 
 
@@ -244,65 +243,70 @@
         $(".bill").select2({
             minimumResultsForSearch: -1
         });
-        //表单验证提交
-        $("#form").validate({
-            submitHandler:function(form){
-                var casNo = $("#cas").val();
-                var enName = $("#en_name").val();
-                var chName = $("#cn_name").val();
-                var img = $("#previewImg").val();
-                var purity = $("#purity").val();
-                var buyAmount = $("#amount").val() + $(".weight").val();
-                var diagram = $(".diagram").val();
-                var makebill = $(".bill").val();
-                var endTime = $("#days").val();
-                var guaranteend = $("#item1").is(':checked');
-                var reward = $("#item2").is(':checked')
-                var remark = $("#remark").val();
-                if(guaranteend == true && $("#content1").val() != ""){
-                    var guaranteeMoney = $("#content1").val();
-                }else if(guaranteend == true && $("#content1").val() == ""){
-                    var guaranteeMoney = "0.5%";
-                }else{
-                    var guaranteeMoney = null;
-                }
-                if(reward == true && $("#content2").val() != ""){
-                    var rewardMoney = $("#content2").val();
-                }else if(reward == true && $("#content2").val() == ""){
-                    var rewardMoney = "0.5%";
-                }else{
-                    var guaranteeMoney = null;
-                }
 
-            $.ajax({
-                url: "/real/publishReal",
-                data: {
-                    userId: ${currentUser.userId},
-                    casNo: casNo,
-                    englishName: enName,
-                    chineseName: chName,
-                    buyAmount: buyAmount,
-                    purity: purity,
-
+    });
+    //表单验证提交
+    $("#form").validate({
+        submitHandler:function(form){
+            var guaranteend = $("#item1").is(':checked');
+            var reward = $("#item2").is(':checked')
+            var guaranteeMoney;
+            var rewardMoney;
+            if(guaranteend == true && $("#content1").val() != ""){
+                guaranteeMoney = $("#content1").val();
+            }else if(guaranteend == true && $("#content1").val() == ""){
+                guaranteeMoney = "0.5%";
+            }else{
+                guaranteeMoney = "";
+            }
+            if(reward == true && $("#content2").val() != ""){
+                rewardMoney = $("#content2").val();
+            }else if(reward == true && $("#content2").val() == ""){
+                rewardMoney = "0.5%";
+            }else{
+                guaranteeMoney = "";
+            }
+            $.ajaxFileUpload({
+                url: '/real/publishReal', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'previewImg', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                data:{
+                    <%--userId: ${currentUser.userId},--%>
+                    casNo: $("#cas").val(),
+                    englishName: $("#en_name").val(),
+                    chineseName: $("#cn_name").val(),
+                    buyAmount: $("#amount").val() + $(".weight").val(),
+                    image: $("#previewImg").val(),
+                    purity: $("#purity").val(),
+                    diagramRequire:$(".diagram").val(),
+                    makeBill: $(".bill").val(),
+                    endTime:$("#days").val(),
+                    guaranteeMoneyPercent: guaranteeMoney,
+                    rewardMoneyPercent: rewardMoney,
+                    remark: $("#remark").val(),
+                    priceBetween: $("#lowPrice").val() + "-" + $("#highPrice").val(),
+                    submitDeadline: $("#beginWeek").val() + $("#endWeek").val(),
                 },
-                success: function(result){
-                    if(result.code == 200){
-                        swal("成功！", "登陆成功", "success");
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    alert(data.code)
+                    if(data.code == 200){
+                        swal("成功！", "发布实单成功", "success");
                         setTimeout(function () {
                             window.location.href = "/index/indexPage";
                         },2000)
-                    }else{
-                        layer.msg("用户名或密码错误");
                     }
                 },
-                error: function(result){
-                    alert("系统出错")
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert("系统出错");
                 }
             })
-            },
-            invalidHandler: function(form, validator) {return false;}
-        });
+        },
+        invalidHandler: function(form, validator) {return false;}
     });
+
 
 
     //点击期限事件

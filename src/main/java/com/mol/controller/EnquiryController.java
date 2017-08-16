@@ -14,7 +14,7 @@ public class EnquiryController {
      * 跳转到询单发布页面
      * @return
      */
-    @RequestMapping
+    @RequestMapping("/enquiryPublishPage")
     public String view2enquiryPublish(){
         return "enquiry_publish";
     }
