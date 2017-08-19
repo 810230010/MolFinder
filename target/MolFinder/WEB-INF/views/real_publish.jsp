@@ -6,7 +6,7 @@
 <head>
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
-    <link rel="stylesheet" href="/static/css/index.css">
+    <%--<link rel="stylesheet" href="/static/css/index.css">--%>
     <link rel="stylesheet" href="/static/css/plugins/semantic/semantic.min.css">
     <link href="/static/css/plugins/select2/select2.min.css" rel="stylesheet">
 
@@ -218,7 +218,8 @@
 </div>
 
 
-<%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+<script src="/static/js/jquery-3.1.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/plugins/layer/layer.js"></script>
 <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
 <!--预览图片-->

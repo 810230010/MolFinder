@@ -1,25 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" href="/static/css/plugins/semantic/semantic.min.css">
-    <!-- 文件上传 -->
-    <link href="/static/css/plugins/webuploader/webuploader.css" media="all" rel="stylesheet" type="text/css"/>
-    <%@include file="/WEB-INF/views/common/resource_js.jsp"%>
-    <script src="/static/js/plugins/layer/layer.js"></script>
+    <link href="/static/css/plugins/select2/select2.min.css" rel="stylesheet">
 
-
-
+    <style>
+        .select2-hidden-accessible{display: none}
+    </style>
 </head>
-<style>
-ul li{height:24px}
-ul li:nth-child(even){ margin-left:20px}
-</style>
 <body>
 <div>
-<jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
+    <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
 </div>
 <div class="hr-line-dashed" style="margin-top: 10px"></div>
 <div class="col-md-8 col-md-offset-2" >
@@ -28,17 +25,17 @@ ul li:nth-child(even){ margin-left:20px}
 
         <div class="ibox" style="border: 1px dashed #999">
             <div class="ibox-title">
-                <h3 id="rank">询单规则</h3>
+                <h3 id="rank">实单规则</h3>
             </div>
             <div class="ibox-content">
                 <form class="form-horizontal">
                     <label>真实有效</label>
                     <div class="form-group" style="padding-left: 20px;background: #f1f1f1">
-                        <font class="col-md-12">所发询单必须保证真实有效，不得恶意发布虚假信息，一经发现永久封号.</font>
+                        <font class="col-md-12">所发实单必须保证真实有效，不得恶意发布虚假信息，一经发现永久封号.</font>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group" style="padding-left: 10px">
-                        <h3>询单流程</h3>
+                        <h3>实单流程</h3>
                         <ul style="list-style: none">
                             <li>1.需求方发布询单</li>
                             <li><i class="fa fa-arrow-circle-down"></i></li>
@@ -56,15 +53,18 @@ ul li:nth-child(even){ margin-left:20px}
     <!--发布询单表单-->
     <div class="col-md-9">
         <div class="ibox">
+            <div class="ibox-title text-center">
+                <h3>发布实单</h3>
+            </div>
             <div class="ibox-title">
-                <h3>发布询单</h3>
+                <h4>基本要求</h4>
             </div>
             <div class="ibox-content">
-                <form class="form-horizontal" onsubmit="return false">
+                <form class="form-horizontal" id="form" onsubmit="return false">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">CAS号:</label>
+                        <label class="col-sm-3 control-label" for="cas">CAS号:</label>
                         <div class="col-sm-7">
-                            <input id="cas" type="text" class="form-control">
+                            <input id="cas" type="text" class="form-control" required>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -83,6 +83,16 @@ ul li:nth-child(even){ margin-left:20px}
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">上传图片</label>
+                        <div class="col-sm-7">
+                            <div id="preview">
+                                <img id="imghead" border="0" src="/static/img/add_icon.png" width="90" height="90" onclick="$('#previewImg').click();">
+                            </div>
+                            <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" name="previewImg">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">纯度要求:</label>
                         <div class="col-sm-7">
                             <input id="purity" type="text" class="form-control">
@@ -91,13 +101,59 @@ ul li:nth-child(even){ margin-left:20px}
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">采购量:</label>
-                        <div class="col-sm-7">
-                            <input id="amount" type="text" class="form-control">
+                        <div class="col-sm-4">
+                           <span class="col-sm-8">
+                            <input id="amount" type="text" class="form-control" style="height:30px">
+                           </span>
+                            <span class="col-sm-4">
+                            <select class="weight">
+                                <option>g</option>
+                                <option>mg</option>
+                                <option>kg</option>
+                            </select>
+                           </span>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">报价截止日期:</label>
+                        <label class="col-sm-3 control-label">期望交货期:</label>
+                        <div class="input-group col-sm-4" style="position:relative;left: 20px">
+                            <input id="beginWeek" type="text" class="input-sm form-control" name="lowPrice">
+                            <span class="input-group-addon">-</span>
+                            <input id="endWeek" type="text" class="input-sm form-control" name="highPrice">
+                            <span class="input-group-addon">周</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">图谱要求:</label>
+                        <div class="col-sm-7">
+                            <select class="col-sm-12 diagram" multiple="multiple">
+                                <option>HNMR</option>
+                                <option>LCMS</option>
+                                <option>CNMR</option>
+                                <option>FNMR</option>
+                                <option>HPLC</option>
+                                <option>GC</option>
+                                <option>GCMS</option>
+                                <option>MS</option>
+                                <option>Optical rotation</option>
+                                <option>ee</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">发票要求:</label>
+                        <div class="col-sm-7">
+                            <select class="col-sm-12 bill">
+                                <option>不开发票</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">抢单截止日期:</label>
                         <div class="col-sm-7">
                             <button id="1" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(1)">1天</button>
                             <button id="2" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(2)">2天</button>
@@ -105,32 +161,44 @@ ul li:nth-child(even){ margin-left:20px}
                             <input type="hidden" id="days"/>
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">其他要求:</label>
-                        <div class="col-sm-7">
-                            <textarea class="form-control" style="height:100px">
-
-                            </textarea>
-                        </div>
+                    <div class="ibox-title">
+                        <h4>其他项设置</h4>
                     </div>
-                    <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">上传图片</label>
+                        <label class="col-sm-3 control-label">保奖设置:</label>
                         <div class="col-sm-7">
-                            <div id="uploader-demo">
-                                <!--用来存放item-->
-                                <div id="thelist" class="uploader-list text-center"></div>
-                                <div>
-                                    <div id="filePicker"></div>
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseOne">
+                                                下拉设置保证金、奖励金
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <p><input id="item1" type="checkbox">可付订单价<input id="content1" type="text" style="width: 60px">%至网站作保证金(默认0.5%)</p>
+                                            <p><input id="item2" type="checkbox">提前交货可奖励订单价<input id="content2" type="text" style="width: 60px">%/天(默认0.5)</p>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">其他要求:</label>
+                        <div class="col-sm-7">
+                            <textarea id="remark" class="form-control" style="height:120px"></textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
                         <div class="text-center">
-                            <input id="submit" type="button" class="btn btn-primary" value="填好了,去发布"/>
+                            <input id="submit" type="submit" class="btn btn-primary" value="填好了,去发布"/>
                         </div>
                     </div>
                 </form>
@@ -140,155 +208,139 @@ ul li:nth-child(even){ margin-left:20px}
 </div>
 
 
-<div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp" flush="true"/>
-</div>
-</body>
+<%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+<script src="/static/js/plugins/layer/layer.js"></script>
 <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
-<!-- 文件上传 -->
-<script src="/static/js/plugins/webuploader/webuploader.min.js" type="text/javascript"></script>
+<!--预览图片-->
+<script src="/static/js/preview.js" type="text/javascript"></script>
+<!--bootstrap select-->
+<script src="/static/js/plugins/select2/select2.full.min.js" type="text/javascript"></script>
+<!--jquery validate-->
+<script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.js"></script>
+<script src="/static/js/ajaxfileupload.js"></script>
+</body>
+
 
 <script>
+
     $(function(){
-        /*init webuploader*/
-        var $list=$("#thelist");   //这几个初始化全局的百度文档上没说明，好蛋疼。
-        var thumbnailWidth = 100;   //缩略图高度和宽度 （单位是像素），当宽高度是0~1的时候，是按照百分比计算，具体可以看api文档
-        var thumbnailHeight = 100;
-
-        var uploader = WebUploader.create({
-            // 选完文件后，是否自动上传。
-            auto: true,
-            pick: {
-                id: '#filePicker',
-                name:"file",  //这个地方 name 没什么用，虽然打开调试器，input的名字确实改过来了。但是提交到后台取不到文件。如果想自定义file的name属性，还是要和fileVal 配合使用。
-                label: '点击选择图片',
-                multiple:false            //默认为true，true表示可以多选文件，HTML5的属性
-            },
-            fileNumLimit: 1,
-            // swf文件路径
-            swf: '/static/js/plugins/webupload/Uploader.swf',
-
-            // 文件接收服务端。
-            server: '/apm-web/a/test/',
-
-            // 选择文件的按钮。可选。
-            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-
-            // 只允许选择图片文件。
-            accept: {
-                title: 'Images',
-                extensions: 'gif,jpg,jpeg,bmp,png',
-                mimeTypes: 'image/*'
-            },
-            method:'POST',
+        $('#collapseOne').collapse('hide');
+        $(".diagram").select2();
+        $(".weight").select2({
+            minimumResultsForSearch: -1
         });
-        // 当有文件添加进来的时候
-        uploader.on( 'fileQueued', function( file ) {  // webuploader事件.当选择文件后，文件被加载到文件队列中，触发该事件。等效于 uploader.onFileueued = function(file){...} ，类似js的事件定义。
-            var $li = $(
-                    '<div id="' + file.id + '" class="file-item thumbnail">' +
-                    '<img>' +
-                    '<div class="info">' + file.name + '</div>' +
-                    '</div>'
-                ),
-                $img = $li.find('img');
-
-
-            // $list为容器jQuery实例
-            $list.append( $li );
-
-            // 创建缩略图
-            // 如果为非图片文件，可以不用调用此方法。
-            // thumbnailWidth x thumbnailHeight 为 100 x 100
-            uploader.makeThumb( file, function( error, src ) {   //webuploader方法
-                if ( error ) {
-                    $img.replaceWith('<span>不能预览</span>');
-                    return;
-                }
-
-                $img.attr( 'src', src );
-            }, thumbnailWidth, thumbnailHeight );
-        });
-        // 文件上传过程中创建进度条实时显示。
-        uploader.on( 'uploadProgress', function( file, percentage ) {
-            var $li = $( '#'+file.id ),
-                $percent = $li.find('.progress span');
-
-            // 避免重复创建
-            if ( !$percent.length ) {
-                $percent = $('<p class="progress"><span></span></p>')
-                    .appendTo( $li )
-                    .find('span');
-            }
-
-            $percent.css( 'width', percentage * 100 + '%' );
-        });
-
-        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-        uploader.on( 'uploadSuccess', function( file ) {
-            $( '#'+file.id ).addClass('upload-state-done');
-        });
-
-        // 文件上传失败，显示上传出错。
-        uploader.on( 'uploadError', function( file ) {
-            var $li = $( '#'+file.id ),
-                $error = $li.find('div.error');
-
-            // 避免重复创建
-            if ( !$error.length ) {
-                $error = $('<div class="error"></div>').appendTo( $li );
-            }
-
-            $error.html("<font color='red'>上传失败</font>");
-        });
-
-        // 完成上传完了，成功或者失败，先删除进度条。
-        uploader.on( 'uploadComplete', function( file ) {
-            $( '#'+file.id ).find('.progress').remove();
+        $(".bill").select2({
+            minimumResultsForSearch: -1
         });
 
     });
+    //表单验证提交
+    $("#form").validate({
+        submitHandler:function(form){
+            var guaranteend = $("#item1").is(':checked');
+            var reward = $("#item2").is(':checked')
+            var guaranteeMoney;
+            var rewardMoney;
+            if(guaranteend == true && $("#content1").val() != ""){
+                guaranteeMoney = $("#content1").val();
+            }else if(guaranteend == true && $("#content1").val() == ""){
+                guaranteeMoney = "0.5%";
+            }else{
+                guaranteeMoney = "";
+            }
+            if(reward == true && $("#content2").val() != ""){
+                rewardMoney = $("#content2").val();
+            }else if(reward == true && $("#content2").val() == ""){
+                rewardMoney = "0.5%";
+            }else{
+                guaranteeMoney = "";
+            }
+            $.ajaxFileUpload({
+                url: '/enquiry/publishEnquiry', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'previewImg', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                data:{
+                    <%--userId: ${currentUser.userId},--%>
+                    casNo: $("#cas").val(),
+                    englishName: $("#en_name").val(),
+                    chineseName: $("#cn_name").val(),
+                    buyAmount: $("#amount").val() + $(".weight").val(),
+                    image: $("#previewImg").val(),
+                    purity: $("#purity").val(),
+                    diagramRequire:$(".diagram").val(),
+                    makeBill: $(".bill").val(),
+                    endTime:$("#days").val(),
+                    guaranteeMoneyPercent: guaranteeMoney,
+                    rewardMoneyPercent: rewardMoney,
+                    remark: $("#remark").val(),
+                    priceBetween: $("#lowPrice").val() + "-" + $("#highPrice").val(),
+                    submitDeadline: $("#beginWeek").val() + $("#endWeek").val(),
+                },
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    alert(data.code)
+                    if(data.code == 200){
+                        swal("成功！", "发布实单成功", "success");
+                        setTimeout(function () {
+                            window.location.href = "/index/indexPage";
+                        },2000)
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert("系统出错");
+                }
+            })
+        },
+        invalidHandler: function(form, validator) {return false;}
+    });
+
+
 
     //点击期限事件
     function getDeadline(days){
         $("#"+days).addClass('active');
         removeOtherSelectedStyle(days);
-       var deadLine = dateFtt("yyyy-MM-dd hh:mm:ss",addDays(new Date(), days));
-       var show = "截止日期:" + deadLine;
+        var deadLine = dateFtt("yyyy-MM-dd hh:mm:ss",addDays(new Date(), days));
+        $("#days").val(deadLine);
+        var show = "截止日期:" + deadLine;
         layer.tips(show, '#'+days, {
             tips: 3,
         });
     }
 
     //格式化日期
-function dateFtt(fmt,date)
-{
-    var o = {
-        "M+" : date.getMonth()+1,                 //月份
-        "d+" : date.getDate(),                    //日
-        "h+" : date.getHours(),                   //小时
-        "m+" : date.getMinutes(),                 //分
-        "s+" : date.getSeconds(),                 //秒
-        "q+" : Math.floor((date.getMonth()+3)/3), //季度
-        "S"  : date.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt))
-        fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
-    for(var k in o)
-        if(new RegExp("("+ k +")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-    return fmt;
-}
-function addDays(theDate, days) {
-    return new Date(theDate.getTime() + days*24*60*60*1000);
-}
-function removeOtherSelectedStyle(k){
-    for(var i=1; i<=3; i++){
-        if(i == k){
-            continue;
-        }else{
-            $("#"+i).removeClass('active');
+    function dateFtt(fmt,date)
+    {
+        var o = {
+            "M+" : date.getMonth()+1,                 //月份
+            "d+" : date.getDate(),                    //日
+            "h+" : date.getHours(),                   //小时
+            "m+" : date.getMinutes(),                 //分
+            "s+" : date.getSeconds(),                 //秒
+            "q+" : Math.floor((date.getMonth()+3)/3), //季度
+            "S"  : date.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
+    function addDays(theDate, days) {
+        return new Date(theDate.getTime() + days*24*60*60*1000);
+    }
+    function removeOtherSelectedStyle(k){
+        for(var i=1; i<=3; i++){
+            if(i == k){
+                continue;
+            }else{
+                $("#"+i).removeClass('active');
+            }
         }
     }
-}
 </script>
 </html>

@@ -16,16 +16,16 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
 <div class="hr-line-dashed" style="margin-top: 10px"></div>
 <div class="menus" style="font-size: 24px;font-weight: 600;margin-bottom: 140px">
-    <div class="row1">
+    <div class="row1" id="row1">
         <div class="col-md-4 text-right"><a>实单</a></div>
         <div class="col-md-4 text-center"><a>询单</a></div>
-        <div class="col-md-4 text-left"><a class="authority" url="/material/materialPurchase">原料采购</a></div>
+        <div class="col-md-4 text-left"><a class="authority" url="/material/materialBuyPage">原料采购</a></div>
     </div>
 
     <div class="row2" style="margin-top: 40px">
         <div class="col-md-4 text-right"><a class="authority" url="/real/realPublishPage">发布实单</a></div>
         <div class="col-md-4 text-center"><a class="authority" url="/enquiry/enquiryPublishPage">发布询单</a></div>
-        <div class="col-md-4 text-left"><a class="authority" url="/material/materialSupply">原料供应</a></div>
+        <div class="col-md-4 text-left"><a class="authority" url="/material/materialSupplyPage">原料供应</a></div>
     </div>
 </div>
 <div id="myCarousel" class="carousel slide">
@@ -54,7 +54,7 @@
 </div>
 <div class="hr-line-dashed"></div>
 <!--定制实单-->
-<div class="col-lg-12 text-center real-bill"><h3><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
+<div class="col-lg-12 text-center real-bill"><h3 id="real"><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
 <div class="row text-center" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <c:forEach var="item" items="${realList}">
         <div class="col-md-6 model">
