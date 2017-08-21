@@ -6,7 +6,9 @@
 <head>
     <title>实单详情</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
-    <%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+    <%--<%@include file="/WEB-INF/views/common/resource_js.jsp"%>--%>
+    <script src="/static/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
 </head>
 <body>
@@ -52,12 +54,12 @@
 <div class="row" style="margin-top:40px;">
     <div class="tabs-container">
         <ul class="nav nav-tabs">
-            <li class="active col-md-4"><a data-toggle="tab" href="tabs.html#tab-1"> 实单详情</a></li>
-            <li class="col-md-4"><a data-toggle="tab" href="tabs.html#tab-2">参考文献与路线</a></li>
-            <li class="col-md-4"><a data-toggle="tab" href="tabs.html#tab-3">发单人</a></li>
+            <li class="active col-md-4" style="padding-left: 0"><a data-toggle="tab" href="#tab-1"><i class="fa fa-eye"> </i>实单详情</a></li>
+            <li class="col-md-4"><a data-toggle="tab" href="#tab-2"><i class="fa fa-book"></i>参考文献与路线</a></li>
+            <li class="col-md-4" style="padding-right: 0"><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i>发单人</a></li>
         </ul>
         <div class="tab-content" style="height:400px">
-            <div id="tab-1" class="tab-pane active">
+            <div id="tab-1" class="tab-pane fade in active">
                 <div class="panel-body text-center">
                     <h3><i class="fa fa-building-o" style="color: red"></i>实单详情</h3>
                     <div class="text-left" style="margin-top: 20px">
@@ -68,33 +70,36 @@
                         <p><strong>其他要求</strong>：${realDetail.remark}</p>
                     </div>
                     <div class="col-md-4" style="border-right: 1px dashed grey">
-                        <p><strong>CAS号</strong>：1896159-87-7</p>
-                        <p><strong>英文名称</strong>： N,1-Dimethyl-1h-pyrazol-4-aminedihydrochloride</p>
-                        <p><strong>中文名称</strong>：</p>
-                        <p><strong>其他要求</strong>：货到检测合格付款</p>
+                        <p><strong>采购量</strong>：${realDetail.buyAmount}</p>
+                        <p><strong>纯度要求</strong>： ${realDetail.purity}</p>
+                        <p><strong>图谱要求</strong>：${realDetail.diagramRequire}</p>
+                        <p><strong>实单价格</strong>：${realDetail.priceBetween}元</p>
                     </div>
                     <div class="col-md-4">
-                        <p><strong>CAS号</strong>： 1896159-87-7</p>
-                        <p><strong>英文名称</strong>： N,1-Dimethyl-1h-pyrazol-4-aminedihydrochloride</p>
-                        <p><strong>中文名称</strong>：</p>
+                        <p><strong>交货期</strong>：${realDetail.submitDeadline}</p>
+                        <p><strong>发布日期</strong>： <fmt:formatDate value="${realDetail.beginTime}" pattern="yyyy-MM-dd hh:mm:ss" /></p>
+                        <p><strong>发票类型</strong>： ${realDetail.makeBill}</p>
                     </div>
+                        <c:if test="${realDetail.guaranteeMoneyPercent != null}">
+                        <div class="col-md-12">
+                            <div class="hr-line-dashed"></div>
+                            <p><b>成交后买方预付全款${realDetail.guaranteeMoneyPercent}%至网站作为保证金</b></p>
+                            <c:if test="${realDetail.rewardMoneyPercent != null}">
+                                <p><b>提前完成奖励订单价${realDetail.rewardMoneyPercent}%每天</b></p>
+                            </c:if>
+                        </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
-            <div id="tab-2" class="tab-pane">
+            <div id="tab-2" class="tab-pane fade">
                 <div class="panel-body text-center">
                       ${realDetail.referDoc}
                 </div>
             </div>
-            <div id="tab-3" class="tab-pane">
+            <div id="tab-3" class="tab-pane fade">
                 <div class="panel-body">
-                    <strong>Donec quam felis</strong>
 
-                    <p>Thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks, and grow familiar with the countless indescribable forms of the insects
-                        and flies, then I feel the presence of the Almighty, who formed us in his own image, and the breath </p>
-
-                    <p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite
-                        sense of mere tranquil existence, that I neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
                 </div>
             </div>
         </div>

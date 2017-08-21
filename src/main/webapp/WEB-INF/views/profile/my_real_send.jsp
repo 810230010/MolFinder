@@ -3,14 +3,15 @@
 <head>
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
+    <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/plugins/layer/layer.js"></script>
+    <script src="/static/js/plugins/dataTables/datatables.min.js"></script>
     <style>
         ul{height: 40px;padding-left: 0px;background: #f8f8f8}
         li{height:40px;float: left;line-height: 40px;padding: 0 15px;cursor: pointer}
         .active{background-color: #c23;color: white}
-
     </style>
 </head>
 <body style="background-color: white">
@@ -44,6 +45,14 @@
             <li><b>停止抢单</b></li>
             <li><b>报价结束未派单</b></li>
         </ul>
+    </div>
+    <div class="table-responsive">
+        <table id="dataTable" class="table table-striped table-bordered table-hover dataTables-example" >
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

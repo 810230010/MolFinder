@@ -82,7 +82,7 @@
 
             </div>
             <div class="col-md-4">
-               <button class="btn btn-danger col-md-12">立即抢单</button>
+               <button class="btn btn-danger col-md-12 rub">立即抢单</button>
             </div>
           </div>
         </a>
@@ -164,7 +164,6 @@
            //转换为时间日期类型
             var endDate1 = eval('new Date(' + endDate.replace(/\d+(?=-[^-]+$)/, function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) +')');
 
-
             var endTime = endDate1.getTime(); //结束时间毫秒数
 
 
@@ -180,6 +179,8 @@
             else{
                 $(this).removeClass("timespan");
                 $(this).html("已经结束");
+                $(this).parents('model').children('rub').html('报价结束');
+                $(this).parents('model').children('rub').css('background-color', 'grey');
             }
         });
         setTimeout("updateEndTime()",1000);

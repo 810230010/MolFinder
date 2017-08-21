@@ -26,4 +26,6 @@ public class RealDetailDTO {
     private String referDoc;
     private Integer joinCount;
     private String remark;
+    private Double guaranteeMoneyPercent;
+    private Double rewardMoneyPercent;
 }
