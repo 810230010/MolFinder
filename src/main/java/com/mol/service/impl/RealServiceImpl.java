@@ -1,5 +1,6 @@
 package com.mol.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.mol.dao.RealOrderMapper;
 import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by 江建平 on 2017/8/11.
@@ -25,5 +27,11 @@ public class RealServiceImpl implements RealService{
     public int publishReal(RealOrder realOrder) {
         realOrder.setBeginTime(new Date());
         return realOrderMapper.insertSelective(realOrder);
+    }
+
+    @Override
+    public List<RealOrder> searchMyRealOrderOnsale(Integer page, Integer pageSize, String orderColumn, String orderType, Integer userId) {
+        PageHelper.startPage(page, pageSize);
+        return realOrderMapper.listRealOrderByUserId(orderColumn, orderType, userId);
     }
 }

@@ -10,4 +10,16 @@
   <select id="getRealDetail" resultType="com.mol.dto.RealDetailDTO">
     select * from t_real_order where real_order_id = #{realOrderId}
   </select>
+
+  <select id="listRealOrderByUserId" resultType="com.mol.entity.RealOrder">
+    select * from t_real_order
+    <where>
+      user_id = #{userId}
+    </where>
+    order by
+    real_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
 </mapper>

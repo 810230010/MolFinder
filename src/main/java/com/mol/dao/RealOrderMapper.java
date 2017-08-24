@@ -23,4 +23,13 @@ public interface RealOrderMapper extends BaseDao<RealOrder, Integer>{
      * @return
      */
     RealDetailDTO getRealDetail(@Param("realOrderId") Integer realOrderId);
+
+    /**
+     * 查询当前用户发布的正在抢单状态的实单
+     * @param orderColumn
+     * @param orderType
+     * @param userId
+     * @return
+     */
+    List<RealOrder> listRealOrderByUserId(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("userId") Integer userId);
 }
