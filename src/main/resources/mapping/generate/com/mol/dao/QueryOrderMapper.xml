@@ -8,38 +8,28 @@
     <result column="english_name" property="englishName" jdbcType="VARCHAR" />
     <result column="chinese_name" property="chineseName" jdbcType="VARCHAR" />
     <result column="purity" property="purity" jdbcType="VARCHAR" />
-    <result column="buy_amount" property="buyAmount" jdbcType="DOUBLE" />
+    <result column="buy_amount" property="buyAmount" jdbcType="VARCHAR" />
     <result column="submit_deadline" property="submitDeadline" jdbcType="VARCHAR" />
     <result column="diagram_require" property="diagramRequire" jdbcType="VARCHAR" />
-    <result column="is_guaranteend" property="isGuaranteend" jdbcType="BIT" />
     <result column="guarantee_money_percent" property="guaranteeMoneyPercent" jdbcType="DOUBLE" />
-    <result column="is_reward_ahead" property="isRewardAhead" jdbcType="BIT" />
     <result column="reward_money_percent" property="rewardMoneyPercent" jdbcType="DOUBLE" />
     <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="other_require" property="otherRequire" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="refer_doc" property="referDoc" jdbcType="VARCHAR" />
-    <result column="has_bill_paper" property="hasBillPaper" jdbcType="BIT" />
+    <result column="make_bill" property="makeBill" jdbcType="VARCHAR" />
     <result column="join_count" property="joinCount" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="BIT" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.mol.entity.QueryOrder" extends="BaseResultMap" >
-    <result column="other_require" property="otherRequire" jdbcType="LONGVARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     query_order_id, user_id, cas_no, english_name, chinese_name, purity, buy_amount, 
-    submit_deadline, diagram_require, is_guaranteend, guarantee_money_percent, is_reward_ahead, 
-    reward_money_percent, begin_time, end_time, image, refer_doc, has_bill_paper, join_count, 
-    state
+    submit_deadline, diagram_require, guarantee_money_percent, reward_money_percent, 
+    begin_time, end_time, other_require, image, refer_doc, make_bill, join_count, state
   </sql>
-  <sql id="Blob_Column_List" >
-    other_require
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from t_query_order
     where query_order_id = #{queryOrderId,jdbcType=INTEGER}
   </select>
@@ -51,19 +41,17 @@
     insert into t_query_order (query_order_id, user_id, cas_no, 
       english_name, chinese_name, purity, 
       buy_amount, submit_deadline, diagram_require, 
-      is_guaranteend, guarantee_money_percent, is_reward_ahead, 
-      reward_money_percent, begin_time, end_time, 
-      image, refer_doc, has_bill_paper, 
-      join_count, state, other_require
-      )
+      guarantee_money_percent, reward_money_percent, 
+      begin_time, end_time, other_require, 
+      image, refer_doc, make_bill, 
+      join_count, state)
     values (#{queryOrderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{casNo,jdbcType=VARCHAR}, 
       #{englishName,jdbcType=VARCHAR}, #{chineseName,jdbcType=VARCHAR}, #{purity,jdbcType=VARCHAR}, 
-      #{buyAmount,jdbcType=DOUBLE}, #{submitDeadline,jdbcType=VARCHAR}, #{diagramRequire,jdbcType=VARCHAR}, 
-      #{isGuaranteend,jdbcType=BIT}, #{guaranteeMoneyPercent,jdbcType=DOUBLE}, #{isRewardAhead,jdbcType=BIT}, 
-      #{rewardMoneyPercent,jdbcType=DOUBLE}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{image,jdbcType=VARCHAR}, #{referDoc,jdbcType=VARCHAR}, #{hasBillPaper,jdbcType=BIT}, 
-      #{joinCount,jdbcType=INTEGER}, #{state,jdbcType=BIT}, #{otherRequire,jdbcType=LONGVARCHAR}
-      )
+      #{buyAmount,jdbcType=VARCHAR}, #{submitDeadline,jdbcType=VARCHAR}, #{diagramRequire,jdbcType=VARCHAR}, 
+      #{guaranteeMoneyPercent,jdbcType=DOUBLE}, #{rewardMoneyPercent,jdbcType=DOUBLE}, 
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{otherRequire,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{referDoc,jdbcType=VARCHAR}, #{makeBill,jdbcType=VARCHAR}, 
+      #{joinCount,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mol.entity.QueryOrder" >
     insert into t_query_order
@@ -95,14 +83,8 @@
       <if test="diagramRequire != null" >
         diagram_require,
       </if>
-      <if test="isGuaranteend != null" >
-        is_guaranteend,
-      </if>
       <if test="guaranteeMoneyPercent != null" >
         guarantee_money_percent,
-      </if>
-      <if test="isRewardAhead != null" >
-        is_reward_ahead,
       </if>
       <if test="rewardMoneyPercent != null" >
         reward_money_percent,
@@ -113,23 +95,23 @@
       <if test="endTime != null" >
         end_time,
       </if>
+      <if test="otherRequire != null" >
+        other_require,
+      </if>
       <if test="image != null" >
         image,
       </if>
       <if test="referDoc != null" >
         refer_doc,
       </if>
-      <if test="hasBillPaper != null" >
-        has_bill_paper,
+      <if test="makeBill != null" >
+        make_bill,
       </if>
       <if test="joinCount != null" >
         join_count,
       </if>
       <if test="state != null" >
         state,
-      </if>
-      <if test="otherRequire != null" >
-        other_require,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -152,7 +134,7 @@
         #{purity,jdbcType=VARCHAR},
       </if>
       <if test="buyAmount != null" >
-        #{buyAmount,jdbcType=DOUBLE},
+        #{buyAmount,jdbcType=VARCHAR},
       </if>
       <if test="submitDeadline != null" >
         #{submitDeadline,jdbcType=VARCHAR},
@@ -160,14 +142,8 @@
       <if test="diagramRequire != null" >
         #{diagramRequire,jdbcType=VARCHAR},
       </if>
-      <if test="isGuaranteend != null" >
-        #{isGuaranteend,jdbcType=BIT},
-      </if>
       <if test="guaranteeMoneyPercent != null" >
         #{guaranteeMoneyPercent,jdbcType=DOUBLE},
-      </if>
-      <if test="isRewardAhead != null" >
-        #{isRewardAhead,jdbcType=BIT},
       </if>
       <if test="rewardMoneyPercent != null" >
         #{rewardMoneyPercent,jdbcType=DOUBLE},
@@ -178,23 +154,23 @@
       <if test="endTime != null" >
         #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="otherRequire != null" >
+        #{otherRequire,jdbcType=VARCHAR},
+      </if>
       <if test="image != null" >
         #{image,jdbcType=VARCHAR},
       </if>
       <if test="referDoc != null" >
         #{referDoc,jdbcType=VARCHAR},
       </if>
-      <if test="hasBillPaper != null" >
-        #{hasBillPaper,jdbcType=BIT},
+      <if test="makeBill != null" >
+        #{makeBill,jdbcType=VARCHAR},
       </if>
       <if test="joinCount != null" >
         #{joinCount,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
-        #{state,jdbcType=BIT},
-      </if>
-      <if test="otherRequire != null" >
-        #{otherRequire,jdbcType=LONGVARCHAR},
+        #{state,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -217,7 +193,7 @@
         purity = #{purity,jdbcType=VARCHAR},
       </if>
       <if test="buyAmount != null" >
-        buy_amount = #{buyAmount,jdbcType=DOUBLE},
+        buy_amount = #{buyAmount,jdbcType=VARCHAR},
       </if>
       <if test="submitDeadline != null" >
         submit_deadline = #{submitDeadline,jdbcType=VARCHAR},
@@ -225,14 +201,8 @@
       <if test="diagramRequire != null" >
         diagram_require = #{diagramRequire,jdbcType=VARCHAR},
       </if>
-      <if test="isGuaranteend != null" >
-        is_guaranteend = #{isGuaranteend,jdbcType=BIT},
-      </if>
       <if test="guaranteeMoneyPercent != null" >
         guarantee_money_percent = #{guaranteeMoneyPercent,jdbcType=DOUBLE},
-      </if>
-      <if test="isRewardAhead != null" >
-        is_reward_ahead = #{isRewardAhead,jdbcType=BIT},
       </if>
       <if test="rewardMoneyPercent != null" >
         reward_money_percent = #{rewardMoneyPercent,jdbcType=DOUBLE},
@@ -243,49 +213,25 @@
       <if test="endTime != null" >
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="otherRequire != null" >
+        other_require = #{otherRequire,jdbcType=VARCHAR},
+      </if>
       <if test="image != null" >
         image = #{image,jdbcType=VARCHAR},
       </if>
       <if test="referDoc != null" >
         refer_doc = #{referDoc,jdbcType=VARCHAR},
       </if>
-      <if test="hasBillPaper != null" >
-        has_bill_paper = #{hasBillPaper,jdbcType=BIT},
+      <if test="makeBill != null" >
+        make_bill = #{makeBill,jdbcType=VARCHAR},
       </if>
       <if test="joinCount != null" >
         join_count = #{joinCount,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
-        state = #{state,jdbcType=BIT},
-      </if>
-      <if test="otherRequire != null" >
-        other_require = #{otherRequire,jdbcType=LONGVARCHAR},
+        state = #{state,jdbcType=VARCHAR},
       </if>
     </set>
-    where query_order_id = #{queryOrderId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mol.entity.QueryOrder" >
-    update t_query_order
-    set user_id = #{userId,jdbcType=INTEGER},
-      cas_no = #{casNo,jdbcType=VARCHAR},
-      english_name = #{englishName,jdbcType=VARCHAR},
-      chinese_name = #{chineseName,jdbcType=VARCHAR},
-      purity = #{purity,jdbcType=VARCHAR},
-      buy_amount = #{buyAmount,jdbcType=DOUBLE},
-      submit_deadline = #{submitDeadline,jdbcType=VARCHAR},
-      diagram_require = #{diagramRequire,jdbcType=VARCHAR},
-      is_guaranteend = #{isGuaranteend,jdbcType=BIT},
-      guarantee_money_percent = #{guaranteeMoneyPercent,jdbcType=DOUBLE},
-      is_reward_ahead = #{isRewardAhead,jdbcType=BIT},
-      reward_money_percent = #{rewardMoneyPercent,jdbcType=DOUBLE},
-      begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP},
-      image = #{image,jdbcType=VARCHAR},
-      refer_doc = #{referDoc,jdbcType=VARCHAR},
-      has_bill_paper = #{hasBillPaper,jdbcType=BIT},
-      join_count = #{joinCount,jdbcType=INTEGER},
-      state = #{state,jdbcType=BIT},
-      other_require = #{otherRequire,jdbcType=LONGVARCHAR}
     where query_order_id = #{queryOrderId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mol.entity.QueryOrder" >
@@ -295,20 +241,19 @@
       english_name = #{englishName,jdbcType=VARCHAR},
       chinese_name = #{chineseName,jdbcType=VARCHAR},
       purity = #{purity,jdbcType=VARCHAR},
-      buy_amount = #{buyAmount,jdbcType=DOUBLE},
+      buy_amount = #{buyAmount,jdbcType=VARCHAR},
       submit_deadline = #{submitDeadline,jdbcType=VARCHAR},
       diagram_require = #{diagramRequire,jdbcType=VARCHAR},
-      is_guaranteend = #{isGuaranteend,jdbcType=BIT},
       guarantee_money_percent = #{guaranteeMoneyPercent,jdbcType=DOUBLE},
-      is_reward_ahead = #{isRewardAhead,jdbcType=BIT},
       reward_money_percent = #{rewardMoneyPercent,jdbcType=DOUBLE},
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
+      other_require = #{otherRequire,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
       refer_doc = #{referDoc,jdbcType=VARCHAR},
-      has_bill_paper = #{hasBillPaper,jdbcType=BIT},
+      make_bill = #{makeBill,jdbcType=VARCHAR},
       join_count = #{joinCount,jdbcType=INTEGER},
-      state = #{state,jdbcType=BIT}
+      state = #{state,jdbcType=VARCHAR}
     where query_order_id = #{queryOrderId,jdbcType=INTEGER}
   </update>
 </mapper>

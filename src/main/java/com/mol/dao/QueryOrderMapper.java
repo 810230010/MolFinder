@@ -3,6 +3,7 @@ package com.mol.dao;
 import com.mol.common.dao.BaseDao;
 import com.mol.entity.QueryOrder;
 import com.mol.entity.RealOrder;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +16,19 @@ public interface QueryOrderMapper extends BaseDao<QueryOrder, Integer> {
      * @return
      */
     List<QueryOrder> getQueryOrderList();
+
+    /**
+     * 根据状态查询我的询单的列表
+     * @param orderColumn
+     * @param orderType
+     * @param searchKey
+     * @param userId
+     * @param status
+     * @return
+     */
+    List<QueryOrder> listQueryOrdersWithStatus(@Param("orderColumn") String orderColumn,
+                                               @Param("orderType") String orderType,
+                                               @Param("searchKey") String searchKey,
+                                               @Param("userId") Integer userId,
+                                               @Param("status") String status);
 }

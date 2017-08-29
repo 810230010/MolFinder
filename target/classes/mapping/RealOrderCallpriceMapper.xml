@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mol.dao.RealOrderCallpriceMapper" >
+  <!--根据报价实单状态查询当前用户报价的实单列表-->
+  <select id="listCallpriceRealOrdersWithStatus" resultType="com.mol.entity.RealOrderCallprice">
+    select * from t_real_order_callprice a, t_real_order b
+    <where>
+      a.user_id = #{userId} and a.state = #{status}
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    real_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
+</mapper>

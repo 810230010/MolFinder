@@ -24,13 +24,15 @@ public interface RealService {
     int publishReal(RealOrder realOrder);
 
     /**
-     * 查询我发布的实单(抢单中)
+     * 根据状态查询当前用户发布的实单列表
      * @param page
      * @param pageSize
      * @param orderColumn
      * @param orderType
+     * @param searchKey
      * @param userId
+     * @param status
      * @return
      */
-    List<RealOrder> searchMyRealOrderOnsale(Integer page, Integer pageSize, String orderColumn, String orderType, Integer userId);
+    List<RealOrder> searchMyRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status);
 }

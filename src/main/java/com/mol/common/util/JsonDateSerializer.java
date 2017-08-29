@@ -12,9 +12,7 @@ import java.util.Date;
 /**
  * Created by 江建平 on 2017/7/29.
  */
-public class JsonDateUtil {
-
-    public static class JsonDateSerializer extends JsonSerializer<Date>{
+    public class JsonDateSerializer extends JsonSerializer<Date>{
         private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         public void serialize(Date date, JsonGenerator gen, SerializerProvider provider) throws IOException, JsonProcessingException {
 
@@ -23,4 +21,4 @@ public class JsonDateUtil {
             gen.writeString(formattedDate);
         }
     }
-}
+

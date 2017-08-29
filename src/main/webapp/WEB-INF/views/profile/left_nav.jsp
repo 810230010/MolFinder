@@ -29,25 +29,25 @@
             </li>
         </ul>
     </div>
-    <div class="col-md-3 menu" style="height: 700px;background-color:#f8f8f8;padding-left: 0;padding-right: 0">
+    <div class="col-md-2 menu" style="height: 700px;background-color:#f8f8f8;padding-left: 0;padding-right: 0">
         <div style="height:44px;padding-left: 30px">
             <h4>发单管理</h4>
         </div>
-        <div style="height:176px;vertical-align: middle" class="aaa">
+        <div style="height:132px;vertical-align: middle" class="aaa">
             <ul style="list-style: none;width:100%">
-                <li class="active"><a href="/profile/myRealSendPage" target="menuFrame">我的实单</a></li>
-                <li><a href="#">我的询单</a></li>
-                <li><a href="#">已删除的实单</a></li>
-                <li><a href="#">已删除的询单</a></li>
+                <li class="active"><a href="/profile/mypublish/myRealSendPage" target="menuFrame">我的实单</a></li>
+                <li><a href="/profile/mypublish/myEnquirySendPage" target="menuFrame">我的询单</a></li>
+                <li><a href="/profile/mypublish/deletedOrdersPage" target="menuFrame">已删除</a></li>
             </ul>
         </div>
         <div style="height:44px;padding-left: 30px">
             <h4>接单管理</h4>
         </div>
-        <div style="height:88px;vertical-align: middle">
+        <div style="height:176px;vertical-align: middle">
             <ul style="list-style: none">
-                <li style="height:44px">已报价实单</li>
-                <li style="height:44px">已报价询单</li>
+                <li style="height:44px"><a href="/profile/callprice/realOrdersCallpricePage" target="menuFrame">已报价实单</a></li>
+                <li style="height:44px"><a href="/profile/callprice/queryOrdersCallpricePage" target="menuFrame">已报价询单</a></li>
+                <li style="height:44px"><a href="/profile/callprice/deletedOrdesPage" target="menuFrame">已删除</a></li>
             </ul>
         </div>
         <div style="height:44px;padding-left: 30px">
@@ -68,8 +68,8 @@
             </ul>
         </div>
     </div>
-    <div class="right-content col-md-9" style="height: 700px;">
-        <iframe id="menuFrame" name="menuFrame" src="/profile/myRealSendPage" style="overflow:visible;" scrolling="no" frameborder="no" width="100%" height="100%; float:left">
+    <div class="right-content col-md-10" style="height: 700px;">
+        <iframe id="menuFrame" name="menuFrame" src="/profile/mypublish/myRealSendPage" style="overflow:visible;" scrolling="no" frameborder="no" width="100%" height="100%; float:left">
         </iframe>
     </div>
 </div>

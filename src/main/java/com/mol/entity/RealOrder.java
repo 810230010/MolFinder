@@ -1,5 +1,10 @@
 package com.mol.entity;
 
+
+import com.mol.common.util.JsonDateSerializer;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+
 import java.util.Date;
 
 public class RealOrder {
@@ -115,6 +120,7 @@ public class RealOrder {
         this.submitDeadline = submitDeadline == null ? null : submitDeadline.trim();
     }
 
+    @JsonSerialize(using= JsonDateSerializer.class)
     public Date getBeginTime() {
         return beginTime;
     }

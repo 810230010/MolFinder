@@ -1,8 +1,5 @@
 package com.mol.entity;
 
-import com.mol.common.util.JsonDateUtil;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import java.util.Date;
 
 public class QueryOrder {
@@ -18,17 +15,13 @@ public class QueryOrder {
 
     private String purity;
 
-    private Double buyAmount;
+    private String buyAmount;
 
     private String submitDeadline;
 
     private String diagramRequire;
 
-    private Boolean isGuaranteend;
-
     private Double guaranteeMoneyPercent;
-
-    private Boolean isRewardAhead;
 
     private Double rewardMoneyPercent;
 
@@ -36,17 +29,17 @@ public class QueryOrder {
 
     private Date endTime;
 
+    private String otherRequire;
+
     private String image;
 
     private String referDoc;
 
-    private Boolean hasBillPaper;
+    private String makeBill;
 
     private Integer joinCount;
 
-    private Boolean state;
-
-    private String otherRequire;
+    private String state;
 
     public Integer getQueryOrderId() {
         return queryOrderId;
@@ -96,12 +89,12 @@ public class QueryOrder {
         this.purity = purity == null ? null : purity.trim();
     }
 
-    public Double getBuyAmount() {
+    public String getBuyAmount() {
         return buyAmount;
     }
 
-    public void setBuyAmount(Double buyAmount) {
-        this.buyAmount = buyAmount;
+    public void setBuyAmount(String buyAmount) {
+        this.buyAmount = buyAmount == null ? null : buyAmount.trim();
     }
 
     public String getSubmitDeadline() {
@@ -120,28 +113,12 @@ public class QueryOrder {
         this.diagramRequire = diagramRequire == null ? null : diagramRequire.trim();
     }
 
-    public Boolean getIsGuaranteend() {
-        return isGuaranteend;
-    }
-
-    public void setIsGuaranteend(Boolean isGuaranteend) {
-        this.isGuaranteend = isGuaranteend;
-    }
-
     public Double getGuaranteeMoneyPercent() {
         return guaranteeMoneyPercent;
     }
 
     public void setGuaranteeMoneyPercent(Double guaranteeMoneyPercent) {
         this.guaranteeMoneyPercent = guaranteeMoneyPercent;
-    }
-
-    public Boolean getIsRewardAhead() {
-        return isRewardAhead;
-    }
-
-    public void setIsRewardAhead(Boolean isRewardAhead) {
-        this.isRewardAhead = isRewardAhead;
     }
 
     public Double getRewardMoneyPercent() {
@@ -160,13 +137,20 @@ public class QueryOrder {
         this.beginTime = beginTime;
     }
 
-    @JsonSerialize(using = JsonDateUtil.JsonDateSerializer.class)
     public Date getEndTime() {
         return endTime;
     }
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getOtherRequire() {
+        return otherRequire;
+    }
+
+    public void setOtherRequire(String otherRequire) {
+        this.otherRequire = otherRequire == null ? null : otherRequire.trim();
     }
 
     public String getImage() {
@@ -185,12 +169,12 @@ public class QueryOrder {
         this.referDoc = referDoc == null ? null : referDoc.trim();
     }
 
-    public Boolean getHasBillPaper() {
-        return hasBillPaper;
+    public String getMakeBill() {
+        return makeBill;
     }
 
-    public void setHasBillPaper(Boolean hasBillPaper) {
-        this.hasBillPaper = hasBillPaper;
+    public void setMakeBill(String makeBill) {
+        this.makeBill = makeBill == null ? null : makeBill.trim();
     }
 
     public Integer getJoinCount() {
@@ -201,19 +185,11 @@ public class QueryOrder {
         this.joinCount = joinCount;
     }
 
-    public Boolean getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
-        this.state = state;
-    }
-
-    public String getOtherRequire() {
-        return otherRequire;
-    }
-
-    public void setOtherRequire(String otherRequire) {
-        this.otherRequire = otherRequire == null ? null : otherRequire.trim();
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
     }
 }

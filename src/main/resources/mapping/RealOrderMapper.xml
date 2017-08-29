@@ -10,11 +10,73 @@
   <select id="getRealDetail" resultType="com.mol.dto.RealDetailDTO">
     select * from t_real_order where real_order_id = #{realOrderId}
   </select>
-
+  <!--查询当前用户抢单中的实单-->
   <select id="listRealOrderByUserId" resultType="com.mol.entity.RealOrder">
     select * from t_real_order
     <where>
       user_id = #{userId} and state = 'ONSALE'
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    real_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
+  <!--查询当前用户已派单的实单列表-->
+  <select id="listRealOrderSendedByUserId" resultType="com.mol.entity.RealOrder">
+    select * from t_real_order
+    <where>
+      user_id = #{userId} and state = 'SENDED'
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    real_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
+  <!--查询当前用户发布的停止抢单的实单-->
+  <select id="listRealOrderStoppedByUserId" resultType="com.mol.entity.RealOrder">
+    select * from t_real_order
+    <where>
+      user_id = #{userId} and state = 'STOPPED'
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    real_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
+  <!--查询当前用户发布的已成单的实单-->
+  <select id="listRealOrderSuccessByUserId" resultType="com.mol.entity.RealOrder">
+    select * from t_real_order
+    <where>
+      user_id = #{userId} and state = 'SUCCESS'
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    real_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
+  <select id="listRealOrderWithStatus" resultType="com.mol.entity.RealOrder">
+    select * from t_real_order
+    <where>
+      user_id = #{userId} and state = #{status}
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
     </where>
     order by
     real_order_id asc

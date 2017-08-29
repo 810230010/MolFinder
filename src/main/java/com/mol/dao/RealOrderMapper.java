@@ -31,5 +31,54 @@ public interface RealOrderMapper extends BaseDao<RealOrder, Integer>{
      * @param userId
      * @return
      */
-    List<RealOrder> listRealOrderByUserId(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("userId") Integer userId);
+    List<RealOrder> listRealOrderByUserId(@Param("orderColumn") String orderColumn,
+                                          @Param("orderType") String orderType,
+                                          @Param("searchKey") String searchKey,
+                                          @Param("userId") Integer userId);
+
+    /**
+     * 查询当前用户发布的已派单的实单
+     * @param orderColumn
+     * @param orderType
+     * @param userId
+     * @return
+     */
+    List<RealOrder> listRealOrderSendedByUserId(@Param("orderColumn") String orderColumn,
+                                                @Param("orderType") String orderType,
+                                                @Param("searchKey") String searchKey,
+                                                @Param("userId") Integer userId);
+
+    /**
+     * 查询当前用户发布的停止抢单的实单
+     * @param orderColumn
+     * @param orderType
+     * @param userId
+     * @return
+     */
+    List<RealOrder> listRealOrderStoppedByUserId(@Param("orderColumn") String orderColumn,
+                                                @Param("orderType") String orderType,
+                                                @Param("searchKey") String searchKey,
+                                                @Param("userId") Integer userId);
+    /**
+     * 查询当前用户发布的已成单的实单
+     * @param orderColumn
+     * @param orderType
+     * @param userId
+     * @return
+     */
+    List<RealOrder> listRealOrderSuccessByUserId(@Param("orderColumn") String orderColumn,
+                                                 @Param("orderType") String orderType,
+                                                 @Param("searchKey") String searchKey,
+                                                 @Param("userId") Integer userId);
+
+    /**
+     * 根据状态查询当前用户发布的实单
+     * @param orderColumn
+     * @param orderType
+     * @param searchKey
+     * @param userId
+     * @param status
+     * @return
+     */
+    List<RealOrder> listRealOrderWithStatus(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("searchKey") String searchKey, @Param("userId") Integer userId, @Param("status") String status);
 }

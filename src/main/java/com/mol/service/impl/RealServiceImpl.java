@@ -30,8 +30,8 @@ public class RealServiceImpl implements RealService{
     }
 
     @Override
-    public List<RealOrder> searchMyRealOrderOnsale(Integer page, Integer pageSize, String orderColumn, String orderType, Integer userId) {
+    public List<RealOrder> searchMyRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status) {
         PageHelper.startPage(page, pageSize);
-        return realOrderMapper.listRealOrderByUserId(orderColumn, orderType, userId);
+        return realOrderMapper.listRealOrderWithStatus(orderColumn, orderType, searchKey, userId, status);
     }
 }
