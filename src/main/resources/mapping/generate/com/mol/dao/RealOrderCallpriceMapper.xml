@@ -3,25 +3,25 @@
 <mapper namespace="com.mol.dao.RealOrderCallpriceMapper" >
   <resultMap id="BaseResultMap" type="com.mol.entity.RealOrderCallprice" >
     <id column="real_call_id" property="realCallId" jdbcType="INTEGER" />
-    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="real_order_id" property="realOrderId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="call_price_amount" property="callPriceAmount" jdbcType="VARCHAR" />
+    <result column="call_price_money" property="callPriceMoney" jdbcType="VARCHAR" />
     <result column="call_price_validtime" property="callPriceValidtime" jdbcType="VARCHAR" />
+    <result column="call_purity" property="callPurity" jdbcType="VARCHAR" />
+    <result column="call_submit_deadline" property="callSubmitDeadline" jdbcType="VARCHAR" />
     <result column="offer_diagram" property="offerDiagram" jdbcType="VARCHAR" />
     <result column="make_bill" property="makeBill" jdbcType="VARCHAR" />
     <result column="other_require" property="otherRequire" jdbcType="VARCHAR" />
-    <result column="is_prepayed" property="isPrepayed" jdbcType="BIT" />
-    <result column="prepayed_money_amount" property="prepayedMoneyAmount" jdbcType="DOUBLE" />
+    <result column="prepayed_money_amount" property="prepayedMoneyAmount" jdbcType="DECIMAL" />
     <result column="attachment" property="attachment" jdbcType="VARCHAR" />
-    <result column="accept_vialation_money" property="acceptVialationMoney" jdbcType="BIT" />
-    <result column="accept_vialation_money_amount" property="acceptVialationMoneyAmount" jdbcType="DOUBLE" />
+    <result column="vilation_money_amount" property="vilationMoneyAmount" jdbcType="DECIMAL" />
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    real_call_id, order_id, user_id, call_price_amount, call_price_validtime, offer_diagram, 
-    make_bill, other_require, is_prepayed, prepayed_money_amount, attachment, accept_vialation_money, 
-    accept_vialation_money_amount, state, create_time
+    real_call_id, real_order_id, user_id, call_price_money, call_price_validtime, call_purity, 
+    call_submit_deadline, offer_diagram, make_bill, other_require, prepayed_money_amount, 
+    attachment, vilation_money_amount, state, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,23 +29,22 @@
     from t_real_order_callprice
     where real_call_id = #{realCallId,jdbcType=INTEGER}
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_real_order_callprice
     where real_call_id = #{realCallId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mol.entity.RealOrderCallprice" >
-    insert into t_real_order_callprice (real_call_id, order_id, user_id, 
-      call_price_amount, call_price_validtime, offer_diagram, 
-      make_bill, other_require, is_prepayed, 
-      prepayed_money_amount, attachment, accept_vialation_money, 
-      accept_vialation_money_amount, state, create_time
+    insert into t_real_order_callprice (real_call_id, real_order_id, user_id, 
+      call_price_money, call_price_validtime, call_purity, 
+      call_submit_deadline, offer_diagram, make_bill, 
+      other_require, prepayed_money_amount, attachment, 
+      vilation_money_amount, state, create_time
       )
-    values (#{realCallId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{callPriceAmount,jdbcType=VARCHAR}, #{callPriceValidtime,jdbcType=VARCHAR}, #{offerDiagram,jdbcType=VARCHAR}, 
-      #{makeBill,jdbcType=VARCHAR}, #{otherRequire,jdbcType=VARCHAR}, #{isPrepayed,jdbcType=BIT}, 
-      #{prepayedMoneyAmount,jdbcType=DOUBLE}, #{attachment,jdbcType=VARCHAR}, #{acceptVialationMoney,jdbcType=BIT}, 
-      #{acceptVialationMoneyAmount,jdbcType=DOUBLE}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{realCallId,jdbcType=INTEGER}, #{realOrderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{callPriceMoney,jdbcType=VARCHAR}, #{callPriceValidtime,jdbcType=VARCHAR}, #{callPurity,jdbcType=VARCHAR}, 
+      #{callSubmitDeadline,jdbcType=VARCHAR}, #{offerDiagram,jdbcType=VARCHAR}, #{makeBill,jdbcType=VARCHAR}, 
+      #{otherRequire,jdbcType=VARCHAR}, #{prepayedMoneyAmount,jdbcType=DECIMAL}, #{attachment,jdbcType=VARCHAR}, 
+      #{vilationMoneyAmount,jdbcType=DECIMAL}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mol.entity.RealOrderCallprice" >
@@ -54,17 +53,23 @@
       <if test="realCallId != null" >
         real_call_id,
       </if>
-      <if test="orderId != null" >
-        order_id,
+      <if test="realOrderId != null" >
+        real_order_id,
       </if>
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="callPriceAmount != null" >
-        call_price_amount,
+      <if test="callPriceMoney != null" >
+        call_price_money,
       </if>
       <if test="callPriceValidtime != null" >
         call_price_validtime,
+      </if>
+      <if test="callPurity != null" >
+        call_purity,
+      </if>
+      <if test="callSubmitDeadline != null" >
+        call_submit_deadline,
       </if>
       <if test="offerDiagram != null" >
         offer_diagram,
@@ -75,20 +80,14 @@
       <if test="otherRequire != null" >
         other_require,
       </if>
-      <if test="isPrepayed != null" >
-        is_prepayed,
-      </if>
       <if test="prepayedMoneyAmount != null" >
         prepayed_money_amount,
       </if>
       <if test="attachment != null" >
         attachment,
       </if>
-      <if test="acceptVialationMoney != null" >
-        accept_vialation_money,
-      </if>
-      <if test="acceptVialationMoneyAmount != null" >
-        accept_vialation_money_amount,
+      <if test="vilationMoneyAmount != null" >
+        vilation_money_amount,
       </if>
       <if test="state != null" >
         state,
@@ -101,17 +100,23 @@
       <if test="realCallId != null" >
         #{realCallId,jdbcType=INTEGER},
       </if>
-      <if test="orderId != null" >
-        #{orderId,jdbcType=INTEGER},
+      <if test="realOrderId != null" >
+        #{realOrderId,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="callPriceAmount != null" >
-        #{callPriceAmount,jdbcType=VARCHAR},
+      <if test="callPriceMoney != null" >
+        #{callPriceMoney,jdbcType=VARCHAR},
       </if>
       <if test="callPriceValidtime != null" >
         #{callPriceValidtime,jdbcType=VARCHAR},
+      </if>
+      <if test="callPurity != null" >
+        #{callPurity,jdbcType=VARCHAR},
+      </if>
+      <if test="callSubmitDeadline != null" >
+        #{callSubmitDeadline,jdbcType=VARCHAR},
       </if>
       <if test="offerDiagram != null" >
         #{offerDiagram,jdbcType=VARCHAR},
@@ -122,20 +127,14 @@
       <if test="otherRequire != null" >
         #{otherRequire,jdbcType=VARCHAR},
       </if>
-      <if test="isPrepayed != null" >
-        #{isPrepayed,jdbcType=BIT},
-      </if>
       <if test="prepayedMoneyAmount != null" >
-        #{prepayedMoneyAmount,jdbcType=DOUBLE},
+        #{prepayedMoneyAmount,jdbcType=DECIMAL},
       </if>
       <if test="attachment != null" >
         #{attachment,jdbcType=VARCHAR},
       </if>
-      <if test="acceptVialationMoney != null" >
-        #{acceptVialationMoney,jdbcType=BIT},
-      </if>
-      <if test="acceptVialationMoneyAmount != null" >
-        #{acceptVialationMoneyAmount,jdbcType=DOUBLE},
+      <if test="vilationMoneyAmount != null" >
+        #{vilationMoneyAmount,jdbcType=DECIMAL},
       </if>
       <if test="state != null" >
         #{state,jdbcType=VARCHAR},
@@ -148,17 +147,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.mol.entity.RealOrderCallprice" >
     update t_real_order_callprice
     <set >
-      <if test="orderId != null" >
-        order_id = #{orderId,jdbcType=INTEGER},
+      <if test="realOrderId != null" >
+        real_order_id = #{realOrderId,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="callPriceAmount != null" >
-        call_price_amount = #{callPriceAmount,jdbcType=VARCHAR},
+      <if test="callPriceMoney != null" >
+        call_price_money = #{callPriceMoney,jdbcType=VARCHAR},
       </if>
       <if test="callPriceValidtime != null" >
         call_price_validtime = #{callPriceValidtime,jdbcType=VARCHAR},
+      </if>
+      <if test="callPurity != null" >
+        call_purity = #{callPurity,jdbcType=VARCHAR},
+      </if>
+      <if test="callSubmitDeadline != null" >
+        call_submit_deadline = #{callSubmitDeadline,jdbcType=VARCHAR},
       </if>
       <if test="offerDiagram != null" >
         offer_diagram = #{offerDiagram,jdbcType=VARCHAR},
@@ -169,20 +174,14 @@
       <if test="otherRequire != null" >
         other_require = #{otherRequire,jdbcType=VARCHAR},
       </if>
-      <if test="isPrepayed != null" >
-        is_prepayed = #{isPrepayed,jdbcType=BIT},
-      </if>
       <if test="prepayedMoneyAmount != null" >
-        prepayed_money_amount = #{prepayedMoneyAmount,jdbcType=DOUBLE},
+        prepayed_money_amount = #{prepayedMoneyAmount,jdbcType=DECIMAL},
       </if>
       <if test="attachment != null" >
         attachment = #{attachment,jdbcType=VARCHAR},
       </if>
-      <if test="acceptVialationMoney != null" >
-        accept_vialation_money = #{acceptVialationMoney,jdbcType=BIT},
-      </if>
-      <if test="acceptVialationMoneyAmount != null" >
-        accept_vialation_money_amount = #{acceptVialationMoneyAmount,jdbcType=DOUBLE},
+      <if test="vilationMoneyAmount != null" >
+        vilation_money_amount = #{vilationMoneyAmount,jdbcType=DECIMAL},
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=VARCHAR},
@@ -195,18 +194,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mol.entity.RealOrderCallprice" >
     update t_real_order_callprice
-    set order_id = #{orderId,jdbcType=INTEGER},
+    set real_order_id = #{realOrderId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
-      call_price_amount = #{callPriceAmount,jdbcType=VARCHAR},
+      call_price_money = #{callPriceMoney,jdbcType=VARCHAR},
       call_price_validtime = #{callPriceValidtime,jdbcType=VARCHAR},
+      call_purity = #{callPurity,jdbcType=VARCHAR},
+      call_submit_deadline = #{callSubmitDeadline,jdbcType=VARCHAR},
       offer_diagram = #{offerDiagram,jdbcType=VARCHAR},
       make_bill = #{makeBill,jdbcType=VARCHAR},
       other_require = #{otherRequire,jdbcType=VARCHAR},
-      is_prepayed = #{isPrepayed,jdbcType=BIT},
-      prepayed_money_amount = #{prepayedMoneyAmount,jdbcType=DOUBLE},
+      prepayed_money_amount = #{prepayedMoneyAmount,jdbcType=DECIMAL},
       attachment = #{attachment,jdbcType=VARCHAR},
-      accept_vialation_money = #{acceptVialationMoney,jdbcType=BIT},
-      accept_vialation_money_amount = #{acceptVialationMoneyAmount,jdbcType=DOUBLE},
+      vilation_money_amount = #{vilationMoneyAmount,jdbcType=DECIMAL},
       state = #{state,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where real_call_id = #{realCallId,jdbcType=INTEGER}

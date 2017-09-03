@@ -8,6 +8,7 @@
     <script src="/static/js/plugins/layer/layer.js"></script>
     <style>
         .active{background-color: silver;color: white;border-left: 5px solid #c23}
+        .active2{background-color: wheat;color: white;border-left: 5px solid #c23}
         .menu ul{padding-left: 0;text-align: center}
         .menu ul li{height:44px; line-height: 44px;}
         .menu ul li a{color:black; text-decoration: none}
@@ -43,7 +44,7 @@
         <div style="height:44px;padding-left: 30px">
             <h4>接单管理</h4>
         </div>
-        <div style="height:176px;vertical-align: middle">
+        <div style="height:132px;vertical-align: middle">
             <ul style="list-style: none">
                 <li style="height:44px"><a href="/profile/callprice/realOrdersCallpricePage" target="menuFrame">已报价实单</a></li>
                 <li style="height:44px"><a href="/profile/callprice/queryOrdersCallpricePage" target="menuFrame">已报价询单</a></li>
@@ -55,8 +56,8 @@
         </div>
         <div style="height:88px;vertical-align: middle">
             <ul style="list-style: none">
-                <li style="height:44px">我采购的</li>
-                <li style="height:44px">我生产的</li>
+                <li style="height:44px"><a href="/profile/orders/purchasePage" target="menuFrame">我采购的</a></li>
+                <li style="height:44px"><a href="/profile/orders/sellPage" target="menuFrame">我生产的</a></li>
             </ul>
         </div>
         <div style="height:44px;padding-left: 30px">
@@ -64,11 +65,11 @@
         </div>
         <div style="height:44px;vertical-align: middle">
             <ul style="list-style: none">
-                <li style="height:44px">实名认证</li>
+                <li style="height:44px"><a href="/profile/certificationPage" target="menuFrame">实名认证</a></li>
             </ul>
         </div>
     </div>
-    <div class="right-content col-md-10" style="height: 700px;">
+    <div class="right-content col-md-10" style="height: 1200px;">
         <iframe id="menuFrame" name="menuFrame" src="/profile/mypublish/myRealSendPage" style="overflow:visible;" scrolling="no" frameborder="no" width="100%" height="100%; float:left">
         </iframe>
     </div>
@@ -80,6 +81,19 @@
         $(".menu ul li").removeClass('active');
         $(this).addClass('active');
         $("#breadcrumb").html($(this).text())
+    })
+    $(".menu ul li").mouseover(function () {
+        $(".menu ul li").removeClass('active2');
+        $(this).addClass('active2');
+        if($(this).hasClass('active')){
+            $(this).removeClass('active2');
+        }
+    })
+    $(".menu ul li").mouseleave(function () {
+        $(".menu ul li").removeClass('active2');
+    })
+    $(".menu ul li").mousedown(function () {
+        $(".menu ul li").removeClass('active2');
     })
 </script>
 </html>

@@ -1,6 +1,7 @@
 package com.mol.dao;
 
 import com.mol.common.dao.BaseDao;
+import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.RealOrderCallprice;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,5 +20,5 @@ public interface RealOrderCallpriceMapper extends BaseDao<RealOrderCallprice, In
      * @param status
      * @return
      */
-    List<RealOrderCallprice> listCallpriceRealOrdersWithStatus(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("searchKey") String searchKey, Integer userId, String status);
+    List<RealOrderCallpriceDTO> listCallpriceRealOrdersWithStatus(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("searchKey") String searchKey, @Param("userId") Integer userId, @Param("status") String status);
 }

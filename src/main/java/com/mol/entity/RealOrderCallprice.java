@@ -5,13 +5,17 @@ import java.util.Date;
 public class RealOrderCallprice {
     private Integer realCallId;
 
-    private Integer orderId;
+    private Integer realOrderId;
 
     private Integer userId;
 
-    private String callPriceAmount;
+    private String callPriceMoney;
 
     private String callPriceValidtime;
+
+    private String callPurity;
+
+    private String callSubmitDeadline;
 
     private String offerDiagram;
 
@@ -19,15 +23,11 @@ public class RealOrderCallprice {
 
     private String otherRequire;
 
-    private Boolean isPrepayed;
-
-    private Double prepayedMoneyAmount;
+    private Long prepayedMoneyAmount;
 
     private String attachment;
 
-    private Boolean acceptVialationMoney;
-
-    private Double acceptVialationMoneyAmount;
+    private Long vilationMoneyAmount;
 
     private String state;
 
@@ -41,12 +41,12 @@ public class RealOrderCallprice {
         this.realCallId = realCallId;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getRealOrderId() {
+        return realOrderId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setRealOrderId(Integer realOrderId) {
+        this.realOrderId = realOrderId;
     }
 
     public Integer getUserId() {
@@ -57,12 +57,12 @@ public class RealOrderCallprice {
         this.userId = userId;
     }
 
-    public String getCallPriceAmount() {
-        return callPriceAmount;
+    public String getCallPriceMoney() {
+        return callPriceMoney;
     }
 
-    public void setCallPriceAmount(String callPriceAmount) {
-        this.callPriceAmount = callPriceAmount == null ? null : callPriceAmount.trim();
+    public void setCallPriceMoney(String callPriceMoney) {
+        this.callPriceMoney = callPriceMoney == null ? null : callPriceMoney.trim();
     }
 
     public String getCallPriceValidtime() {
@@ -71,6 +71,22 @@ public class RealOrderCallprice {
 
     public void setCallPriceValidtime(String callPriceValidtime) {
         this.callPriceValidtime = callPriceValidtime == null ? null : callPriceValidtime.trim();
+    }
+
+    public String getCallPurity() {
+        return callPurity;
+    }
+
+    public void setCallPurity(String callPurity) {
+        this.callPurity = callPurity == null ? null : callPurity.trim();
+    }
+
+    public String getCallSubmitDeadline() {
+        return callSubmitDeadline;
+    }
+
+    public void setCallSubmitDeadline(String callSubmitDeadline) {
+        this.callSubmitDeadline = callSubmitDeadline == null ? null : callSubmitDeadline.trim();
     }
 
     public String getOfferDiagram() {
@@ -97,19 +113,11 @@ public class RealOrderCallprice {
         this.otherRequire = otherRequire == null ? null : otherRequire.trim();
     }
 
-    public Boolean getIsPrepayed() {
-        return isPrepayed;
-    }
-
-    public void setIsPrepayed(Boolean isPrepayed) {
-        this.isPrepayed = isPrepayed;
-    }
-
-    public Double getPrepayedMoneyAmount() {
+    public Long getPrepayedMoneyAmount() {
         return prepayedMoneyAmount;
     }
 
-    public void setPrepayedMoneyAmount(Double prepayedMoneyAmount) {
+    public void setPrepayedMoneyAmount(Long prepayedMoneyAmount) {
         this.prepayedMoneyAmount = prepayedMoneyAmount;
     }
 
@@ -121,20 +129,12 @@ public class RealOrderCallprice {
         this.attachment = attachment == null ? null : attachment.trim();
     }
 
-    public Boolean getAcceptVialationMoney() {
-        return acceptVialationMoney;
+    public Long getVilationMoneyAmount() {
+        return vilationMoneyAmount;
     }
 
-    public void setAcceptVialationMoney(Boolean acceptVialationMoney) {
-        this.acceptVialationMoney = acceptVialationMoney;
-    }
-
-    public Double getAcceptVialationMoneyAmount() {
-        return acceptVialationMoneyAmount;
-    }
-
-    public void setAcceptVialationMoneyAmount(Double acceptVialationMoneyAmount) {
-        this.acceptVialationMoneyAmount = acceptVialationMoneyAmount;
+    public void setVilationMoneyAmount(Long vilationMoneyAmount) {
+        this.vilationMoneyAmount = vilationMoneyAmount;
     }
 
     public String getState() {

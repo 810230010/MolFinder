@@ -1,5 +1,6 @@
 package com.mol.service;
 
+import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.RealOrderCallprice;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface RealOrderCallpriceService {
      * @param status
      * @return
      */
-    List<RealOrderCallprice> searchCallpriceRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status);
+    List<RealOrderCallpriceDTO> searchCallpriceRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status);
 }

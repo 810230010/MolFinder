@@ -80,7 +80,8 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realCallId","width":"7%","title":"","visible": false},
+                {"data":"companyName","width": "10%","title":"发单者","orderable": false},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -92,49 +93,51 @@
                         return html;
                     }
                 },
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
+                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                    "render": function (data, type, row) {
+                         var str = '';
+                         if(row.prepayedMoneyAmount != null)
+                          str = "预:" + row.prepayedMoneyAmount + '%\n';
+                         if(row.vilationMoneyAmount != null)
+                             str += "违:" + row.vilationMoneyAmount + "%";
+                         if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
+                             str = '无';
+                         return str;
+                    }
+                },
                 {
-                    "data":"beginTime",
+                    "data":"createTime",
                     "width": "10%",
-                    "title":"开始时间",
+                    "title":"报价时间",
                     "orderable": true,
                     "render": function (data, type, row) {
                         return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
                     }
                 },
-                {
-                    "data":"endTime",
-                    "width": "10%",
-                    "title":"结束时间",
-                    "orderable": true,
-                    "render": function (data, type, row) {
-                        return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
-                    }
-                },
-                {"data":"joinCount","width": "10%","title":"抢单人数","orderable": true},
                 {
                     "data":"state",
                     "width": "10%",
-                    "title":"状态",
-                    "orderable": false,
+                    "title":"是否中标",
+                    "orderable": true,
                     "render": function (data, type, row) {
-                        return "已删除";
+                       return "抢单中";
                     }
                 },
+                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
                 {
-                    "data":"realOrderId",
+                    "data":"realCallId",
                     "width": "15%",
                     "title":"操作",
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
-                            '查看报价 <i class="fa fa-eye"></i>',
+                            '修改 <i class="fa fa-eye"></i>',
                             '</a>',
                             '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
-                            '恢复删除 <i class="fa fa-trash-o"></i>',
-                            '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
-                            '重新发单 <i class="fa fa-trash-o"></i>',
+                            '取消报价 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
                     }},
@@ -156,11 +159,11 @@
         });
 
     }
-  //已删除询单列表
+  //派单中列表
     function fun2(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/profile/mypublish/queryOrders/' + 'DELETED',
+                'url': '/profile/myaccept/realOrders/' + 'SENDING',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;
@@ -173,7 +176,9 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realCallId","width":"7%","title":"","visible": false},
+                {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
+                {"data":"companyName","width": "10%","title":"发单者","orderable": false},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -185,57 +190,48 @@
                         return html;
                     }
                 },
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
+                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                    "render": function (data, type, row) {
+                        var str = '';
+                        if(row.prepayedMoneyAmount != null)
+                            str = "预:" + row.prepayedMoneyAmount + '%\n';
+                        if(row.vilationMoneyAmount != null)
+                            str += "违:" + row.vilationMoneyAmount + "%";
+                        if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
+                            str = '无';
+                        return str;
+                    }
+                },
                 {
-                    "data":"beginTime",
+                    "data":"createTime",
                     "width": "10%",
-                    "title":"开始时间",
+                    "title":"报价时间",
                     "orderable": true,
                     "render": function (data, type, row) {
                         return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
                     }
                 },
-                {
-                    "data":"endTime",
-                    "width": "10%",
-                    "title":"结束时间",
-                    "orderable": true,
-                    "render": function (data, type, row) {
-                        return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
-                    }
-                },
-                {"data":"joinCount","width": "10%","title":"抢单人数","orderable": true},
                 {
                     "data":"state",
                     "width": "10%",
-                    "title":"状态",
-                    "orderable": false,
+                    "title":"是否中标",
+                    "orderable": true,
                     "render": function (data, type, row) {
-                        return "已删除";
+                        return "派单中";
                     }
                 },
-                {
-                    "data":"realOrderId",
-                    "width": "15%",
-                    "title":"操作",
-                    "orderable": false,
-                    "render": function (data, type, row) {
-                        return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
-                            '查看报价 <i class="fa fa-eye"></i>',
-                            '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
-                            '修改订单 <i class="fa fa-trash-o"></i>',
-                            '</a>',
-                        ].join('');
-                    }},
+                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
             ],
-            "searching": false,
+            "searching": true,
             "ordering":true,
             "serverSide": true,
             "deferRender": true,
             "processing": true,
             "autoWidth": false,
             "destroy": true,
+            "lengthMenu": [ 5, 10, 15],
             "responsive": true,
             "dom": '<"html5buttons"B>lTfgitp',
             "buttons": [],
@@ -245,6 +241,211 @@
         });
 
     }
+    //已派单列表
+    function fun3(){
+        $('#dataTable').DataTable({
+            "ajax": {
+                'url': '/profile/myaccept/realOrders/' + 'SENDED',
+                "data": function(d) {
+                    var param = {};
+                    param.page = d.start/d.length + 1;
+                    param.pageSize = d.length;
+                    param.draw = d.draw;
+                    param.searchKey = d.search["value"];
+                    param.orderColumn = d.columns[d.order[0]['column']]['data'];
+                    param.orderType = d.order[0]['dir'];
+                    return param;
+                },
+            },
+            "columns": [
+                {"data":"realCallId","width":"7%","title":"","visible": false},
+                {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
+                {"data":"vilationMoneyAmount","width":"7%","title":"","visible": false},
+                {"data":"companyName","width": "10%","title":"发单者","orderable": false},
+                {"data":"casNo","width": "10%","title":"CAS","orderable": false},
+                {
+                    "data":"image",
+                    "width": "10%",
+                    "title":"结构式",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        return html;
+                    }
+                },
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
+                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                    "render": function (data, type, row) {
+                        var str = '';
+                        if(row.prepayedMoneyAmount != null)
+                            str = "预:" + row.prepayedMoneyAmount + '%\n';
+                        if(row.vilationMoneyAmount != null)
+                            str += "违:" + row.vilationMoneyAmount + "%";
+                        if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
+                            str = '无';
+                        return str;
+                    }
+                },
+                {
+                    "data":"createTime",
+                    "width": "10%",
+                    "title":"报价时间",
+                    "orderable": true,
+                    "render": function (data, type, row) {
+                        return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
+                    }
+                },
+                {
+                    "data":"state",
+                    "width": "10%",
+                    "title":"是否中标",
+                    "orderable": true,
+                    "render": function (data, type, row) {
+                        if(data == 'HERE'){
+                            return "已派单到这里";
+                        }else
+                            return "派单至别处";
+                    }
+                },
+                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
+                {
+                    "data":"realCallId",
+                    "width": "10%",
+                    "title":"操作",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        if(row.state == 'HERE'){
+                            return [
+                                '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                                '订单确认 <i class="fa fa-eye"></i>',
+                                '</a>'
+                            ].join('');
+                        }else{
+                            return [
+                                '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                                '删除 <i class="fa fa-trash-o"></i>',
+                                '</a>',
+                            ].join('');
+                        }
 
+                    }
+                },
+            ],
+            "searching": true,
+            "ordering":true,
+            "serverSide": true,
+            "deferRender": true,
+            "processing": true,
+            "autoWidth": false,
+            "destroy": true,
+            "lengthMenu": [ 5, 10, 15],
+            "responsive": true,
+            "dom": '<"html5buttons"B>lTfgitp',
+            "buttons": [],
+            "language": {
+                "url": "/static/js/plugins/dataTables/Chinese.json",
+            }
+        });
+
+    }
+    //已取消列表
+    function fun4(){
+        $('#dataTable').DataTable({
+            "ajax": {
+                'url': '/profile/myaccept/realOrders/' + 'CANCEL',
+                "data": function(d) {
+                    var param = {};
+                    param.page = d.start/d.length + 1;
+                    param.pageSize = d.length;
+                    param.draw = d.draw;
+                    param.searchKey = d.search["value"];
+                    param.orderColumn = d.columns[d.order[0]['column']]['data'];
+                    param.orderType = d.order[0]['dir'];
+                    return param;
+                },
+            },
+            "columns": [
+                {"data":"realCallId","width":"7%","title":"","visible": false},
+                {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
+                {"data":"vilationMoneyAmount","width":"7%","title":"","visible": false},
+                {"data":"companyName","width": "10%","title":"发单者","orderable": false},
+                {"data":"casNo","width": "10%","title":"CAS","orderable": false},
+                {
+                    "data":"image",
+                    "width": "10%",
+                    "title":"结构式",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        return html;
+                    }
+                },
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
+                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                    "render": function (data, type, row) {
+                        var str = '';
+                        if(row.prepayedMoneyAmount != null)
+                            str = "预:" + row.prepayedMoneyAmount + '%\n';
+                        if(row.vilationMoneyAmount != null)
+                            str += "违:" + row.vilationMoneyAmount + "%";
+                        if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
+                            str = '无';
+                        return str;
+                    }
+                },
+                {
+                    "data":"createTime",
+                    "width": "10%",
+                    "title":"报价时间",
+                    "orderable": true,
+                    "render": function (data, type, row) {
+                        return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
+                    }
+                },
+                {
+                    "data":"state",
+                    "width": "10%",
+                    "title":"是否中标",
+                    "orderable": true,
+                    "render": function (data, type, row) {
+                        if(data == 'CANCEL') return '已取消';
+                        else
+                            return '买家已取消';
+                    }
+                },
+                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
+                {
+                    "data":"realCallId",
+                    "width": "10%",
+                    "title":"操作",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                            return [
+                                '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                                '删除 <i class="fa fa-trash-o"></i>',
+                                '</a>',
+                            ].join('');
+                    }
+                },
+            ],
+            "searching": true,
+            "ordering":true,
+            "serverSide": true,
+            "deferRender": true,
+            "processing": true,
+            "autoWidth": false,
+            "destroy": true,
+            "lengthMenu": [ 5, 10, 15],
+            "responsive": true,
+            "dom": '<"html5buttons"B>lTfgitp',
+            "buttons": [],
+            "language": {
+                "url": "/static/js/plugins/dataTables/Chinese.json",
+            }
+        });
+
+    }
 </script>
 </html>

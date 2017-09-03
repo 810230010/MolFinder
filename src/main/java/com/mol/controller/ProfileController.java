@@ -1,14 +1,17 @@
 package com.mol.controller;
 
 import com.mol.common.controller.PageResult;
+import com.mol.common.controller.RestResult;
+import com.mol.common.qiniu.QiniuUtil;
 import com.mol.common.util.StringUtils;
 import com.mol.common.util.WebUtil;
+import com.mol.dto.QueryOrderCallpriceDTO;
+import com.mol.dto.RealOrderCallpriceDTO;
+import com.mol.entity.Certification;
 import com.mol.entity.QueryOrder;
 import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
-import com.mol.service.QueryService;
-import com.mol.service.RealOrderCallpriceService;
-import com.mol.service.RealService;
+import com.mol.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +35,10 @@ public class ProfileController
     private QueryService queryService;
     @Autowired
     private RealOrderCallpriceService realOrderCallpriceService;
+    @Autowired
+    private QueryOrderCallpriceService queryOrderCallpriceService;
+    @Autowired
+    private CertificationService certificationService;
     /**
      * 跳转到我的定制合成页面
      * @return
@@ -140,13 +147,13 @@ public class ProfileController
     }
 
     /**
-     * 查询已报价抢单中的实单
+     * 根据状态查询已报价的实单
      * @param draw
      * @param orderColumn
      * @param orderType
      * @param page
      * @param pageSize
-     * @param status BIDDING:抢单中 SENDED:已派单 STOPPED:停止
+     * @param status BIDDING:抢单中 SENDED:已派单 STOPPED:停止 SENDING:派单中
      * @return
      */
     @RequestMapping("/myaccept/realOrders/{status}")
@@ -161,7 +168,73 @@ public class ProfileController
                                       HttpServletRequest request) {
         orderColumn = StringUtils.camelToUnderline(orderColumn);
         Integer userId = WebUtil.getCurrentUser(request).getUserId();
-        List<RealOrderCallprice> realOrders = realOrderCallpriceService.searchCallpriceRealOrdersWithStatus(page, pageSize, orderColumn, orderType, searchKey, userId, status);
-        return new PageResult<RealOrderCallprice>(realOrders, draw);
+        List<RealOrderCallpriceDTO> realOrders = realOrderCallpriceService.searchCallpriceRealOrdersWithStatus(page, pageSize, orderColumn, orderType, searchKey, userId, status);
+        return new PageResult<RealOrderCallpriceDTO>(realOrders, draw);
+    }
+    /**
+     * 当前用户已报价询单页面
+     * @return
+     */
+    @RequestMapping("/callprice/queryOrdersCallpricePage")
+    public String view2callpriceQueryOrdersPage(){
+        return "profile/my_callprice_query";
+    }
+    /**
+     * 当前用户已报价删除询单页面
+     * @return
+     */
+    @RequestMapping("/callprice/deletedOrdersPage")
+    public String view2callpriceDeletedOrdersPage(){
+        return "profile/my_callprice_deleted";
+    }
+    /**
+     * 根据状态查询已报价的询单
+     * @param draw
+     * @param orderColumn
+     * @param orderType
+     * @param page
+     * @param pageSize
+     * @param status BIDDING:抢单中 SENDED:已派单 STOPPED:停止 SENDING:派单中
+     * @return
+     */
+    @RequestMapping("/myaccept/queryOrders/{status}")
+    @ResponseBody
+    public Object searchMyCallpriceQueryOrders(@RequestParam("draw") int draw,
+                                              @RequestParam(value = "orderColumn", required = false) String orderColumn,
+                                              @RequestParam(value = "orderType", required = false) String orderType,
+                                              @RequestParam(value = "searchKey", required = false) String searchKey,
+                                              @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                              @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize,
+                                              @PathVariable("status")String status,
+                                              HttpServletRequest request) {
+        orderColumn = StringUtils.camelToUnderline(orderColumn);
+        Integer userId = WebUtil.getCurrentUser(request).getUserId();
+        List<QueryOrderCallpriceDTO> queryOrders = queryOrderCallpriceService.searchCallpriceQueryOrdersWithStatus(page, pageSize, orderColumn, orderType, searchKey, userId, status);
+        return new PageResult<QueryOrderCallpriceDTO>(queryOrders, draw);
+    }
+
+    /**
+     * 实名认证页面
+     * @return
+     */
+    @RequestMapping("/certificationPage")
+    public String view2certification(Model model){
+        String token = QiniuUtil.getUploadToken();
+        model.addAttribute("uploadToken", token);
+        model.addAttribute("domain", QiniuUtil.getBaseUrl());
+        return "profile/certification";
+    }
+
+    /**
+     * 实名认证
+     * @param certification
+     * @return
+     */
+    @RequestMapping("/certificate")
+    @ResponseBody
+    public Object certificate(Certification certification){
+        RestResult result = new RestResult();
+        int affectedRow = certificationService.addCertificateUser(certification);
+        return result;
     }
 }
