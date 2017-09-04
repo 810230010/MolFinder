@@ -208,7 +208,8 @@
 </div>
 
 
-<%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+<script src="/static/js/jquery-3.1.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/plugins/layer/layer.js"></script>
 <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
 <!--预览图片-->

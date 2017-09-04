@@ -151,7 +151,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
   //已派单
     function fun2(){
@@ -230,6 +230,7 @@
             "ordering":true,
             "serverSide": true,
             "deferRender": true,
+            "lengthMenu": [ 5, 10, 15],
             "processing": true,
             "autoWidth": false,
             "destroy": true,
@@ -240,7 +241,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     //停止发单
     function fun3(){
@@ -319,6 +320,7 @@
             "ordering":true,
             "serverSide": true,
             "deferRender": true,
+            "lengthMenu": [ 5, 10, 15],
             "processing": true,
             "autoWidth": false,
             "destroy": true,
@@ -404,6 +406,7 @@
             "searching": false,
             "ordering":true,
             "serverSide": true,
+            "lengthMenu": [ 5, 10, 15],
             "deferRender": true,
             "processing": true,
             "autoWidth": false,
@@ -416,6 +419,14 @@
             }
         });
 
+    }
+    function tableAction(){
+        var table = $('#dataTable').DataTable();
+        table.on( 'click', '.scan', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + data.realOrderId;
+        });
     }
 </script>
 </html>

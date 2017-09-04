@@ -222,6 +222,7 @@
                     }},
             ],
             "searching": false,
+            "lengthMenu": [ 5, 10, 15],
             "ordering":true,
             "serverSide": true,
             "deferRender": true,

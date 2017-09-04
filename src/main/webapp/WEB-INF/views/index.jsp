@@ -17,8 +17,8 @@
 <div class="hr-line-dashed" style="margin-top: 10px"></div>
 <div class="menus" style="font-size: 24px;font-weight: 600;margin-bottom: 140px">
     <div class="row1" id="row1">
-        <div class="col-md-4 text-right"><a>实单</a></div>
-        <div class="col-md-4 text-center"><a>询单</a></div>
+        <div class="col-md-4 text-right"><a href="#realdiv">实单</a></div>
+        <div class="col-md-4 text-center"><a href="#querydiv">询单</a></div>
         <div class="col-md-4 text-left"><a class="authority" url="/material/materialBuyPage">原料采购</a></div>
     </div>
 
@@ -54,7 +54,7 @@
 </div>
 <div class="hr-line-dashed"></div>
 <!--定制实单-->
-<div class="col-lg-12 text-center real-bill"><h3 id="real"><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
+<div class="col-lg-12 text-center real-bill" id="realdiv"><h3 id="real"><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
 <div class="row text-center" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <c:forEach var="item" items="${realList}">
         <div class="col-md-6 model">
@@ -95,7 +95,7 @@
 </div>
 
 <!--定制询单-->
-<div class="col-lg-12 text-center enquiry-bill"><h3><i class="fa fa-question-circle-o" style="color: red"></i>定制询单</h3></div>
+<div class="col-lg-12 text-center enquiry-bill" id="querydiv"><h3><i class="fa fa-question-circle-o" style="color: red"></i>定制询单</h3></div>
 <div class="row text-center enquiry-main" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <c:forEach var="item" items="${queryList}">
         <div class="col-md-6">

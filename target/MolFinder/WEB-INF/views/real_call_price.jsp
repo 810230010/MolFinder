@@ -4,14 +4,15 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>实单详情</title>
+    <title>实单报价详情</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
-    <%--<%@include file="/WEB-INF/views/common/resource_js.jsp"%>--%>
+    <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <script src="/static/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/plugins/dataTables/datatables.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<%@include file="/WEB-INF/views/common/header.jsp"%>
 <div class="hr-line-dashed"></div>
 <div class="container">
     <div class="row">
@@ -98,33 +99,14 @@
             </div>
             <div id="tab-3" class="tab-pane fade">
                 <div class="panel-body text-center">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>报价人</th>
-                            <th>报价金额</th>
-                            <th>发票信息</th>
-                            <th>纯度</th>
-                            <th>交货期限</th>
-                            <th>其他(预付款、保证金)</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>查看详情</td>
-                            <td>生成订单</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive" style="font-size: 14px">
+                        <table id="dataTable" class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,13 +115,14 @@
     </div>
 </div>
 </div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+<%@include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
-<script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
 <script>
 $(function () {
     updateEndTime();
+    loadTable();
 })
+
 //倒计时函数
 function updateEndTime()
 {
@@ -174,5 +157,75 @@ function updateEndTime()
     });
     setTimeout("updateEndTime()",1000);
 }
+function loadTable(){
+    $('#dataTable').DataTable({
+        "ajax": {
+            'url': '/real/getRealCallpriceMembers',
+            "data": function(d) {
+                var param = {};
+                param.page = d.start/d.length + 1;
+                param.pageSize = d.length;
+                param.draw = d.draw;
+                param.searchKey = d.search["value"];
+                param.orderColumn = d.columns[d.order[0]['column']]['data'];
+                param.orderType = d.order[0]['dir'];
+                param.realOrderId = ${realDetail.realOrderId};
+                return param;
+            },
+        },
+        "columns": [
+            {"data":"realCallId","width":"7%","title":"","visible": false},
+            {"data":"companyName","width":"10%","title":"发单人","orderable": false},
+            {"data":"callPriceMoney","width":"7%","title":"报价","orderable": false},
+            {"data":"companyName","width": "10%","title":"发单者","orderable": false},
+            {"data":"callPurity","width": "10%","title":"纯度","orderable": false},
+            {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+            {"data":"realCallId","width": "10%","title":"其他设置","orderable": false,
+                "render": function (data, type, row) {
+                    var str = '';
+                    if(row.prepayedMoneyAmount != null)
+                        str = "预:" + row.prepayedMoneyAmount + '%\n';
+                    if(row.vilationMoneyAmount != null)
+                        str += "违:" + row.vilationMoneyAmount + "%";
+                    if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
+                        str = '无';
+                    return str;
+                }
+            },
+            {
+                "data":"realCallId",
+                "width": "10%",
+                "title":"操作",
+                "orderable": false,
+                "render": function (data, type, row) {
+                    return [
+                        '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                        '查看详情 <i class="fa fa-eye"></i>',
+                        '</a>',
+                        '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                        '生成订单 <i class="fa fa-trash-o"></i>',
+                        '</a>'
+                    ].join('');
+                }
+            },
+        ],
+        "searching": true,
+        "ordering":true,
+        "serverSide": true,
+        "deferRender": true,
+        "processing": true,
+        "autoWidth": false,
+        "destroy": true,
+        "lengthMenu": [ 5, 10, 15],
+        "responsive": true,
+        "dom": '<"html5buttons"B>lTfgitp',
+        "buttons": [],
+        "language": {
+            "url": "/static/js/plugins/dataTables/Chinese.json",
+        }
+    });
+}
+
+
 </script>
 </html>

@@ -9,6 +9,7 @@
 <script src="/static/js/plugins/select2/select2.full.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/plugins/layer/layer.js"></script>
+<script src="/assets/admin/js/plugins/sweetalert/sweetalert.min.js" type="text/javascript"></script>
 <!-- 文件上传 -->
 <script src="/static/js/plugins/fileinput/fileinput.min.js" type="text/javascript"></script>
 <script src="/static/js/plugins/fileinput/zh.js" type="text/javascript"></script>

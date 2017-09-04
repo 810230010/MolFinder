@@ -2,6 +2,7 @@ package com.mol.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.mol.dao.RealOrderCallpriceMapper;
+import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.RealOrderCallprice;
 import com.mol.service.RealOrderCallpriceService;
@@ -21,5 +22,11 @@ public class RealOrderCallpriceImpl implements RealOrderCallpriceService {
     public List<RealOrderCallpriceDTO> searchCallpriceRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status) {
         PageHelper.startPage(page, pageSize);
         return realOrderCallpriceMapper.listCallpriceRealOrdersWithStatus(orderColumn, orderType, searchKey, userId, status);
+    }
+
+    @Override
+    public List<RealCallpriceMemberDTO> searchCallpriceRealOrdersMembers(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer realOrderId) {
+        PageHelper.startPage(page, pageSize);
+        return realOrderCallpriceMapper.listRealCallpriceMembers(orderColumn, orderType, searchKey, realOrderId);
     }
 }

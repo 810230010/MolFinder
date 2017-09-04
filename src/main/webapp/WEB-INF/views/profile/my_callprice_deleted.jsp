@@ -224,6 +224,7 @@
             "searching": false,
             "ordering":true,
             "serverSide": true,
+            "lengthMenu": [ 5, 10, 15],
             "deferRender": true,
             "processing": true,
             "autoWidth": false,
