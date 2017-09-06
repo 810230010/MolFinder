@@ -10,7 +10,6 @@ import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.Certification;
 import com.mol.entity.QueryOrder;
 import com.mol.entity.RealOrder;
-import com.mol.entity.RealOrderCallprice;
 import com.mol.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,7 +72,7 @@ public class ProfileController
     @RequestMapping("/mypublish/realCallPriceDetailPage")
     public String view2realCallPriceDetail(Integer realOrderId, Model model){
         model.addAttribute("realDetail", realService.getRealDetail(realOrderId));
-        return "real_call_price";
+        return "real_callprice_intro";
     }
 
     /**

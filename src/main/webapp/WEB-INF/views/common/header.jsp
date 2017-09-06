@@ -4,7 +4,7 @@
 
 
 <div class="col-lg-12 top-left-slogan" style="background-color: #354b56">
-    <div class="col-lg-2 col-lg-offset-3 pull-left" style="color: white;line-height: 44px;height: 44px">专注定制合成</div>
+    <div class="col-lg-2 col-lg-offset-2 pull-left" style="color: white;line-height: 44px;height: 44px">专注定制合成</div>
     <div class="col-lg-4 pull-right">
         <c:choose>
             <c:when test="${!empty currentUser}">
@@ -25,21 +25,7 @@
     </div>
 
 </div>
-<div class="top-logo" style="height: 200px; background: white; width: 66%;margin: 0 auto">
-    <div class="col-md-8 logo">
-        <a href="/index/indexPage"><img src="/static/img/logo.png"/></a>
-    </div>
-    <a href="#" style="text-decoration: none; color: black">
-    <div class="col-md-4 text-left" style="margin-top: 20px">
-        <h3>资讯</h3>
-        <div class="analysis">
-            实单: <span class="badge">21</span>
-            询单: <span class="badge">21</span></span>
-            成交单数: <span class="badge">21</span>
-        </div>
-    </div>
-    </a>
-</div>
+
 
 
 

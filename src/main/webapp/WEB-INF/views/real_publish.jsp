@@ -50,7 +50,7 @@
 
     </div>
 
-    <!--发布询单表单-->
+    <!--发布实单表单-->
     <div class="col-md-9">
         <div class="ibox">
             <div class="ibox-title text-center">

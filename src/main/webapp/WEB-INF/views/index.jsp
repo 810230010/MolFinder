@@ -14,6 +14,21 @@
 
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
+<div class="top-logo" style="height: 200px; background: white; width: 66%;margin: 0 auto">
+    <div class="col-md-8 logo">
+        <a href="/index/indexPage"><img src="/static/img/logo.png"/></a>
+    </div>
+    <a href="#" style="text-decoration: none; color: black">
+        <div class="col-md-4 text-left" style="margin-top: 20px">
+            <h3>资讯</h3>
+            <div class="analysis">
+                实单: <span class="badge">21</span>
+                询单: <span class="badge">21</span></span>
+                成交单数: <span class="badge">21</span>
+            </div>
+        </div>
+    </a>
+</div>
 <div class="hr-line-dashed" style="margin-top: 10px"></div>
 <div class="menus" style="font-size: 24px;font-weight: 600;margin-bottom: 140px">
     <div class="row1" id="row1">
@@ -55,7 +70,7 @@
 <div class="hr-line-dashed"></div>
 <!--定制实单-->
 <div class="col-lg-12 text-center real-bill" id="realdiv"><h3 id="real"><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
-<div class="row text-center" style="position: relative;top:40px;width: 66%; margin:0 auto">
+<div class="row text-center" style="position: relative;top:40px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${realList}">
         <div class="col-md-6 model">
         <a href="/real/realDetailPage?realOrderId=${item.realOrderId}" class="thumbnail" style="text-decoration: none">

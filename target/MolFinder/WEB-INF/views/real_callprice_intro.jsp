@@ -43,7 +43,7 @@
                 <div class="col-md-3" >交货期:${realDetail.submitDeadline}周</div>
             </div>
             <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
-            <div class="col-md-6 text-right" style="margin-top: 30px"><button type="button" class="btn btn-danger" style="width:120px">立即抢单</button></div>
+            <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
         </div>
 
     </div>
@@ -175,7 +175,11 @@ function loadTable(){
         },
         "columns": [
             {"data":"realCallId","width":"7%","title":"","visible": false},
-            {"data":"companyName","width":"10%","title":"发单人","orderable": false},
+            {"data":"companyName","width":"10%","title":"发单人","orderable": false,
+                "render": function (data, type, row) {
+                    return "<a class='scanCom'>" + data + "</a>"
+                }
+            },
             {"data":"callPriceMoney","width":"7%","title":"报价","orderable": false},
             {"data":"companyName","width": "10%","title":"发单者","orderable": false},
             {"data":"callPurity","width": "10%","title":"纯度","orderable": false},
@@ -223,6 +227,19 @@ function loadTable(){
         "language": {
             "url": "/static/js/plugins/dataTables/Chinese.json",
         }
+    });
+    var table = $("#dataTable").DataTable();
+    //查看实单报价详情
+    table.on( 'click', '.scan', function () {
+        var tr = $(this).closest('tr');
+        var data = table.row(tr).data();
+        window.location.href = "/real/realCallpriceShowPage";
+    });
+    //浏览公司信息
+    table.on( 'click', '.scanCom', function () {
+        var tr = $(this).closest('tr');
+        var data = table.row(tr).data();
+        window.location.href = "/company/companyDetailPage?certificateId=" + data.certificateId;
     });
 }
 

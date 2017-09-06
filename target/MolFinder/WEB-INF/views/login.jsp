@@ -4,7 +4,9 @@
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-    <%@include file="/WEB-INF/views/common/resource_js.jsp"%>
+    <!-- Mainly scripts -->
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="/static/js/plugins/validate/messages_zh.js"></script>
