@@ -67,7 +67,6 @@
     <a class="carousel-control left" href="#myCarousel" data-slide="prev">‹</a>
     <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
 </div>
-<div class="hr-line-dashed"></div>
 <!--定制实单-->
 <div class="col-lg-12 text-center real-bill" id="realdiv"><h3 id="real"><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
 <div class="row text-center" style="position: relative;top:40px;width: 70%; margin:0 auto">
@@ -94,10 +93,9 @@
             <div style="color: black" class="col-md-8">
                <i class="fa fa-clock-o fa-2x"></i>
                 <span endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" class="timespan" style="font-size: 20px;font-weight: 400"></span>
-
             </div>
             <div class="col-md-4">
-               <button class="btn btn-danger col-md-12 rub">立即抢单</button>
+               <button style="display: none" class="btn btn-danger col-md-12 rub">立即抢单</button>
             </div>
           </div>
         </a>
@@ -113,8 +111,8 @@
 <div class="col-lg-12 text-center enquiry-bill" id="querydiv"><h3><i class="fa fa-question-circle-o" style="color: red"></i>定制询单</h3></div>
 <div class="row text-center enquiry-main" style="position: relative;top:40px;width: 66%; margin:0 auto">
     <c:forEach var="item" items="${queryList}">
-        <div class="col-md-6">
-            <a href="#" class="thumbnail" style="text-decoration: none">
+        <div class="col-md-6 model">
+            <a href="/enquiry/enquiryDetailPage" class="thumbnail" style="text-decoration: none">
                 <div class="description" style="height: 200px">
                     <div class="img col-md-4">
                         <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>
@@ -133,8 +131,8 @@
                         <i class="fa fa-clock-o fa-2x"></i>
                         <span class="timespan" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" style="font-size: 20px;font-weight: 400"></span>
                     </div>
-                    <div class="col-md-4 rub">
-                        <button class="btn btn-danger col-md-12">立即报价</button>
+                    <div class="col-md-4">
+                        <button class="btn btn-danger col-md-12 rub">立即报价</button>
                     </div>
                 </div>
             </a>
@@ -194,11 +192,17 @@
             else{
                 $(this).removeClass("timespan");
                 $(this).html("已经结束");
-                $(this).parents('model').children('rub').html('报价结束');
-                $(this).parents('model').children('rub').css('background-color', 'grey');
+                $(this).parent().siblings().children('.rub').html('报价结束');
+                $(this).parent().siblings().children('.rub').css('background-color', 'grey');
             }
         });
         setTimeout("updateEndTime()",1000);
     }
+    $(".model").mouseover(function () {
+        $(".rub").show();
+    })
+    $(".model").mouseleave(function () {
+        $(".rub").hide();
+    })
 </script>
 </html>

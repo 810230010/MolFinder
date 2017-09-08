@@ -98,8 +98,58 @@
                 </div>
             </div>
             <div id="tab-3" class="tab-pane fade">
-                <div class="panel-body">
-
+                <div class="panel-body" style="background:#F6F6F6;">
+                    <div class="col-md-6 text-center" style="border-right:2px solid silver;height: 220px">
+                        <h5><img src="/static/img/icons/phone.png">联系人信息</h5>
+                        <div class="hr-line-dashed"></div>
+                        <div>
+                            <div class="alert alert-warning">
+                                <strong><img src="/static/img/icons/exclaim.png">报价后方可查看发单人信息!</strong>
+                            </div>
+                        </div>
+                        <div style="font-size: 16px;display: none">
+                            <p>
+                                <span>企业地址:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
+                            </p>
+                            <p>
+                                <span>联系人:<font style="font-size: 18px;font-weight: bold">闲林</font>；</span>
+                                <span>联系号码:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
+                            </p>
+                            <p>
+                                <span>qq:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
+                            </p>
+                            <p>
+                                <span>邮箱:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
+                            </p>
+                            <p>
+                                <span>传真:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center" style="height: 220px">
+                        <h5><img src="/static/img/icons/info.png" style="width:20px; height: 20px;">他的概况</h5>
+                        <div class="hr-line-dashed"></div>
+                        <div>
+                            <p>
+                                <div>
+                                     <span>积分等级:</span>
+                                     <span>伯爵</span>
+                                </div>
+                            </p>
+                            <p>
+                            <div>
+                                <span>实单成单率:</span>
+                                <span>99%</span>
+                            </div>
+                            </p>
+                            <p>
+                            <div>
+                                <span>资质:</span>
+                                <span>实名认证</span>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

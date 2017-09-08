@@ -15,7 +15,7 @@
 
 <body style="background: url(/static/img/login-al.png)">
 <div class="container">
-<div class="row col-lg-offset-2">
+<div class="row col-lg-offset-2" style="border-radius: 50px">
     <div class="col-sm-9" style="margin-top: 100px;" >
         <div class="ibox">
             <div class="ibox-title text-center">
@@ -55,6 +55,7 @@
     </div>
 </div>
 </div>
+<%@include file="common/footer.jsp"%>
 </body>
 <script>
     $("#form").validate({

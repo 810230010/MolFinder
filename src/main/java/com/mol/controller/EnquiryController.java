@@ -6,6 +6,7 @@ import com.mol.common.util.RequestUtil;
 import com.mol.entity.RealOrder;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,5 +43,14 @@ public class EnquiryController {
     public Object publishEnquiry(@RequestParam("previewImg")MultipartFile file, HttpServletRequest request){
         RestResult result = new RestResult();
         return result;
+    }
+
+    /**
+     * 询单详情页
+     * @return
+     */
+    @RequestMapping("/queryDetailPage")
+    public String view2queryDetail(Integer queryOrderId, Model model){
+        return "enquiry_detail";
     }
 }

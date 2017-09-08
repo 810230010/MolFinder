@@ -18,6 +18,7 @@
         .nav-bar a{color: white;text-decoration: none}
        .nav-bar a:hover{color: silver;text-decoration: none}
         .active2{color: silver;border-bottom: 2px solid red;height: 62px}
+       .active3{color: silver;border-bottom: 2px solid #c23;height: 62px}
        .nav > li.active{border-bottom:2px solid #c23}
     </style>
 </head>
@@ -67,11 +68,11 @@
     </div>
     <div class="clearfix"></div>
     <div class="analysis" style="margin-top: 30px" >
-        <div class="ibox-title" style="border-left: 5px solid #c23" id="analysis">
+        <div class="ibox-title" style="border-left: 5px solid #c23;background: #f5f5f5" id="analysis">
             <h4>总体评价</h4>
         </div>
         <div id="graph" style="height: 200px;width: 40%;padding-left: 0;border-right: 1px solid silver;float: left;"></div>
-        <div class="tag" style="float: right;width: 30%;text-align: center;float: left;height: 200px;background: #F6F6F6">
+        <div class="tag" style="float: right;width: 30%;text-align: center;float: left;height: 200px;">
             <h4>买家印象</h4>
             <p>
                 <span class="label label-primary" style="padding-right: 0">默认标签<span class="label label-primary">(50)</span></span>
@@ -84,7 +85,7 @@
                 <span class="label label-primary" style="padding-right: 0">默认标签<span class="label label-primary">(50)</span></span>
             </p>
         </div>
-        <div class="tag" style="float: right;width: 30%;text-align: center;border-left: 1px solid silver;height: 200px;background: #F6F6F6">
+        <div class="tag" style="float: right;width: 30%;text-align: center;border-left: 1px solid silver;height: 200px;">
             <h4>卖家印象</h4>
             <p>
                 <span class="label label-primary" style="padding-right: 0">默认标签<span class="label label-primary">(50)</span></span>
@@ -101,7 +102,7 @@
     <div class="clearfix"></div>
     <!--企业概述-->
     <div class="com-intro" style="margin-top: 30px">
-        <div class="ibox-title" style="border-left:5px solid #c23" id="com-intro">
+        <div class="ibox-title" style="border-left:5px solid #c23;background: #f5f5f5" id="com-intro">
             <h4>企业概述</h4>
         </div>
         <div class="intro-content ibox-content">
@@ -157,7 +158,7 @@
     </div>
     <!--联系信息-->
     <div class="contact-info" style="margin-top: 30px">
-        <div class="ibox-title" id="contact" style="border-left: 5px solid #c23">
+        <div class="ibox-title" id="contact" style="border-left: 5px solid #c23;background: #f5f5f5">
             <h4>联系信息</h4>
         </div>
         <div class="contact-table col-md-6" style="margin-top: 20px;padding-left: 0">
@@ -194,8 +195,8 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="comment" style="margin-top:20px">
-        <div class="ibox-title" style="border-left:5px solid #c23" id="comment">
+    <div class="comment" style="margin-top:20px;background: #f5f5f5">
+        <div class="ibox-title" style="border-left:5px solid #c23;background: #f5f5f5" id="comment">
             <h4>交易点评</h4>
         </div>
         <div class="ibox-content">
@@ -324,6 +325,12 @@
             }]
         });
     });
-
+    $(".menu-item").mouseover(function () {
+        $(".menu-item").removeClass('active3')
+        $(this).addClass('active3');
+    })
+    $(".menu-item").mouseleave(function () {
+        $(".menu-item").removeClass('active3')
+    })
 </script>
 </html>
