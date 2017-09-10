@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2017-08-31 19:24:24
+Date: 2017-09-10 17:01:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,13 +28,44 @@ CREATE TABLE `t_certification` (
   `phone` varchar(20) DEFAULT NULL,
   `realname` varchar(20) DEFAULT NULL,
   `qq` varchar(20) DEFAULT NULL,
-  `guanrantee_material` varchar(100) DEFAULT NULL,
-  `is_pass` tinyint(1) DEFAULT NULL,
+  `guaranteen_material` varchar(100) DEFAULT NULL,
+  `is_pass` varchar(10) DEFAULT '"CHECKING"',
+  `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`certificate_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_certification
+-- ----------------------------
+INSERT INTO `t_certification` VALUES ('1', '2', 'COMPANY', 'alibaba', '啊阿斯顿', '12313543', '张三', null, null, '1', null);
+
+-- ----------------------------
+-- Table structure for `t_company`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_company`;
+CREATE TABLE `t_company` (
+  `company_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `certificate_id` int(11) DEFAULT NULL,
+  `company_intro` varchar(2048) DEFAULT NULL COMMENT '公司简介',
+  `company_logo` varchar(50) DEFAULT NULL COMMENT '公司图标',
+  `reg_no` varchar(30) DEFAULT NULL COMMENT '工商注册号',
+  `company_legal_person` varchar(20) DEFAULT NULL COMMENT '法人',
+  `reg_money` varchar(10) DEFAULT NULL COMMENT '注册资本',
+  `establish_time` varchar(40) DEFAULT NULL COMMENT '公司创立时间',
+  `reg_status` varchar(30) DEFAULT NULL,
+  `reg_place` varchar(50) DEFAULT NULL COMMENT '注册地点',
+  `manage_range` varchar(200) DEFAULT NULL COMMENT '经营范围',
+  `shareholder` varchar(50) DEFAULT NULL COMMENT '股东',
+  `main_people` varchar(50) DEFAULT NULL,
+  `company_address` varchar(50) DEFAULT NULL,
+  `contact_person` varchar(20) DEFAULT NULL,
+  `comment_count` int(11) DEFAULT NULL COMMENT '公司被点评人数',
+  `thumbup_count` int(11) DEFAULT NULL COMMENT '点赞人数',
+  PRIMARY KEY (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_company
 -- ----------------------------
 
 -- ----------------------------
@@ -43,7 +74,7 @@ CREATE TABLE `t_certification` (
 DROP TABLE IF EXISTS `t_credit`;
 CREATE TABLE `t_credit` (
   `credit_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '积分id',
-  `description` varchar(20) DEFAULT NULL,
+  `rank` varchar(20) DEFAULT NULL,
   `credit_amount` int(11) DEFAULT NULL,
   `daily_max_credit` int(11) DEFAULT NULL,
   PRIMARY KEY (`credit_id`)
@@ -165,30 +196,28 @@ INSERT INTO `t_query_order` VALUES ('1', '2', '2311', 'asdgf', 'dsaf', '99%', '2
 -- ----------------------------
 DROP TABLE IF EXISTS `t_query_order_callprice`;
 CREATE TABLE `t_query_order_callprice` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `order_id` int(11) NOT NULL,
-  `order_type` varchar(10) DEFAULT NULL COMMENT '实单还是询单 QUERY:询单 REAL:实单',
-  `user_id` int(11) DEFAULT NULL COMMENT '报价人id',
-  `call_price_amount` varchar(20) DEFAULT NULL,
+  `query_call_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `query_order_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT '0' COMMENT '报价人id',
+  `call_price_money` varchar(20) DEFAULT NULL,
   `call_price_validtime` varchar(20) DEFAULT NULL COMMENT '报价有效期',
+  `call_purity` varchar(10) DEFAULT NULL,
+  `call_submit_deadline` varchar(20) DEFAULT NULL,
   `offer_diagram` varchar(20) DEFAULT NULL,
-  `has_bill` tinyint(1) DEFAULT NULL COMMENT '是否开发票',
+  `make_bill` varchar(10) DEFAULT NULL COMMENT '是否开发票',
   `other_require` varchar(2024) DEFAULT NULL,
-  `is_prepayed` tinyint(1) DEFAULT NULL,
-  `prepayed_money_amount` double(10,2) DEFAULT NULL,
+  `prepayed_money_amount` decimal(10,0) DEFAULT NULL,
   `attachment` varchar(50) DEFAULT NULL,
-  `accept_vialation_money` tinyint(1) DEFAULT NULL COMMENT '是否接受违约金',
-  `accept_vialation_money_amount` double(10,2) DEFAULT NULL,
+  `vilation_money_amount` decimal(10,0) DEFAULT NULL,
   `state` varchar(10) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL COMMENT '报价/抢单时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`query_call_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_query_order_callprice
 -- ----------------------------
-INSERT INTO `t_query_order_callprice` VALUES ('1', '0', '1', '1', '4000', null, '1', null, '无', null, null, null, null, null, null, null);
-INSERT INTO `t_query_order_callprice` VALUES ('2', '0', '1', '2', '4000', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `t_query_order_callprice` VALUES ('1', '1', '2', '4000元/10g', null, null, '3-4周', 'hfds', '1', '无', '1', null, '1', 'BIDDING', '2017-09-01 21:05:23');
 
 -- ----------------------------
 -- Table structure for `t_real_order`
@@ -244,12 +273,12 @@ CREATE TABLE `t_real_order_callprice` (
   `state` varchar(10) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL COMMENT '报价/抢单时间',
   PRIMARY KEY (`real_call_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_real_order_callprice
 -- ----------------------------
-INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '1', '4000元/10g', null, null, null, 'hfds', '1', '无', null, null, '1', null, null);
+INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '4000元/10g', null, '98', '3-4周', 'hfds', '1', '无', '1', null, '1', 'BIDDING', null);
 
 -- ----------------------------
 -- Table structure for `t_setting`

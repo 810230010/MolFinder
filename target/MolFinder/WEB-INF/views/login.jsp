@@ -15,7 +15,7 @@
 
 <body style="background: url(/static/img/login-al.png)">
 <div class="container">
-<div class="row col-lg-offset-2" style="border-radius: 50px">
+<div class="row col-lg-offset-2">
     <div class="col-sm-9" style="margin-top: 100px;" >
         <div class="ibox">
             <div class="ibox-title text-center">

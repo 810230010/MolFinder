@@ -73,7 +73,7 @@
     <c:forEach var="item" items="${realList}">
         <div class="col-md-6 model">
         <a href="/real/realDetailPage?realOrderId=${item.realOrderId}" class="thumbnail" style="text-decoration: none">
-            <div class="description" style="height: 200px">
+            <div class="description" style="height: 170px">
                 <div class="img col-md-4">
                    <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>
                 </div>
@@ -89,10 +89,10 @@
             </div>
             </div>
             <div class="hr-line-dashed"></div>
-            <div class="deadline text-left" style="height: 60px;">
+            <div class="deadline text-left" style="height: 40px;">
             <div style="color: black" class="col-md-8">
                <i class="fa fa-clock-o fa-2x"></i>
-                <span endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" class="timespan" style="font-size: 20px;font-weight: 400"></span>
+                <span endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" class="timespan" style="font-size: 18px;font-weight: 400"></span>
             </div>
             <div class="col-md-4">
                <button style="display: none" class="btn btn-danger col-md-12 rub">立即抢单</button>
@@ -109,11 +109,11 @@
 
 <!--定制询单-->
 <div class="col-lg-12 text-center enquiry-bill" id="querydiv"><h3><i class="fa fa-question-circle-o" style="color: red"></i>定制询单</h3></div>
-<div class="row text-center enquiry-main" style="position: relative;top:40px;width: 66%; margin:0 auto">
+<div class="row text-center enquiry-main" style="position: relative;top:20px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${queryList}">
         <div class="col-md-6 model">
             <a href="/enquiry/enquiryDetailPage" class="thumbnail" style="text-decoration: none">
-                <div class="description" style="height: 200px">
+                <div class="description" style="height: 160px">
                     <div class="img col-md-4">
                         <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>
                     </div>
@@ -126,10 +126,10 @@
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
-                <div class="deadline text-left" style="height: 60px;">
+                <div class="deadline text-left" style="height: 40px;">
                     <div style="color: black" class="col-md-8">
                         <i class="fa fa-clock-o fa-2x"></i>
-                        <span class="timespan" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" style="font-size: 20px;font-weight: 400"></span>
+                        <span class="timespan" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" style="font-size: 18px;font-weight: 400"></span>
                     </div>
                     <div class="col-md-4">
                         <button class="btn btn-danger col-md-12 rub">立即报价</button>
