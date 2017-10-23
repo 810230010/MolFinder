@@ -14,46 +14,49 @@
 </head>
 
 <body style="background: url(/static/img/login-al.png)">
+<div class="nav text-center" style="background-color: #354b56;height: 44px;color: white;line-height: 44px;font-size: 20px">欢迎来到精细化工交易平台</div>
 <div class="container">
-<div class="row col-lg-offset-2">
-    <div class="col-sm-9" style="margin-top: 100px;" >
-        <div class="ibox">
-            <div class="ibox-title text-center">
-                <h4>精细化网站注册</h4>
-            </div>
 
-            <div class="ibox-content">
-                <form class="form-horizontal" id="form" onsubmit="return false">
-                    <div class="form-group">
-                        <label for="phone" class="col-sm-3 control-label">手机号:</label>
-                        <div class="col-sm-6 input-group">
-                            <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
-                            <input type="text" class="form-control" id="phone" placeholder="请输入手机号" required/>
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group">
-                        <label for="password1" class="col-sm-3 control-label">密码:</label>
-                        <div class="col-sm-6 input-group">
-                            <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                            <input type="password" class="form-control" id="password1" placeholder="请输入密码" required/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="text-center">
-                            <button id="login" type="submit" class="btn btn-default col-md-6">登录</button>
-                            <button id="register" type="button" class="btn btn-primary col-md-6" onclick="window.location.href='/user/registerPage'">没有账号?去注册<i class="fa fa-arrow-right"></i></button>
-                        </div>
-                        <div class="col-md-12 text-right" style="margin-top: 14px">
-                            <a href="/index/indexPage">不了!随便逛逛</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
+     <div class="row col-lg-offset-2">
+        <div class="col-sm-9" style="margin-top: 100px;" >
+            <div class="ibox">
+                <div class="ibox-title text-center">
+                    <h4>精细化网站注册</h4>
+                </div>
 
+                <div class="ibox-content">
+                    <form class="form-horizontal" id="form" onsubmit="return false">
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-3 control-label">手机号:</label>
+                            <div class="col-sm-6 input-group">
+                                <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
+                                <input type="text" class="form-control" id="phone" placeholder="请输入手机号" required/>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label for="password1" class="col-sm-3 control-label">密码:</label>
+                            <div class="col-sm-6 input-group">
+                                <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                                <input type="password" class="form-control" id="password1" placeholder="请输入密码" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-center">
+                                <button id="login" type="submit" class="btn btn-default col-md-6">登录</button>
+                                <button id="register" type="button" class="btn btn-primary col-md-6" onclick="window.location.href='/user/registerPage'">没有账号?去注册<i class="fa fa-arrow-right"></i></button>
+                            </div>
+                            <div class="col-md-12 text-right" style="margin-top: 14px">
+                                <a href="/index/indexPage">不了!随便逛逛</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
+
 </div>
 <%@include file="common/footer.jsp"%>
 </body>

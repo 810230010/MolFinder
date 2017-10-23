@@ -27,6 +27,7 @@ public class RealOrderCallpriceImpl implements RealOrderCallpriceService {
     @Override
     public List<RealCallpriceMemberDTO> searchCallpriceRealOrdersMembers(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer realOrderId) {
         PageHelper.startPage(page, pageSize);
-        return realOrderCallpriceMapper.listRealCallpriceMembers(orderColumn, orderType, searchKey, realOrderId);
+        List<RealCallpriceMemberDTO> list = realOrderCallpriceMapper.listRealCallpriceMembers(orderColumn, orderType, searchKey, realOrderId);
+        return list;
     }
 }

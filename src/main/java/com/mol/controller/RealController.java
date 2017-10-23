@@ -113,7 +113,8 @@ public class RealController {
      * @return
      */
     @RequestMapping("/realCallpriceShowPage")
-    public String view2realCallpriceShow(){
+    public String view2realCallpriceShow(Integer realCallId, Model model){
+        
         return "real_callprice_show";
     }
 

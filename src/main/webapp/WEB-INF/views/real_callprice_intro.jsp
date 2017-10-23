@@ -43,7 +43,6 @@
                 <div class="col-md-3" >交货期:${realDetail.submitDeadline}周</div>
             </div>
             <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
-            <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
         </div>
 
     </div>
@@ -233,7 +232,7 @@ function loadTable(){
     table.on( 'click', '.scan', function () {
         var tr = $(this).closest('tr');
         var data = table.row(tr).data();
-        window.location.href = "/real/realCallpriceShowPage";
+        window.location.href = "/real/realCallpriceShowPage?realCallId=" + data.realCallId;
     });
     //浏览公司信息
     table.on( 'click', '.scanCom', function () {

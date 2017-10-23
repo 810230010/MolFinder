@@ -9,5 +9,6 @@ public class GlobalConstant {
     public static final int REGISTER_ERROR = 501;
     public static final int WRONG_USER_CODE = 502;
     public static final String SUCCESS_MESSAGE = "success";
-    private static final String IMG_BASE_URL = "http://localhost:8080/molfinder/doc/";
+    public static final String IMG_BASE_URL = "http://localhost:8080/molfinder/doc/";
+    public static final String RMB_UNIT = "元";
 }

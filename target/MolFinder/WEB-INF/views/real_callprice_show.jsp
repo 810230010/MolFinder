@@ -5,7 +5,7 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>实单报价页面</title>
+    <title>他人实单报价详情页面</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <%--<link rel="stylesheet" href="/static/css/index.css">--%>
     <link rel="stylesheet" href="/static/css/plugins/semantic/semantic.min.css">
@@ -353,6 +353,10 @@
                 $("#"+i).removeClass('active');
             }
         }
+    }
+    //跳转到下单页面
+    function jump2makeOrder() {
+        
     }
 </script>
 </html>

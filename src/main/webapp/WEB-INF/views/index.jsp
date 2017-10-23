@@ -71,7 +71,7 @@
 <div class="col-lg-12 text-center real-bill" id="realdiv"><h3 id="real"><i class="fa fa-building-o" style="color: red"></i>定制实单</h3></div>
 <div class="row text-center" style="position: relative;top:40px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${realList}">
-        <div class="col-md-6 model">
+        <div class="col-md-6 model1">
         <a href="/real/realDetailPage?realOrderId=${item.realOrderId}" class="thumbnail" style="text-decoration: none">
             <div class="description" style="height: 170px">
                 <div class="img col-md-4">
@@ -111,7 +111,7 @@
 <div class="col-lg-12 text-center enquiry-bill" id="querydiv"><h3><i class="fa fa-question-circle-o" style="color: red"></i>定制询单</h3></div>
 <div class="row text-center enquiry-main" style="position: relative;top:20px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${queryList}">
-        <div class="col-md-6 model">
+        <div class="col-md-6 model2">
             <a href="/enquiry/enquiryDetailPage" class="thumbnail" style="text-decoration: none">
                 <div class="description" style="height: 160px">
                     <div class="img col-md-4">
@@ -198,11 +198,17 @@
         });
         setTimeout("updateEndTime()",1000);
     }
-    $(".model").mouseover(function () {
-        $(".rub").show();
+    $(".model1").mouseover(function () {
+        $(this).children().find('.rub').show();
     })
-    $(".model").mouseleave(function () {
-        $(".rub").hide();
+    $(".model1").mouseleave(function () {
+        $(this).children().find('.rub').hide();
+    })
+    $(".model2").mouseover(function () {
+        $(this).children().find('.rub').show();
+    })
+    $(".model2").mouseleave(function () {
+        $(this).children().find('.rub').hide();
     })
 </script>
 </html>
