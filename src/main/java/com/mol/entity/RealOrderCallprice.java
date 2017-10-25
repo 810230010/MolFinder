@@ -1,6 +1,7 @@
 package com.mol.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class RealOrderCallprice {
     private Integer realCallId;
@@ -10,6 +11,8 @@ public class RealOrderCallprice {
     private Integer userId;
 
     private String callPriceMoney;
+
+    private String callPriceAmount;
 
     private String callPriceValidtime;
 
@@ -32,6 +35,15 @@ public class RealOrderCallprice {
     private String state;
 
     private Date createTime;
+    private List<String> realCallpriceCompleted;
+
+    public List<String> getRealCallpriceCompleted() {
+        return realCallpriceCompleted;
+    }
+
+    public void setRealCallpriceCompleted(List<String> realCallpriceCompleted) {
+        this.realCallpriceCompleted = realCallpriceCompleted;
+    }
 
     public Integer getRealCallId() {
         return realCallId;
@@ -151,5 +163,13 @@ public class RealOrderCallprice {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCallPriceAmount() {
+        return callPriceAmount;
+    }
+
+    public void setCallPriceAmount(String callPriceAmount) {
+        this.callPriceAmount = callPriceAmount;
     }
 }

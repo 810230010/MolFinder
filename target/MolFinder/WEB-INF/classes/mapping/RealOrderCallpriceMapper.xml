@@ -31,6 +31,7 @@
   <!--查询实单报价的成员列表-->
     <select id="listRealCallpriceMembers" resultType="com.mol.dto.RealCallpriceMemberDTO">
       select
+      a.real_order_id,
       a.real_call_id,
       a.call_price_money,
       a.call_submit_deadline,
@@ -53,5 +54,25 @@
       <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
         , ${orderColumn} ${orderType}
       </if>
+    </select>
+  <!--获得实单报价详情-->
+    <select id="getRealOrderCallpriceDetail" resultType="com.mol.dto.RealCallpriceDetailDTO">
+      select b.cas_no,
+      b.english_name,
+      b.chinese_name,
+      b.image,
+      a.call_price_amount,
+      a.call_price_money,
+      a.call_purity,
+      a.call_submit_deadline,
+      a.offer_diagram,
+      a.make_bill,
+      a.other_require,
+      a.prepayed_money_amount,
+      a.vilation_money_amount
+      from
+      t_real_order_callprice a, t_real_order b
+      where a.real_call_id = #{realCallId}
+      and a.real_order_id = b.real_order_id
     </select>
 </mapper>

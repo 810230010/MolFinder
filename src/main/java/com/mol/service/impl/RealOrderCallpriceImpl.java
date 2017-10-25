@@ -2,6 +2,7 @@ package com.mol.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.mol.dao.RealOrderCallpriceMapper;
+import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.RealOrderCallprice;
@@ -9,6 +10,7 @@ import com.mol.service.RealOrderCallpriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +29,10 @@ public class RealOrderCallpriceImpl implements RealOrderCallpriceService {
     @Override
     public List<RealCallpriceMemberDTO> searchCallpriceRealOrdersMembers(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer realOrderId) {
         PageHelper.startPage(page, pageSize);
-        List<RealCallpriceMemberDTO> list = realOrderCallpriceMapper.listRealCallpriceMembers(orderColumn, orderType, searchKey, realOrderId);
-        return list;
+        return realOrderCallpriceMapper.listRealCallpriceMembers(orderColumn, orderType, searchKey, realOrderId);
+    }
+    @Override
+    public RealCallpriceDetailDTO getRealCallpriceDetail(Integer realCallId, Integer realOrderId) {
+        return realOrderCallpriceMapper.getRealOrderCallpriceDetail(realCallId, realOrderId);
     }
 }

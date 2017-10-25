@@ -2,6 +2,7 @@ package com.mol.service;
 
 import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
+import com.mol.entity.RealOrderCallprice;
 
 import java.util.List;
 
@@ -35,4 +36,6 @@ public interface RealService {
      * @return
      */
     List<RealOrder> searchMyRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status);
+
+
 }

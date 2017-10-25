@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by 江建平 on 2017/8/11.
  */
 @Data
-public class RealDetailDTO {
+public class RealDetailDTO{
     private Integer realOrderId;
     private Integer userId;
     private String casNo;

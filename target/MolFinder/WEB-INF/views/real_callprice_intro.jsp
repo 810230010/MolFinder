@@ -179,11 +179,24 @@ function loadTable(){
                     return "<a class='scanCom'>" + data + "</a>"
                 }
             },
-            {"data":"callPriceMoney","width":"7%","title":"报价","orderable": false},
+            {
+                "data":"callPriceCompleted",
+                "width":"7%",
+                "title":"报价",
+                "orderable": false,
+                 "render": function(data, type, row){
+                    var str = "";
+                    var listLen = data.length;
+                    for(var i=0; i<listLen; i++){
+                        str += data[i] + "\n";
+                    }
+                    return str;
+                 }
+            },
             {"data":"companyName","width": "10%","title":"发单者","orderable": false},
             {"data":"callPurity","width": "10%","title":"纯度","orderable": false},
             {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
-            {"data":"realCallId","width": "10%","title":"其他设置","orderable": false,
+            {"data":"realOrderId","width": "10%","title":"其他设置","orderable": false,
                 "render": function (data, type, row) {
                     var str = '';
                     if(row.prepayedMoneyAmount != null)
@@ -232,7 +245,7 @@ function loadTable(){
     table.on( 'click', '.scan', function () {
         var tr = $(this).closest('tr');
         var data = table.row(tr).data();
-        window.location.href = "/real/realCallpriceShowPage?realCallId=" + data.realCallId;
+        window.location.href = "/real/realCallpriceShowPage?realCallId=" + data.realCallId + "&realOrderId=" + data.realOrderId;
     });
     //浏览公司信息
     table.on( 'click', '.scanCom', function () {

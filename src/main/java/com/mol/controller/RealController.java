@@ -6,8 +6,10 @@ import com.mol.common.qiniu.QiniuUtil;
 import com.mol.common.util.PropertyReader;
 import com.mol.common.util.RequestUtil;
 import com.mol.common.util.StringUtils;
+import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.entity.RealOrder;
+import com.mol.entity.RealOrderCallprice;
 import com.mol.service.RealOrderCallpriceService;
 import com.mol.service.RealService;
 import org.apache.commons.io.FileUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -105,6 +108,7 @@ public class RealController {
                                          @RequestParam(value = "realOrderId") Integer realOrderId){
         orderColumn = StringUtils.camelToUnderline(orderColumn);
         List<RealCallpriceMemberDTO> realOrders = realOrderCallpriceService.searchCallpriceRealOrdersMembers(page, pageSize, orderColumn, orderType, searchKey, realOrderId);
+        getRealCallpriceCompleted(realOrders);
         return new PageResult<RealCallpriceMemberDTO>(realOrders, draw);
     }
 
@@ -113,8 +117,10 @@ public class RealController {
      * @return
      */
     @RequestMapping("/realCallpriceShowPage")
-    public String view2realCallpriceShow(Integer realCallId, Model model){
-        
+    public String view2realCallpriceShow(Integer realCallId, Integer realOrderId, Model model){
+        RealCallpriceDetailDTO realOrderCallprice = realOrderCallpriceService.getRealCallpriceDetail(realCallId, realOrderId);
+        getRealCallpriceCompleted2(realOrderCallprice);
+        model.addAttribute("realCallpriceDetail", realOrderCallprice);
         return "real_callprice_show";
     }
 
@@ -126,5 +132,29 @@ public class RealController {
     public String view2realCallprice(Integer realOrderId, Model model){
         model.addAttribute("realDetail", realService.getRealDetail(realOrderId));
         return "real_callprice";
+    }
+
+
+    //获得形如xxx元/xxxg形式的数据
+    private static void getRealCallpriceCompleted(List<RealCallpriceMemberDTO> dto){
+        dto.forEach(item->{
+            List<String> result = new ArrayList<>();
+            String[] amountList = item.getCallPriceAmount().split(",");
+            String[] priceList = item.getCallPriceMoney().split(",");
+            for(int i=0; i<amountList.length; i++){
+                result.add(amountList[i] + "/" + priceList[i]);
+            }
+            item.setCallPriceCompleted(result);
+        });
+    }
+    //获得形如xxx元/xxxg形式的数据
+    private static void getRealCallpriceCompleted2(RealCallpriceDetailDTO dto){
+            List<String> result = new ArrayList<>();
+            String[] amountList = dto.getCallPriceAmount().split(",");
+            String[] priceList = dto.getCallPriceMoney().split(",");
+            for(int i=0; i<amountList.length; i++){
+                result.add(amountList[i] + "/" + priceList[i]);
+            }
+            dto.setRealCallpriceCompleted(result);
     }
 }

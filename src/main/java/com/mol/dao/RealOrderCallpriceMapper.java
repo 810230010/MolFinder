@@ -1,6 +1,7 @@
 package com.mol.dao;
 
 import com.mol.common.dao.BaseDao;
+import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.RealOrderCallprice;
@@ -31,4 +32,11 @@ public interface RealOrderCallpriceMapper extends BaseDao<RealOrderCallprice, In
      * @return
      */
     List<RealCallpriceMemberDTO> listRealCallpriceMembers(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("searchKey") String searchKey, @Param("realOrderId") Integer realOrderId);
+
+    /**
+     * 获取实单报价详情
+     * @param realCallId
+     * @return
+     */
+    RealCallpriceDetailDTO getRealOrderCallpriceDetail(@Param("realCallId") Integer realCallId, @Param("realOrderId") Integer realOrderId);
 }
