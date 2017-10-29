@@ -178,7 +178,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="text-center">
-                            <input id="submit" type="submit" class="btn btn-primary" value="生成订单"/>
+                            <input id="submit" type="button" class="btn btn-primary" value="生成订单" onclick="jump2makeOrder()"/>
                         </div>
                     </div>
                 </form>
@@ -209,8 +209,6 @@
         $('#collapseOne').collapse('show');
         var diagrams = "${realCallpriceDetail.offerDiagram}";
         var diagramArr = diagrams.split(",");
-
-        $(".diagram").append("<option value='10001'>Jquery</option>");
         $(".bill").select2({
             minimumResultsForSearch: -1
         });
@@ -220,7 +218,7 @@
 
     //跳转到下单页面
     function jump2makeOrder() {
-        
+        window.location.href = "/order/realMakeOrderPage?realCallId=" + ${realCallpriceDetail.realCallId};
     }
 </script>
 </html>
