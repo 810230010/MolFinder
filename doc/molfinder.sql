@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : jjp
-Source Server Version : 50540
+Source Server         : test_space
+Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : molfinder
 
 Target Server Type    : MYSQL
-Target Server Version : 50540
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-09-10 17:01:51
+Date: 2017-10-29 15:44:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -105,7 +105,7 @@ CREATE TABLE `t_credit_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_order`;
 CREATE TABLE `t_goods_order` (
-  `goods_order_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单id',
+  `goods_order_id` int(10) unsigned NOT NULL COMMENT '订单id',
   `call_price_id` int(11) DEFAULT NULL COMMENT '报价实单或者询单id',
   `buyer_id` int(11) DEFAULT NULL,
   `express_way` varchar(20) DEFAULT NULL,
@@ -260,6 +260,7 @@ CREATE TABLE `t_real_order_callprice` (
   `real_call_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `real_order_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT '0' COMMENT '报价人id',
+  `call_price_amount` varchar(20) DEFAULT NULL,
   `call_price_money` varchar(20) DEFAULT NULL,
   `call_price_validtime` varchar(20) DEFAULT NULL COMMENT '报价有效期',
   `call_purity` varchar(10) DEFAULT NULL,
@@ -271,6 +272,7 @@ CREATE TABLE `t_real_order_callprice` (
   `attachment` varchar(50) DEFAULT NULL,
   `vilation_money_amount` decimal(10,0) DEFAULT NULL,
   `state` varchar(10) DEFAULT NULL,
+  `express_type` varchar(20) DEFAULT '快递到门',
   `create_time` datetime DEFAULT NULL COMMENT '报价/抢单时间',
   PRIMARY KEY (`real_call_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -278,7 +280,7 @@ CREATE TABLE `t_real_order_callprice` (
 -- ----------------------------
 -- Records of t_real_order_callprice
 -- ----------------------------
-INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '4000元/10g', null, '98', '3-4周', 'hfds', '1', '无', '1', null, '1', 'BIDDING', null);
+INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '10g,20g', '4000元,8000元', null, '98', '3-4周', 'hfds', '不开发票', 'asd', '1', null, '1', 'BIDDING', null, null);
 
 -- ----------------------------
 -- Table structure for `t_setting`
@@ -317,3 +319,22 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('1', '123123', '12312', '0', null, null, '0', null, '2017-08-09 12:12:34');
 INSERT INTO `t_user` VALUES ('2', '17858936109', '810230010@qq.com', '0', '123', null, null, null, '2017-08-09 15:11:51');
+
+-- ----------------------------
+-- Table structure for `t_user_accept_address`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_accept_address`;
+CREATE TABLE `t_user_accept_address` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `accept_goods_username` varchar(10) DEFAULT NULL,
+  `accept_goods_address` varchar(100) DEFAULT NULL,
+  `contact_tel` varchar(20) DEFAULT NULL,
+  `add_time` varchar(20) DEFAULT NULL,
+  `update_time` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_user_accept_address
+-- ----------------------------
