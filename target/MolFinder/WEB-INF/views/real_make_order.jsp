@@ -78,20 +78,16 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <c:forEach var="callItem" items="${realCallpriceDetail.realCallpriceCompleted}">
+                        <c:set value="${ fn:split(callItem, '/') }" var="callItems" />
                     <tr>
-                        <td>25g</td>
-                        <td>1500(含增值税)</td>
-                        <td>98%</td>
-                        <td>1天</td>
-                        <td>快递到门</td>
+                        <td>${callItems[0]}</td>
+                        <td>${callItems[1]}(${realCallpriceDetail.makeBill})</td>
+                        <td>${realCallpriceDetail.callPurity}%</td>
+                        <td>${realCallpriceDetail.callSubmitDeadline}</td>
+                        <td>${realCallpriceDetail.expressType}</td>
                     </tr>
-                    <tr>
-                        <td>30g</td>
-                        <td>1500(含增值税)</td>
-                        <td>98%</td>
-                        <td>1天</td>
-                        <td>快递到门</td>
-                    </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="col-lg-4">
@@ -114,7 +110,15 @@
                     <label class="col-sm-3 control-label">CAS号: <u>${realCallpriceDetail.casNo}</u></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">开票类型: <u>¥${realCallpriceDetail.callPriceAmount}(增值税发票17%)/25g</u></label>
+                    <c:set value="${ fn:split(realCallpriceDetail.callPriceMoney, ',') }" var="prices" />
+                    <c:set value="${ fn:split(realCallpriceDetail.callPriceAmount, ',') }" var="amounts" />
+                        <label class="col-sm-12 control-label">
+                            开票类型:
+                            <c:forEach var="callPriceItem" items="${realCallpriceDetail.realCallpriceCompleted}">
+                            <u>${callPriceItem}(${realCallpriceDetail.makeBill})</u>
+                            </c:forEach>
+                        </label>
+
                 </div>
                 <div class="form-group">
                     <label class="col-sm-12 control-label">纯度: <u>${realCallpriceDetail.callPurity}%</u></label>

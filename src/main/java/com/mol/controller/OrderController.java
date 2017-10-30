@@ -1,6 +1,7 @@
 package com.mol.controller;
 
 import com.mol.common.controller.RestResult;
+import com.mol.common.util.CommonUtil;
 import com.mol.common.util.WebUtil;
 import com.mol.dto.AcceptGoodsAddressInfo;
 import com.mol.dto.RealCallpriceDetailDTO;
@@ -34,6 +35,7 @@ public class OrderController {
     @RequestMapping("/realMakeOrderPage")
     public String view2RealMakeOrder(HttpServletRequest request, Model model, Integer realCallId, Integer realOrderId){
         RealCallpriceDetailDTO realCallpriceDetailDTO = realOrderCallpriceService.getRealCallpriceDetail(realCallId, realOrderId);
+        CommonUtil.getRealCallpriceCompleted2(realCallpriceDetailDTO);
         Integer userId = WebUtil.getCurrentUser(request).getUserId();
         List<AcceptGoodsAddressInfo> list = acceptAddressService.listAcceptAddress(userId);
         model.addAttribute("addressList", list);
@@ -88,5 +90,7 @@ public class OrderController {
         int affectedRow = acceptAddressService.deleteAcceptAddress(addressId);
         return result;
     }
+
+
 }
 
