@@ -135,6 +135,7 @@ public class RealController {
     }
 
 
+
     //获得形如xxx元/xxxg形式的数据
     private static void getRealCallpriceCompleted(List<RealCallpriceMemberDTO> dto){
         dto.forEach(item->{
@@ -157,4 +158,6 @@ public class RealController {
             }
             dto.setRealCallpriceCompleted(result);
     }
+
+
 }

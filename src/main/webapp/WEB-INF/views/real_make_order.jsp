@@ -9,7 +9,7 @@
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link href="/static/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/plugins/semantic/semantic.min.css">
-    <link href="/static/css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
     <style>
         .content{height:1000px}
@@ -23,6 +23,10 @@
             border-bottom:1px solid grey;
             border-radius: 20px;
             margin-top:20px
+        }
+        .del_icon{
+            text-align: right;
+            display: none
         }
     </style>
 </head>
@@ -41,14 +45,15 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/plugins/layer/layer.js"></script>
 <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
-<!--bootstrap select-->
-<script src="/static/js/plugins/select2/select2.full.min.js" type="text/javascript"></script>
+
 <!--jquery validate-->
 <script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="/static/js/plugins/validate/messages_zh.js"></script>
 <script src="/static/js/ajaxfileupload.js"></script>
 <!-- Steps -->
 <script src="/static/js/plugins/steps/jquery.steps.min.js"></script>
+<!--sweetalert-->
+<script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
 </body>
 <div class="ibox-content">
     <h2>
@@ -66,10 +71,10 @@
                 <table class="table table-bordered">
                     <thead style="background-color:silver;">
                     <tr>
-                        <th>20171010</th>
-                        <th>123123</th>
-                        <th>按实际困难大</th>
-                        <th colspan="2">25g,30g</th>
+                        <th><fmt:formatDate value="${realCallpriceDetail.createTime}" pattern="yyyy-MM-dd"/></th>
+                        <th>${realCallpriceDetail.casNo}</th>
+                        <th>${realCallpriceDetail.chineseName}(${realCallpriceDetail.englishName})</th>
+                        <th colspan="2">${realCallpriceDetail.callPriceAmount}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -106,25 +111,27 @@
             <div class="row">
                 <h4 style="background-color: silver"><img src="/static/img/icons/transaction_fill.png"/>确认价格和包装规格</h4>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">CAS号: 1923111</label>
+                    <label class="col-sm-3 control-label">CAS号: <u>${realCallpriceDetail.casNo}</u></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">开票类型: ¥1500(增值税发票17%)/25g</label>
+                    <label class="col-sm-12 control-label">开票类型: <u>¥${realCallpriceDetail.callPriceAmount}(增值税发票17%)/25g</u></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">纯度: 98%</label>
+                    <label class="col-sm-12 control-label">纯度: <u>${realCallpriceDetail.callPurity}%</u></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">快递方式: 送货上门</label>
+                    <label class="col-sm-12 control-label">快递方式: <u>${realCallpriceDetail.expressType}</u></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">交货期: 3-4周</label>
+                    <label class="col-sm-12 control-label">交货期: <u>${realCallpriceDetail.callSubmitDeadline}</u></label>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label">提供图谱:</label>
                     <div class="col-sm-11">
                         <c:set value="${ fn:split(realCallpriceDetail.offerDiagram, ',') }" var="names" />
-                            <a class="ui teal tag label">hsad</a>
+                        <c:forEach var="item" items="${names}">
+                            <a class="ui teal tag label">${item}</a>
+                        </c:forEach>
                     </div>
                 </div>
 
@@ -143,7 +150,7 @@
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <p>可付订单价<input id="content1" type="text" style="width: 60px;display:inline">%至网站作保证金(默认0.5%)</p>
+                                        <p>可付订单价<input id="content1" type="text" style="width: 60px;display:inline" value="${realCallpriceDetail.prepayedMoneyAmount}" readonly>%至网站作保证金(默认0.5%)</p>
                                         <p>接受违约金过期<input id="content2" type="text" style="width: 60px;display: inline" value="${realCallpriceDetail.vilationMoneyAmount}" readonly>%/天(默认1%)</p>
                                     </div>
                                 </div>
@@ -163,31 +170,16 @@
             <h5 style="position: relative;top:40px">收货地址:</h5>
             <div class="form-group" style="position: relative; top:40px">
                 <div class="col-sm-12 addresses">
+                    <c:forEach var="item2" items="${addressList}">
                     <div class="col-sm-4 address">
                         <dl>
-                            <dd>
-                                江建平(17858936109)
-                            </dd>
-                            <dd>北京西三旗小营东路5号院</dd>
+                            <dd>${item2.acceptGoodsUsername}(${item2.contactTel})</dd>
+                            <dd>${item2.acceptGoodsAddress}</dd>
+                            <dd style="display: none;">${item2.id}</dd>
+                            <dd style="text-align: right;display: none" class="del_icon"><a onclick="deleteAddress($(this).parent().prev().text())"><img src="/static/img/icons/trash_fill.png"/></a></dd>
                         </dl>
                     </div>
-
-                    <div class="col-sm-4 address" >
-                        <dl>
-                            <dd>
-                                江建平(17858936109)
-                            </dd>
-                            <dd>北京西三旗小营东路5号院</dd>
-                        </dl>
-                    </div>
-                    <div class="col-sm-4 address" >
-                        <dl>
-                            <dd>
-                                江建平(17858936109)
-                            </dd>
-                            <dd>北京西三旗小营东路5号院</dd>
-                        </dl>
-                    </div>
+                    </c:forEach>
                     <div class="col-sm-4 text-center addressAdd" style="height:100px;background-color: #e0e1e2;padding: 20px 20px;margin-top:20px;cursor: pointer;padding-top: 10px;border-radius: 20px">
                         <img src="/static/img/icons/add.png"/>
                         <p>添加地址</p>
@@ -210,8 +202,78 @@
 
 <script>
 
+    //删除地址事件
+    function deleteAddress(id){
+        swal({
+                title: "确定删除该收货地址?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/order/deleteAcceptAddress",
+                        data: {
+                            id: parseInt(id)
+                        },
+                        success:function(result){
+                            if(result.code == 200){
+                                refreshAcceptGoodsAddress();
+                                swal("删除成功!", "该收货地址已删除!", "success");
+                            }
+                        },
+                        error:function (result) {
+                            alert("删除收货地址系统出错");
+                        }
+                    })
+
+
+                }
+            });
+    }
+    //添加收货地址事件
+    function addAcceptAddress(){
+        $(".addressAdd").click(function () {
+            //iframe层-父子操作
+            layer.open({
+                type: 2,
+                area: ['700px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/order/addAcceptOrderAddressPage',
+                end: function () {
+                    refreshAcceptGoodsAddress();
+                }
+
+            });
+        })
+    }
+    //添加操作收货地址的样式
+    function addStyle(){
+        $(".address").mouseover(function () {
+            $(this).find(".del_icon").show();
+            $(this).addClass('hover');
+        }).mouseleave(function () {
+            $(this).find(".del_icon").hide();
+            if($(this).hasClass('hover')){
+                $(this).removeClass('hover');
+            }
+        }).click(function () {
+            $(".address").each(function () {
+                if($(this).hasClass('selected')){
+                    $(this).removeClass('selected')
+                }
+            })
+            $(this).addClass('selected');
+        })
+    }
      //ajax获得收货地址列表
-     function regreshAcceptGoodsAddress(){
+     function refreshAcceptGoodsAddress(){
          $.ajax({
              url: "/order/getAcceptGoodsAddress",
              data: {
@@ -222,11 +284,19 @@
                  for(var i=0; i<result.length; i++){
                      $(".addresses").append("  <div class=\"col-sm-4 address\">\n" +
                          "                        <dl>\n" +
-                         "                            <dd>result[i].contact_tel</dd>\n" +
-                         "                            <dd>result[i].acceptGoodsAddress</dd>\n" +
+                         "                            <dd>" + result[i].acceptGoodsUsername + "(" +result[i].contactTel + ")" + "</dd>\n" +
+                         "                            <dd>" + result[i].acceptGoodsAddress + "</dd>\n" +
+                         "                            <dd style='display: none'>" + result[i].id + "</dd>\n" +
+                         "<dd class='del_icon'><a onclick='deleteAddress($(this).parent().prev().text())'><img src='/static/img/icons/trash_fill.png'/></a></dd>\n" +
                          "                        </dl>\n" +
                          "                    </div>")
                  }
+                 $(".addresses").append("<div class=\"col-sm-4 text-center addressAdd\" style=\"height:100px;background-color: #e0e1e2;padding: 20px 20px;margin-top:20px;cursor: pointer;padding-top: 10px;border-radius: 20px\">\n" +
+                  "                              <img src=\"/static/img/icons/add.png\"/>\n" +
+                  "                              <p>添加地址</p>\n" +
+                  "  </div>");
+                 addStyle();
+                 addAcceptAddress();
              },
              error:function (result) {
                  alert("系统出错")
@@ -240,34 +310,8 @@
             onStepChanging: function (event, currentIndex, newIndex)
             {
                 if(newIndex == 1){
-                    $(".address").mouseover(function () {
-                        $(this).addClass('hover');
-                    }).mouseleave(function () {
-                        if($(this).hasClass('hover')){
-                            $(this).removeClass('hover');
-                        }
-                    }).click(function () {
-                        $(".address").each(function () {
-                            if($(this).hasClass('selected')){
-                                $(this).removeClass('selected')
-                            }
-                        })
-                        $(this).addClass('selected');
-                    })
-                    $(".addressAdd").click(function () {
-                        //iframe层-父子操作
-                        layer.open({
-                            type: 2,
-                            area: ['700px', '450px'],
-                            fixed: false, //不固定
-                            maxmin: true,
-                            content: '/order/addAcceptOrderAddress',
-                            end: function () {
-                                refreshAcceptGoodsAddress()
-                            }
-
-                        });
-                    })
+                    addStyle();
+                    addAcceptAddress();
                 }
                 // Always allow going backward even if the current step contains invalid fields!
                 if (currentIndex > newIndex)

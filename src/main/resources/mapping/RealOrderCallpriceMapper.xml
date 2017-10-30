@@ -72,7 +72,9 @@
       a.make_bill,
       a.other_require,
       a.prepayed_money_amount,
-      a.vilation_money_amount
+      a.vilation_money_amount,
+      a.express_type,
+      a.create_time
       from
       t_real_order_callprice a, t_real_order b
       where a.real_call_id = #{realCallId}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mol.dao.AcceptAddressMapper" >
+  <!--获得收货地址列表-->
+  <select id="listAcceptGoodsAddressByUserId" resultType="com.mol.dto.AcceptGoodsAddressInfo">
+    select
+    id,
+    accept_goods_username,
+    accept_goods_address,
+    contact_tel
+    FROM
+    t_user_accept_address
+    where user_id = #{userId}
+  </select>
+</mapper>

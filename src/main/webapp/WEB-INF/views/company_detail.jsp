@@ -51,8 +51,8 @@
         </div>
         <div class="col-md-11 credit" style="height: 40px;padding-bottom: 0">
             <ul style="list-style: none;padding-left:0;width:240px;height: 40px">
-                <li><a href="#"><i class="fa fa-thumbs-o-up"></i>点赞1次</a></li>
-                <li><a href="#"><i class="fa fa-share"></i>分享2次</a></li>
+                <li><a href="#"><i class="fa fa-thumbs-o-up"></i>点赞(1)</a></li>
+                <li><a href="#"><i class="fa fa-share"></i>分享(2)</a></li>
                 <li><i class="fa fa-comment"></i>1次评价</li>
             </ul>
         </div>
@@ -203,11 +203,11 @@
             <div class="row">
                 <div class="tabs-container">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-eye"> </i>全部</a></li>
-                        <li><a data-toggle="tab" href="#tab-2"><i class="fa fa-book"></i>好评</a></li>
-                        <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i>中评</a></li>
-                        <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i>差评</a></li>
-                        <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i>有图</a></li>
+                        <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-list-alt"> </i>全部</a></li>
+                        <li><a data-toggle="tab" href="#tab-2"><i class="fa fa-thumbs-o-up"></i>好评</a></li>
+                        <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-minus"></i>中评</a></li>
+                        <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-thumbs-o-down"></i>差评</a></li>
+                        <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-file-image-o"></i>有图</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="tab-1" class="tab-pane fade in active">
@@ -266,6 +266,7 @@
         </div>
     </div>
 </div>
+<%@include file="common/footer.jsp"%>
 </body>
 <script type="text/javascript">
     $(function () {

@@ -218,7 +218,7 @@
 
     //跳转到下单页面
     function jump2makeOrder() {
-        window.location.href = "/order/realMakeOrderPage?realCallId=" + ${realCallpriceDetail.realCallId};
+        window.location.href = "/order/realMakeOrderPage?realCallId=" + ${realCallpriceDetail.realCallId} + "&realOrderId=" + ${realCallpriceDetail.realOrderId};
     }
 </script>
 </html>

@@ -43,5 +43,6 @@ public class RealCallpriceDetailDTO {
     private String state;
 
     private Date createTime;
+    private String expressType;
     private List<String> realCallpriceCompleted;
 }

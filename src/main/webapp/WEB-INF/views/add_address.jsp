@@ -72,26 +72,26 @@
              var accepter = $("#accepter").val();
              var tel = $("#tel").val();
              var address = $("#acceptAddress").val();
-             <%--$.ajax({--%>
-                 <%--url: "/order/addAcceptOrderAddress",--%>
-                 <%--data: {--%>
-                      <%--userId: ${currentUser.userId},--%>
-                      <%--acceptGoodsUsername: $("#accepter").val(),--%>
-                      <%--acceptGoodsAddress: $("#acceptAddress").val(),--%>
-                      <%--contactTel: $("#tel").val()--%>
-                 <%--},--%>
-                 <%--success:function (result) {--%>
-                     <%--if(result.code == 200){--%>
-                         <%--parent.layer.msg('添加地址成功', {shade: 0.3})--%>
-                         <%--setTimeout(function () {--%>
-                             <%--window.location.href = "/index/indexPage";--%>
-                         <%--},2000)--%>
-                     <%--}--%>
-                 <%--},--%>
-                 <%--error:function(result){--%>
-                     <%--alert("系统出错");--%>
-                 <%--}--%>
-             <%--})--%>
+             $.ajax({
+                 url: "/order/addAcceptOrderAddress",
+                 data: {
+                      userId: ${currentUser.userId},
+                      acceptGoodsUsername: accepter,
+                      acceptGoodsAddress: address,
+                      contactTel: tel
+                 },
+                 success:function (result) {
+                     if(result.code == 200){
+                         parent.layer.msg('添加地址成功', {shade: 0.3})
+                         $("#accepter").val("");
+                         $("#tel").val("");
+                         $("#acceptAddress").val("");
+                     }
+                 },
+                 error:function(result){
+                     alert("系统出错");
+                 }
+             })
         },
         invalidHandler: function(form, validator) {return false;}
     });
