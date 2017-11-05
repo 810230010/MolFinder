@@ -6,7 +6,9 @@ import com.mol.common.util.WebUtil;
 import com.mol.dto.AcceptGoodsAddressInfo;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.entity.AcceptAddress;
+import com.mol.entity.GoodsOrder;
 import com.mol.service.AcceptAddressService;
+import com.mol.service.GoodsOrderService;
 import com.mol.service.RealOrderCallpriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ public class OrderController {
     private AcceptAddressService acceptAddressService;
     @Autowired
     private RealOrderCallpriceService realOrderCallpriceService;
+    @Autowired
+    private GoodsOrderService goodsOrderService;
     /**
      *
      * 跳转到实单下单页面
@@ -91,6 +95,17 @@ public class OrderController {
         return result;
     }
 
+    /**
+     * 下单
+     * @return
+     */
+    @RequestMapping("/makeOrderBill")
+    @ResponseBody
+    public Object makeRealOrder(GoodsOrder goodsOrder){
+        RestResult result = new RestResult();
+        int affectedRow = goodsOrderService.createOrderBill(goodsOrder);
+        return result;
+    }
 
 }
 

@@ -81,4 +81,12 @@ public interface RealOrderMapper extends BaseDao<RealOrder, Integer>{
      * @return
      */
     List<RealOrder> listRealOrderWithStatus(@Param("orderColumn") String orderColumn, @Param("orderType") String orderType, @Param("searchKey") String searchKey, @Param("userId") Integer userId, @Param("status") String status);
+
+    /**
+     * 改变实单状态
+     * @param realOrderId
+     * @param state
+     * @return
+     */
+    int changeRealOrderState(@Param("realOrderId") Integer realOrderId, @Param("state") String state);
 }

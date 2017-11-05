@@ -36,5 +36,10 @@ public class RealServiceImpl implements RealService{
         return realOrderMapper.listRealOrderWithStatus(orderColumn, orderType, searchKey, userId, status);
     }
 
+    @Override
+    public int changeRealOrderState(Integer realOrderId, String state) {
+        return realOrderMapper.changeRealOrderState(realOrderId, state);
+    }
+
 
 }

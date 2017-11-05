@@ -11,4 +11,9 @@ public class GlobalConstant {
     public static final String SUCCESS_MESSAGE = "success";
     public static final String IMG_BASE_URL = "http://localhost:8080/molfinder/doc/";
     public static final String RMB_UNIT = "元";
+    public static final String REAL_ORDER_ONSALE = "ONSALE";
+    public static final String REAL_ORDER_CLOSE = "CLOSE";
+    //已派单
+    public static final String REAL_ORDER_SENDED = "SENDED";
+    public static final String REAL_ORDER_SUCCESS = "SUCCESS";
 }

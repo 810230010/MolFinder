@@ -37,5 +37,11 @@ public interface RealService {
      */
     List<RealOrder> searchMyRealOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status);
 
-
+    /**
+     * 改变实单状态
+     * @param realOrderId
+     * @param state
+     * @return
+     */
+    int changeRealOrderState(Integer realOrderId, String state);
 }

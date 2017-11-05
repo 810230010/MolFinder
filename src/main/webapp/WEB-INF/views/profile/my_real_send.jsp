@@ -331,7 +331,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     //已成单
     function fun4(){
@@ -418,7 +418,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     function tableAction(){
         var table = $('#dataTable').DataTable();
@@ -426,6 +426,25 @@
             var tr = $(this).closest('tr');
             var data = table.row(tr).data();
             window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + data.realOrderId;
+        });
+        table.on( 'click', '.stop', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            $.ajax({
+                url: "/real/closeMyRealOrder",
+                data: {
+                    realOrderId: data.realOrderId
+                },
+                success: function (result) {
+                    if(result.code == 200){
+                        swal("关闭实单成功!", "该实单已停止发布!", "success");
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
+
         });
     }
 </script>

@@ -1,5 +1,6 @@
 package com.mol.controller;
 
+import com.mol.common.GlobalConstant;
 import com.mol.common.controller.PageResult;
 import com.mol.common.controller.RestResult;
 import com.mol.common.qiniu.QiniuUtil;
@@ -134,6 +135,18 @@ public class RealController {
         return "real_callprice";
     }
 
+    /**
+     * 关闭我发布的实单
+     * @param realOrderId
+     * @return
+     */
+    @RequestMapping("/closeMyRealOrder")
+    @ResponseBody
+    public Object closeMyRealOrder(Integer realOrderId){
+        RestResult result = new RestResult();
+        int affectedRow = realService.changeRealOrderState(realOrderId, GlobalConstant.REAL_ORDER_CLOSE);
+        return result;
+    }
 
 
     //获得形如xxx元/xxxg形式的数据

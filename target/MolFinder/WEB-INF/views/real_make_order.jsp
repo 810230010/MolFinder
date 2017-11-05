@@ -193,9 +193,9 @@
 
         </fieldset>
 
-        <h1>完成</h1>
+        <h1>确认下单</h1>
         <fieldset>
-            <h2>下单成功!</h2>
+            <h2>最后一部，请确认!</h2>
         </fieldset>
     </form>
 </div>
@@ -313,6 +313,7 @@
             bodyTag: "fieldset",
             onStepChanging: function (event, currentIndex, newIndex)
             {
+
                 if(newIndex == 1){
                     addStyle();
                     addAcceptAddress();
@@ -324,9 +325,16 @@
                 }
 
                 // Forbid suppressing "Warning" step if the user is to young
-                if (newIndex === 3 && Number($("#age").val()) < 18)
+                if (newIndex === 2)
                 {
-                    return false;
+                    var flag = false;
+                    $(".address").each(function () {
+                        if($(this).hasClass('selected')){
+                           flag = true;
+                        }
+                    })
+                    if(flag == false) layer.msg("请选择收货地址!")
+                    return flag;
                 }
 
                 var form = $(this);
@@ -372,10 +380,7 @@
             },
             onFinished: function (event, currentIndex)
             {
-                var form = $(this);
-
-                // Submit form input
-                form.submit();
+                layer.msg("下单成功!")
             }
         }).validate({
             errorPlacement: function (error, element)
