@@ -10,4 +10,7 @@ import java.util.List;
  */
 public interface QueryService {
     List<QueryOrder> searchMyQueryOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String status);
+    QueryOrder getQueryOrderDetail(Integer queryOrderId);
+
+    int changeQueryOrderState(Integer queryOrderId, String queryOrderClose);
 }

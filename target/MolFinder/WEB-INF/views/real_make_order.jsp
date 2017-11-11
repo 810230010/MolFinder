@@ -290,7 +290,7 @@
                          "                        <dl>\n" +
                          "                            <dd>" + result[i].acceptGoodsUsername + "(" +result[i].contactTel + ")" + "</dd>\n" +
                          "                            <dd>" + result[i].acceptGoodsAddress + "</dd>\n" +
-                         "                            <dd style='display: none'>" + result[i].id + "</dd>\n" +
+                         "                            <dd style='display: none' id='accept_info_id'>" + result[i].id + "</dd>\n" +
                          "<dd class='del_icon'><a onclick='deleteAddress($(this).parent().prev().text())'><img src='/static/img/icons/trash_fill.png'/></a></dd>\n" +
                          "                        </dl>\n" +
                          "                    </div>")
@@ -380,19 +380,42 @@
             },
             onFinished: function (event, currentIndex)
             {
-                layer.msg("下单成功!")
-            }
-        }).validate({
-            errorPlacement: function (error, element)
-            {
-                element.before(error);
-            },
-            rules: {
-                confirm: {
-                    equalTo: "#password"
+                var accept_goods_info_id = "";
+                //获取收货地址
+                $(".address").each(function () {
+                    if($(this).hasClass('selected')){
+                        accept_goods_info_id = $(this).find("#accept_info_id").text();
+                    }
+                })
+                var priceList = "${realCallpriceDetail.callPriceMoney}";
+                var total = 0;
+                for(var i=0; i<priceList.length; i++){
+                    total += parseInt(priceList[i]);
                 }
+                $.ajax({
+                    url: "/order/makeOrderBill",
+                    data:{
+                        buyerId: ${currentUser.userId},
+                        callPriceId: ${realCallpriceDetail.realCallId},
+                        expressWay: ${realCallpriceDetail.expressType},
+                        remark: $("#remark").val(),
+                        orderType: "REAL",
+                        acceptGoodsInfoId: accept_goods_info_id,
+                        orderPrice: total
+                    },
+                    success: function (result) {
+                        if(result.code == 200) layer.msg("下单成功!")
+                        setTimeout(function () {
+                            location.href = '/profile/profilePage';
+                        }, 2000)
+                    },
+                    error: function(result){
+                        alert("下单出错");
+                    }
+                })
+
             }
-        });
+        })
     });
 
 </script>

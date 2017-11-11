@@ -22,4 +22,14 @@ public class QueryServiceImpl implements QueryService {
         PageHelper.startPage(page, pageSize);
         return queryOrderMapper.listQueryOrdersWithStatus(orderColumn, orderType, searchKey, userId, status);
     }
+
+    @Override
+    public QueryOrder getQueryOrderDetail(Integer queryOrderId) {
+        return queryOrderMapper.selectByPrimaryKey(queryOrderId);
+    }
+
+    @Override
+    public int changeQueryOrderState(Integer queryOrderId, String state) {
+        return queryOrderMapper.changeQueryOrderState(queryOrderId, state);
+    }
 }

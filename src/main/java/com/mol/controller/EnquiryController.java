@@ -1,10 +1,20 @@
 package com.mol.controller;
 
+import com.mol.common.GlobalConstant;
+import com.mol.common.controller.PageResult;
 import com.mol.common.controller.RestResult;
 import com.mol.common.util.PropertyReader;
 import com.mol.common.util.RequestUtil;
+import com.mol.common.util.StringUtils;
+import com.mol.dto.QueryCallpriceDetailDTO;
+import com.mol.dto.QueryCallpriceMemberDTO;
+import com.mol.dto.RealCallpriceDetailDTO;
+import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.entity.RealOrder;
+import com.mol.service.QueryOrderCallpriceService;
+import com.mol.service.QueryService;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,6 +33,10 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/enquiry")
 public class EnquiryController {
+    @Autowired
+    private QueryService queryService;
+    @Autowired
+    private QueryOrderCallpriceService queryOrderCallpriceService;
 
     /**
      * 跳转到询单发布页面
@@ -52,5 +67,63 @@ public class EnquiryController {
     @RequestMapping("/queryDetailPage")
     public String view2queryDetail(Integer queryOrderId, Model model){
         return "enquiry_detail";
+    }
+
+    /**
+     * 询单报价成员页面
+     * @param queryOrderId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/queryCallpriceMembersPage")
+    public String view2queryCallpriceMembers(Integer queryOrderId, Model model){
+        model.addAttribute("queryDetail", queryService.getQueryOrderDetail(queryOrderId));
+        return "query_callprice_intro";
+    }
+    /**
+     * 询单报价成员
+     * @param draw
+     * @param orderColumn
+     * @param orderType
+     * @param searchKey
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/getQueryCallpriceMembers")
+    @ResponseBody
+    public Object getRealCallpriceDetail(@RequestParam("draw") int draw,
+                                         @RequestParam(value = "orderColumn", required = false) String orderColumn,
+                                         @RequestParam(value = "orderType", required = false) String orderType,
+                                         @RequestParam(value = "searchKey", required = false) String searchKey,
+                                         @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                         @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize,
+                                         @RequestParam(value = "queryOrderId") Integer queryOrderId){
+        orderColumn = StringUtils.camelToUnderline(orderColumn);
+        List<QueryCallpriceMemberDTO> queryOrders = queryOrderCallpriceService.searchCallpriceQueryOrdersMembers(page, pageSize, orderColumn, orderType, searchKey, queryOrderId);
+        return new PageResult<QueryCallpriceMemberDTO>(queryOrders, draw);
+    }
+
+    /**
+     * 询单报价详情显示页面
+     * @return
+     */
+    @RequestMapping("/queryCallpriceShowPage")
+    public String view2queryCallpriceShow(Integer queryCallId, Integer queryOrderId, Model model){
+        QueryCallpriceDetailDTO queryOrderCallprice = queryOrderCallpriceService.getQueryCallpriceDetail(queryCallId, queryOrderId);
+        model.addAttribute("queryCallpriceDetail", queryOrderCallprice);
+        return "query_callprice_show";
+    }
+    /**
+     * 关闭我发布的实单
+     * @param queryOrderId
+     * @return
+     */
+    @RequestMapping("/closeMyQueryOrder")
+    @ResponseBody
+    public Object closeMyQueryOrder(Integer queryOrderId){
+        RestResult result = new RestResult();
+        int affectedRow = queryService.changeQueryOrderState(queryOrderId, GlobalConstant.QUERY_ORDER_CLOSE);
+        return result;
     }
 }

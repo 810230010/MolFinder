@@ -31,4 +31,6 @@ public interface QueryOrderMapper extends BaseDao<QueryOrder, Integer> {
                                                @Param("searchKey") String searchKey,
                                                @Param("userId") Integer userId,
                                                @Param("status") String status);
+
+    int changeQueryOrderState(Integer queryOrderId, String state);
 }

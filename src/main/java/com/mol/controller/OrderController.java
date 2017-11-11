@@ -4,11 +4,13 @@ import com.mol.common.controller.RestResult;
 import com.mol.common.util.CommonUtil;
 import com.mol.common.util.WebUtil;
 import com.mol.dto.AcceptGoodsAddressInfo;
+import com.mol.dto.QueryCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.entity.AcceptAddress;
 import com.mol.entity.GoodsOrder;
 import com.mol.service.AcceptAddressService;
 import com.mol.service.GoodsOrderService;
+import com.mol.service.QueryOrderCallpriceService;
 import com.mol.service.RealOrderCallpriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,8 @@ public class OrderController {
     private RealOrderCallpriceService realOrderCallpriceService;
     @Autowired
     private GoodsOrderService goodsOrderService;
+    @Autowired
+    private QueryOrderCallpriceService queryOrderCallpriceService;
     /**
      *
      * 跳转到实单下单页面
@@ -45,6 +49,20 @@ public class OrderController {
         model.addAttribute("addressList", list);
         model.addAttribute("realCallpriceDetail", realCallpriceDetailDTO);
         return "real_make_order";
+    }
+    /**
+     *
+     * 跳转到询单下单页面
+     * @return
+     */
+    @RequestMapping("/queryMakeOrderPage")
+    public String view2queryMakeOrder(HttpServletRequest request, Model model, Integer queryCallId, Integer queryOrderId){
+        QueryCallpriceDetailDTO queryCallpriceDetailDTO = queryOrderCallpriceService.getQueryCallpriceDetail(queryCallId, queryOrderId);
+        Integer userId = WebUtil.getCurrentUser(request).getUserId();
+        List<AcceptGoodsAddressInfo> list = acceptAddressService.listAcceptAddress(userId);
+        model.addAttribute("addressList", list);
+        model.addAttribute("queryCallpriceDetail", queryCallpriceDetailDTO);
+        return "query_make_order";
     }
 
     /**

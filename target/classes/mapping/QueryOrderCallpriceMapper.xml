@@ -27,4 +27,52 @@
       , ${orderColumn} ${orderType}
     </if>
   </select>
+    <select id="listQueryCallpriceMembers" resultType="com.mol.dto.QueryCallpriceMemberDTO">
+      select
+      a.query_order_id,
+      a.query_call_id,
+      a.call_price_money,
+      a.call_submit_deadline,
+      a.prepayed_money_amount,
+      a.vilation_money_amount,
+      b.company_name,
+      b.user_id,
+      b.certificate_id,
+      a.call_purity
+      from t_query_order_callprice a, t_certification b
+      where
+        a.user_id = b.user_id and a.query_order_id = #{queryOrderId} and a.state = 'BIDDING'
+        <if test="searchKey != null and searchKey != '' ">
+          and (b.company_name like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+        </if>
+      order by
+      a.query_call_id asc
+      <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+        , ${orderColumn} ${orderType}
+      </if>
+    </select>
+  <!--查询询单报价详情-->
+  <select id="getQueryOrderCallpriceDetail" resultType="com.mol.dto.QueryCallpriceDetailDTO">
+    select
+      a.query_call_id,
+      a.query_order_id,
+      b.cas_no,
+      b.english_name,
+      b.chinese_name,
+      b.image,
+      a.call_price_money,
+      a.call_purity,
+      a.call_submit_deadline,
+      a.offer_diagram,
+      a.make_bill,
+      a.other_require,
+      a.prepayed_money_amount,
+      a.vilation_money_amount,
+      a.express_type,
+      a.create_time
+      from
+      t_query_order_callprice a, t_query_order b
+      where a.query_call_id = #{queryCallId}
+      and a.query_order_id = b.query_order_id
+  </select>
 </mapper>

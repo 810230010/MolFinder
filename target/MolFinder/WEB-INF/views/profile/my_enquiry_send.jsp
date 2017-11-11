@@ -147,7 +147,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     //停止询价
     function fun2(){
@@ -216,10 +216,10 @@
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-success btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-success btn-xs table-action again" href="javascript:void(0)">',
                             '再次询价 <i class="fa fa-rotate-left(alias)"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action delete" href="javascript:void(0)">',
                             '删除 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -240,7 +240,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     //已派单
     function fun3(){
@@ -309,13 +309,13 @@
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action update" href="javascript:void(0)">',
                             '修改 <i class="fa fa-trash-o"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action again" href="javascript:void(0)">',
                             '再次发单 <i class="fa fa-trash-o"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action delete" href="javascript:void(0)">',
                             '删除 <i class="fa fa-trash-o"></i>',
                             '</a>'
                         ].join('');
@@ -336,7 +336,36 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
+        tableAction();
+    }
 
+
+    function tableAction(){
+        var table = $('#dataTable').DataTable();
+        table.on( 'click', '.scan', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            window.top.location = "/enquiry/queryCallpriceMembersPage?queryOrderId=" + data.queryOrderId;
+        });
+        table.on( 'click', '.stop', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            $.ajax({
+                url: "/enquiry/closeMyQueryOrder",
+                data: {
+                    queryOrderId: data.queryOrderId
+                },
+                success: function (result) {
+                    if(result.code == 200){
+                        swal("关闭询单成功!", "该询单已停止发布!", "success");
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
+
+        });
     }
 </script>
 </html>

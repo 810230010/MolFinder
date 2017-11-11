@@ -16,4 +16,7 @@ public class GlobalConstant {
     //已派单
     public static final String REAL_ORDER_SENDED = "SENDED";
     public static final String REAL_ORDER_SUCCESS = "SUCCESS";
+
+    public static final String QUERY_ORDER_CLOSE = "CLOSE";
+    public static final String QUERY_ORDER_SENDED = "SENDED";
 }
