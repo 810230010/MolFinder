@@ -149,6 +149,18 @@ public class RealController {
     }
 
 
+    /**
+     * 报价详情显示页面
+     * @return
+     */
+    @RequestMapping("/realCallpriceUpdatePage")
+    public String view2realCallpriceUpdate(Integer realCallId, Integer realOrderId, Model model){
+        RealCallpriceDetailDTO realOrderCallprice = realOrderCallpriceService.getRealCallpriceDetail(realCallId, realOrderId);
+        getRealCallpriceCompleted2(realOrderCallprice);
+        model.addAttribute("realCallpriceDetail", realOrderCallprice);
+        return "real_callprice_update";
+    }
+
     //获得形如xxx元/xxxg形式的数据
     private static void getRealCallpriceCompleted(List<RealCallpriceMemberDTO> dto){
         dto.forEach(item->{

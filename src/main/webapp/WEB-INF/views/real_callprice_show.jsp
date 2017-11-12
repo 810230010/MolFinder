@@ -116,9 +116,6 @@
                         <div class="input-group col-sm-4" style="position:relative;left: 20px">
                             <c:set value="${ fn:split(realCallpriceDetail.callSubmitDeadline, '-') }" var="names" />
                             <input id="beginWeek" type="text" class="input-sm form-control" readonly value="${realCallpriceDetail.callSubmitDeadline}">
-                            <%--<span class="input-group-addon">-</span>--%>
-                            <%--<input id="endWeek" type="text" class="input-sm form-control" readonly value="${names[1]}">--%>
-                            <%--<span class="input-group-addon">周</span>--%>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>

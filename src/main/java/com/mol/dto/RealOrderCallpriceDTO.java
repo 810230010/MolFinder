@@ -11,6 +11,7 @@ import java.util.Date;
 @Data
 public class RealOrderCallpriceDTO {
     private Integer certificateId;
+    private Integer realOrderId;
     private Integer userId;
     private Integer realCallId;
     private String companyName;

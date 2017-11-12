@@ -133,10 +133,10 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs table-action update" href="javascript:void(0)">',
                             '修改 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action cancel" href="javascript:void(0)">',
                             '取消报价 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -157,7 +157,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
   //派单中列表
     function fun2(){
@@ -239,7 +239,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+       tableAction();
     }
     //已派单列表
     function fun3(){
@@ -323,7 +323,7 @@
                             ].join('');
                         }else{
                             return [
-                                '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                                '<a class="table-button btn btn-danger btn-xs table-action delete" href="javascript:void(0)">',
                                 '删除 <i class="fa fa-trash-o"></i>',
                                 '</a>',
                             ].join('');
@@ -347,7 +347,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+         tableAction();
     }
     //已取消列表
     function fun4(){
@@ -423,7 +423,7 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                             return [
-                                '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                                '<a class="table-button btn btn-danger btn-xs table-action delete" href="javascript:void(0)">',
                                 '删除 <i class="fa fa-trash-o"></i>',
                                 '</a>',
                             ].join('');
@@ -445,7 +445,35 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
+    tableAction()
+    }
 
+    function tableAction(){
+        var table = $('#dataTable').DataTable();
+        table.on( 'click', '.update', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            window.top.location = "/real/realCallpriceUpdatePage?realOrderId=" + data.realOrderId + "&realCallId=" + data.realCallId;
+        });
+        table.on( 'click', '.cancel', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            $.ajax({
+                url: "/real/cancelMyRealCallprice",
+                data: {
+                    realOrderId: data.realOrderId
+                },
+                success: function (result) {
+                    if(result.code == 200){
+                        swal("关闭询单成功!", "该询单已停止发布!", "success");
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
+
+        });
     }
 </script>
 </html>
