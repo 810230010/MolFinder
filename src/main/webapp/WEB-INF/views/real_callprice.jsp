@@ -288,7 +288,7 @@
                     rewardMoneyPercent: rewardMoney,
                     remark: $("#remark").val(),
                     priceBetween: $("#lowPrice").val() + "-" + $("#highPrice").val(),
-                    submitDeadline: $("#beginWeek").val() + $("#endWeek").val(),
+                    submitDeadline: $("#beginWeek").val() + $("#endWeek").val()
                 },
                 success: function (data, status)  //服务器成功响应处理函数
                 {

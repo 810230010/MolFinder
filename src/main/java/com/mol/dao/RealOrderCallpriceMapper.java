@@ -39,4 +39,11 @@ public interface RealOrderCallpriceMapper extends BaseDao<RealOrderCallprice, In
      * @return
      */
     RealCallpriceDetailDTO getRealOrderCallpriceDetail(@Param("realCallId") Integer realCallId, @Param("realOrderId") Integer realOrderId);
+
+    /**
+     * 取消报价
+     * @param realCallId
+     * @return
+     */
+    int updateRealOrderCallpriceStatusWithCancel(Integer realCallId);
 }

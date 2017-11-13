@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mol.dao.RealOrderCallpriceMapper" >
+  <update id="updateRealOrderCallpriceStatusWithCancel">
+    update t_real_order_callprice
+    set
+    state = 'CANCEL'
+    where real_call_id = #{realCallId}
+  </update>
   <!--根据报价实单状态查询当前用户报价的实单列表-->
   <select id="listCallpriceRealOrdersWithStatus" resultType="com.mol.dto.RealOrderCallpriceDTO">
     select a.real_call_id, a.real_order_id, a.call_price_money, a.call_submit_deadline, a.prepayed_money_amount, a.vilation_money_amount,a.create_time, a.state,c.company_name,b.cas_no,b.user_id, b.image

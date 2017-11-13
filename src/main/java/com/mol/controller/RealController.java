@@ -7,6 +7,8 @@ import com.mol.common.qiniu.QiniuUtil;
 import com.mol.common.util.PropertyReader;
 import com.mol.common.util.RequestUtil;
 import com.mol.common.util.StringUtils;
+import com.mol.dao.RealOrderCallpriceMapper;
+import com.mol.dao.RealOrderMapper;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.entity.RealOrder;
@@ -37,6 +39,8 @@ public class RealController {
     private RealService realService;
     @Autowired
     private RealOrderCallpriceService realOrderCallpriceService;
+    @Autowired
+    private RealOrderCallpriceMapper realOrderCallpriceMapper;
     /**
      * 跳转到实单发布页面
      * @return
@@ -161,6 +165,26 @@ public class RealController {
         return "real_callprice_update";
     }
 
+    @RequestMapping("/updateRealOrderCallprice")
+    @ResponseBody
+    public Object updateRealOrderCallprice(RealOrderCallprice realOrderCallprice){
+        RestResult result = new RestResult();
+        realOrderCallpriceMapper.updateByPrimaryKeySelective(realOrderCallprice);
+        return result;
+    }
+
+    /**
+     * 取消我报价的实单
+     * @param realCallId
+     * @return
+     */
+    @RequestMapping("/cancelMyRealCallprice")
+    @ResponseBody
+    public Object cancelMyRealCallprice(Integer realCallId){
+        RestResult result = new RestResult();
+        realOrderCallpriceMapper.updateRealOrderCallpriceStatusWithCancel(realCallId);
+        return result;
+    }
     //获得形如xxx元/xxxg形式的数据
     private static void getRealCallpriceCompleted(List<RealCallpriceMemberDTO> dto){
         dto.forEach(item->{

@@ -4,10 +4,12 @@
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/plugins/layer/layer.js"></script>
     <script src="/static/js/plugins/dataTables/datatables.min.js"></script>
+    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="/static/js/util.js"></script>
     <style>
         .filter2 ul{height: 40px;padding-left: 0px;background: #f8f8f8}
@@ -461,11 +463,14 @@
             $.ajax({
                 url: "/real/cancelMyRealCallprice",
                 data: {
-                    realOrderId: data.realOrderId
+                    realCallId: data.realCallId
                 },
                 success: function (result) {
                     if(result.code == 200){
-                        swal("关闭询单成功!", "该询单已停止发布!", "success");
+                       layer.msg("取消实单报价成功!");
+                       setTimeout(function () {
+                           window.location.reload();
+                       },2000)
                     }
                 },
                 error: function(result){
