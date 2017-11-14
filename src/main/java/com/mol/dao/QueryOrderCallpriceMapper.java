@@ -37,4 +37,5 @@ public interface QueryOrderCallpriceMapper extends BaseDao<QueryOrderCallprice, 
      * @return
      */
     QueryCallpriceDetailDTO getQueryOrderCallpriceDetail(@Param("queryCallId") Integer queryCallId, @Param("queryOrderId") Integer queryOrderId);
+    int updateQueryOrderCallpriceStatusWithCancel(Integer queryCallId);
 }

@@ -6,11 +6,11 @@ import com.mol.common.controller.RestResult;
 import com.mol.common.util.PropertyReader;
 import com.mol.common.util.RequestUtil;
 import com.mol.common.util.StringUtils;
-import com.mol.dto.QueryCallpriceDetailDTO;
-import com.mol.dto.QueryCallpriceMemberDTO;
-import com.mol.dto.RealCallpriceDetailDTO;
-import com.mol.dto.RealCallpriceMemberDTO;
+import com.mol.dao.QueryOrderCallpriceMapper;
+import com.mol.dto.*;
+import com.mol.entity.QueryOrderCallprice;
 import com.mol.entity.RealOrder;
+import com.mol.entity.RealOrderCallprice;
 import com.mol.service.QueryOrderCallpriceService;
 import com.mol.service.QueryService;
 import org.apache.commons.io.FileUtils;
@@ -37,6 +37,8 @@ public class EnquiryController {
     private QueryService queryService;
     @Autowired
     private QueryOrderCallpriceService queryOrderCallpriceService;
+    @Autowired
+    private QueryOrderCallpriceMapper queryOrderCallpriceMapper;
 
     /**
      * 跳转到询单发布页面
@@ -124,6 +126,37 @@ public class EnquiryController {
     public Object closeMyQueryOrder(Integer queryOrderId){
         RestResult result = new RestResult();
         int affectedRow = queryService.changeQueryOrderState(queryOrderId, GlobalConstant.QUERY_ORDER_CLOSE);
+        return result;
+    }
+    /**
+     * 报价详情显示页面
+     * @return
+     */
+    @RequestMapping("/queryCallpriceUpdatePage")
+    public String view2realCallpriceUpdate(Integer queryCallId, Integer queryOrderId, Model model){
+        QueryCallpriceDetailDTO queryOrderCallprice = queryOrderCallpriceService.getQueryCallpriceDetail(queryCallId, queryOrderId);
+        model.addAttribute("queryCallpriceDetail", queryOrderCallprice);
+        return "query_callprice_update";
+    }
+
+    @RequestMapping("/updateQueryOrderCallprice")
+    @ResponseBody
+    public Object updateQueryOrderCallprice(QueryOrderCallprice queryOrderCallprice){
+        RestResult result = new RestResult();
+        queryOrderCallpriceMapper.updateByPrimaryKeySelective(queryOrderCallprice);
+        return result;
+    }
+
+    /**
+     * 取消我报价的询单
+     * @param queryCallId
+     * @return
+     */
+    @RequestMapping("/cancelMyQueryCallprice")
+    @ResponseBody
+    public Object cancelMyRealCallprice(Integer queryCallId){
+        RestResult result = new RestResult();
+        queryOrderCallpriceMapper.updateQueryOrderCallpriceStatusWithCancel(queryCallId);
         return result;
     }
 }

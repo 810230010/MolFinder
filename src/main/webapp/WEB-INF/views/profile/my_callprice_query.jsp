@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>我报价的询单</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <script src="/static/js/jquery-3.1.1.min.js"></script>
@@ -133,10 +133,10 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs table-action update" href="javascript:void(0)">',
                             '修改 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action cancel" href="javascript:void(0)">',
                             '取消报价 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -157,7 +157,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     //派单中列表
     function fun2(){
@@ -239,7 +239,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+       tableAction();
     }
     //已派单列表
     function fun3(){
@@ -347,7 +347,7 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
-
+        tableAction();
     }
     //已取消列表
     function fun4(){
@@ -445,7 +445,37 @@
                 "url": "/static/js/plugins/dataTables/Chinese.json",
             }
         });
+     tableAction();
+    }
+    function tableAction(){
+        var table = $('#dataTable').DataTable();
+        table.on( 'click', '.update', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            window.top.location = "/enquiry/queryCallpriceUpdatePage?queryOrderId=" + data.queryOrderId + "&queryCallId=" + data.queryCallId;
+        });
+        table.on( 'click', '.cancel', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            $.ajax({
+                url: "/enquiry/cancelMyQueryCallprice",
+                data: {
+                    queryCallId: data.queryCallId
+                },
+                success: function (result) {
+                    if(result.code == 200){
+                        layer.msg("取消询单报价成功!");
+                        setTimeout(function () {
+                            window.location.reload();
+                        },2000)
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
 
+        });
     }
 </script>
 </html>

@@ -13,6 +13,7 @@ public class QueryOrderCallpriceDTO {
     private Integer certificateId;
     private Integer userId;
     private Integer queryCallId;
+    private Integer queryOrderId;
     private String companyName;
     private String casNo;
     private String callPriceMoney;
