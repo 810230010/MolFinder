@@ -236,4 +236,13 @@ public class ProfileController
         int affectedRow = certificationService.addCertificateUser(certification);
         return result;
     }
+
+    /**
+     * 我购买的订单
+     * @return
+     */
+    @RequestMapping("/orders/purchasePage")
+    public String view2purchaseOrder(){
+        return "order_purchase";
+    }
 }
