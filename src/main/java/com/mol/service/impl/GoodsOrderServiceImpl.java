@@ -1,15 +1,19 @@
 package com.mol.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.mol.common.GlobalConstant;
 import com.mol.common.util.DateUtil;
 import com.mol.common.util.OrderUtil;
 import com.mol.dao.GoodsOrderMapper;
 import com.mol.dao.QueryOrderMapper;
 import com.mol.dao.RealOrderMapper;
+import com.mol.dto.GoodsOrderDTO;
 import com.mol.entity.GoodsOrder;
 import com.mol.service.GoodsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by usher on 2017/11/5.
@@ -35,5 +39,15 @@ public class GoodsOrderServiceImpl implements GoodsOrderService {
         }
 
         return goodsOrderMapper.insertSelective(goodsOrder);
+    }
+
+    @Override
+    public List<GoodsOrderDTO> searchMypurchaseOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String state) {
+        return goodsOrderMapper.listMyPurchaseOrdersWithStatus(orderColumn, orderType, searchKey, userId, state);
+    }
+
+    @Override
+    public int updateGoodsOrderState(String goodsOrderId, String state) {
+        return goodsOrderMapper.updateGoodsOrderState(goodsOrderId, state);
     }
 }

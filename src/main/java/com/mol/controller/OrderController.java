@@ -1,11 +1,12 @@
 package com.mol.controller;
 
+import com.mol.common.controller.PageResult;
+import com.mol.common.controller.PageResult2;
 import com.mol.common.controller.RestResult;
 import com.mol.common.util.CommonUtil;
+import com.mol.common.util.StringUtils;
 import com.mol.common.util.WebUtil;
-import com.mol.dto.AcceptGoodsAddressInfo;
-import com.mol.dto.QueryCallpriceDetailDTO;
-import com.mol.dto.RealCallpriceDetailDTO;
+import com.mol.dto.*;
 import com.mol.entity.AcceptAddress;
 import com.mol.entity.GoodsOrder;
 import com.mol.service.AcceptAddressService;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +29,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
+    @Autowired
+    private HttpServletRequest request;
     @Autowired
     private AcceptAddressService acceptAddressService;
     @Autowired
@@ -125,5 +129,38 @@ public class OrderController {
         return result;
     }
 
+    @RequestMapping("/myPurchaseOrders/{state}")
+    @ResponseBody
+    public Object getMyPurchaseOrdersWithStatus(@PathVariable String state,
+                                                @RequestParam("draw") int draw,
+                                                @RequestParam(value = "orderColumn", required = false) String orderColumn,
+                                                @RequestParam(value = "orderType", required = false) String orderType,
+                                                @RequestParam(value = "searchKey", required = false) String searchKey,
+                                                @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize){
+        orderColumn = StringUtils.camelToUnderline(orderColumn);
+        Integer userId = WebUtil.getCurrentUser(request).getUserId();
+        List<GoodsOrderDTO> orders = goodsOrderService.searchMypurchaseOrdersWithStatus(page, pageSize, orderColumn, orderType, searchKey, userId, state);
+        return new PageResult2<GoodsOrderDTO>(orders, draw);
+    }
+
+    @RequestMapping("/updateGoodsOrderStatus/{state}")
+    @ResponseBody
+    public Object updateGoodsOrderState(@PathVariable String state, String goodsOrderId){
+        RestResult result = new RestResult();
+        goodsOrderService.updateGoodsOrderState(goodsOrderId, state);
+        return result;
+    }
+
+    /**
+     * 订单详情页面
+     * @param goodsOrderId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/goodsOrderDetailPage")
+    public String view2goodsOrderDetail(String goodsOrderId, Model model){
+        return "";
+    }
 }
 
