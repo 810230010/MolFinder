@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : test_space
-Source Server Version : 50528
+Source Server         : jjp
+Source Server Version : 50540
 Source Host           : localhost:3306
 Source Database       : molfinder
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2017-10-29 15:44:15
+Date: 2017-11-19 21:12:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -105,20 +105,25 @@ CREATE TABLE `t_credit_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_goods_order`;
 CREATE TABLE `t_goods_order` (
-  `goods_order_id` int(10) unsigned NOT NULL COMMENT '订单id',
+  `goods_order_id` varchar(100) NOT NULL COMMENT '订单id',
   `call_price_id` int(11) DEFAULT NULL COMMENT '报价实单或者询单id',
   `buyer_id` int(11) DEFAULT NULL,
   `express_way` varchar(20) DEFAULT NULL,
-  `accept_goods_place` varchar(100) DEFAULT NULL,
+  `accept_goods_info_id` varchar(100) DEFAULT NULL,
   `attachment` varchar(100) DEFAULT NULL COMMENT '附件',
-  `state` varchar(10) DEFAULT NULL,
+  `state` varchar(10) DEFAULT 'ORDER' COMMENT 'ORDER:买家已下单  SEND:卖家已发货  SUCCESS:成交  ',
+  `remark` varchar(1024) DEFAULT NULL,
+  `order_type` varchar(6) DEFAULT NULL COMMENT 'REAL:实单 QUERY:询单',
   `create_time` varchar(20) DEFAULT NULL,
+  `order_price` decimal(10,0) DEFAULT NULL,
   PRIMARY KEY (`goods_order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_goods_order
 -- ----------------------------
+INSERT INTO `t_goods_order` VALUES ('90123asda', '1', '2', null, null, null, 'ORDER', null, 'REAL', '2017-11-18 11:00:21', null);
+INSERT INTO `t_goods_order` VALUES ('asdasd', '1', '2', null, null, null, 'SEND', null, 'QUERY', '2017-11-18 11:00:21', null);
 
 -- ----------------------------
 -- Table structure for `t_material_purchase`
@@ -210,6 +215,7 @@ CREATE TABLE `t_query_order_callprice` (
   `attachment` varchar(50) DEFAULT NULL,
   `vilation_money_amount` decimal(10,0) DEFAULT NULL,
   `state` varchar(10) DEFAULT NULL,
+  `express_type` varchar(10) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL COMMENT '报价/抢单时间',
   PRIMARY KEY (`query_call_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -217,7 +223,7 @@ CREATE TABLE `t_query_order_callprice` (
 -- ----------------------------
 -- Records of t_query_order_callprice
 -- ----------------------------
-INSERT INTO `t_query_order_callprice` VALUES ('1', '1', '2', '4000元/10g', null, null, '3-4周', 'hfds', '1', '无', '1', null, '1', 'BIDDING', '2017-09-01 21:05:23');
+INSERT INTO `t_query_order_callprice` VALUES ('1', '1', '2', '4000元/10g', null, '98%', '3-4', '', '不开发票', '无啊啊啊', '1', null, '1', 'BIDDING', '送货上门', '2017-09-01 21:05:23');
 
 -- ----------------------------
 -- Table structure for `t_real_order`
@@ -250,7 +256,7 @@ CREATE TABLE `t_real_order` (
 -- ----------------------------
 -- Records of t_real_order
 -- ----------------------------
-INSERT INTO `t_real_order` VALUES ('1', '2', '21312', 'ASD', 'ASD', '25g', '97%', '4000-5000', '3-4', '2017-08-10 12:54:07', '2017-08-12 12:54:11', 'HNDS', '不开票', '0.50', '0.50', 'http://otncoonon.bkt.clouddn.com/1502243426324.png', null, null, '0', 'ONSALE');
+INSERT INTO `t_real_order` VALUES ('1', '2', '21312', 'ASD', 'ASD', '25g', '97%', '4000-5000', '3-4', '2017-08-10 12:54:07', '2017-08-12 12:54:11', 'HNMR', '不开票', '0.50', '0.50', 'http://otncoonon.bkt.clouddn.com/1502243426324.png', null, null, '0', 'ONSALE');
 
 -- ----------------------------
 -- Table structure for `t_real_order_callprice`
@@ -280,7 +286,7 @@ CREATE TABLE `t_real_order_callprice` (
 -- ----------------------------
 -- Records of t_real_order_callprice
 -- ----------------------------
-INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '10g,20g', '4000元,8000元', null, '98', '3-4周', 'hfds', '不开发票', 'asd', '1', null, '1', 'BIDDING', null, null);
+INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '10g,20g', '4000元,8000元', null, '98%', '3-4', 'HNMR,FNMR', '不开发票', 'asda', '1', null, '1', 'BIDDING', '送货上门', null);
 
 -- ----------------------------
 -- Table structure for `t_setting`
@@ -325,7 +331,7 @@ INSERT INTO `t_user` VALUES ('2', '17858936109', '810230010@qq.com', '0', '123',
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_accept_address`;
 CREATE TABLE `t_user_accept_address` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `accept_goods_username` varchar(10) DEFAULT NULL,
   `accept_goods_address` varchar(100) DEFAULT NULL,
@@ -333,8 +339,11 @@ CREATE TABLE `t_user_accept_address` (
   `add_time` varchar(20) DEFAULT NULL,
   `update_time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_accept_address
 -- ----------------------------
+INSERT INTO `t_user_accept_address` VALUES ('1', '2', '江建平', '浙江杭州余杭闲林', '17858936109', '2017-10-29', '2017-10-29');
+INSERT INTO `t_user_accept_address` VALUES ('2', '2', '江建平', '北京西三旗小营东路5号院', '17858936109', '2017-10-29 21:06:20', '2017-10-29 21:06:20');
+INSERT INTO `t_user_accept_address` VALUES ('4', '2', '马云', '杭州alibaba', '17858112312', '2017-10-29 21:12:41', '2017-10-29 21:12:41');
