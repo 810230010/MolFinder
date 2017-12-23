@@ -43,7 +43,8 @@
     $(".filter2 ul li").click(function () {
         $(".filter2 ul li").removeClass('active');
         $(this).addClass('active');
-        $("#dataTable tbody tr").remove();
+        //$("#dataTable tbody tr").remove();
+        $("#dataTable").DataTable();
         switch($(this).text()){
             case "买家未确认":
                 fun1();
@@ -78,8 +79,8 @@
                 },
             },
             "columns": [
-                {"data":"goodsOrderId","width":"7%","title":"","visible": false},
-                {"data":"companyName","width": "10%","title":"厂商","orderable": false},
+                {"data":"goodsOrderId","width":"7%","title":"订单号","visible": true,"orderable":false},
+                {"data":"companyName","width": "10%","title":"厂商","orderable": false,"orderable":false},
                 {"data":"casNo","width": "10%","title":"CAS号","orderable": false},
                 {"data":"chineseName","width": "10%","title":"中文名","orderable": false},
                 {
@@ -107,7 +108,7 @@
                     "data":"goodsOrderId",
                     "width": "10%",
                     "title":"订单状态",
-                    "orderable": true,
+                    "orderable": false,
                     "render": function (data, type, row) {
                         return "已发货";
                     }
@@ -162,7 +163,7 @@
                 },
             },
             "columns": [
-                {"data":"goodsOrderId","width":"7%","title":"","visible": false},
+                {"data":"goodsOrderId","width":"7%","title":"订单号","orderable":false},
                 {"data":"companyName","width": "10%","title":"厂商","orderable": false},
                 {"data":"casNo","width": "10%","title":"CAS号","orderable": false},
                 {"data":"chineseName","width": "10%","title":"中文名","orderable": false},
@@ -191,7 +192,7 @@
                     "data":"goodsOrderId",
                     "width": "10%",
                     "title":"订单状态",
-                    "orderable": true,
+                    "orderable": false,
                     "render": function (data, type, row) {
                         return "未发货";
                     }
@@ -246,7 +247,7 @@
                 },
             },
             "columns": [
-                {"data":"goodsOrderId","width":"7%","title":"","visible": false},
+                {"data":"goodsOrderId","width":"7%","title":"订单号","visible": true,"orderable":false},
                 {"data":"companyName","width": "10%","title":"厂商","orderable": false},
                 {"data":"casNo","width": "10%","title":"CAS号","orderable": false},
                 {"data":"chineseName","width": "10%","title":"中文名","orderable": false},
@@ -275,7 +276,7 @@
                     "data":"goodsOrderId",
                     "width": "10%",
                     "title":"订单状态",
-                    "orderable": true,
+                    "orderable": false,
                     "render": function (data, type, row) {
                         return "已确认收货";
                     }
@@ -327,12 +328,13 @@
         });
         //订单确认
         table.on( 'click', '.sended', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
+            var goodsOrderId = $(this).parent().siblings().first().text();
+//            var tr = $(this).closest('tr');
+//            var data = table.row(tr).data();
             $.ajax({
                 url: "/order/updateGoodsOrderStatus/" + "SEND",
                 data: {
-                    goodsOrderId: data.goodsOrderId
+                    goodsOrderId: goodsOrderId
                 },
                 success: function (result) {
                     if(result.code == 200){

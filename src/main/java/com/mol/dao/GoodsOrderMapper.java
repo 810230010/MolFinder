@@ -20,7 +20,17 @@ public interface GoodsOrderMapper extends BaseDao<GoodsOrder, String> {
      * @param state
      * @return
      */
-    List<GoodsOrderDTO> listMyPurchaseOrdersWithStatus(@Param("orderColumn") String orderColumn, @Param("orderType")String orderType, @Param("searchKey") String searchKey, @Param("userId") Integer userId, @Param("state") String state);
+    List<GoodsOrderDTO> listMyPurchaseOrdersWithStatus(@Param("orderColumn") String orderColumn,
+                                                       @Param("orderType")String orderType,
+                                                       @Param("searchKey") String searchKey,
+                                                       @Param("userId") Integer userId,
+                                                       @Param("state") String state);
 
     int updateGoodsOrderState(@Param("goodsOrderId") String goodsOrderId, @Param("state") String state);
+
+    List<GoodsOrderDTO> listMySendOrdersWithStatus(@Param("orderColumn") String orderColumn,
+                                                       @Param("orderType")String orderType,
+                                                       @Param("searchKey") String searchKey,
+                                                       @Param("userId") Integer sellerId,
+                                                       @Param("state") String state);
 }

@@ -13,7 +13,6 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-<div class="hr-line-dashed"></div>
 <div class="container">
     <div class="row">
         <div class="span6">
@@ -43,7 +42,7 @@
                 <div class="col-md-3" >交货期:${realDetail.submitDeadline}周</div>
             </div>
             <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
-            <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
+            <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" id="rub" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
         </div>
 
     </div>
@@ -195,6 +194,8 @@ function updateEndTime()
         else{
             $(this).removeClass("timespan");
             $(this).html("已经结束");
+            $("#rub").attr('disabled', true);
+            $("#rub").attr('href', '');
         }
     });
     setTimeout("updateEndTime()",1000);

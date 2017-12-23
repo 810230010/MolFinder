@@ -22,9 +22,9 @@
         <div class="col-md-4 text-left" style="margin-top: 20px">
             <h3>资讯</h3>
             <div class="analysis">
-                实单: <span class="badge">21</span>
-                询单: <span class="badge">21</span></span>
-                成交单数: <span class="badge">21</span>
+                实单: <span class="badge">${analysis.get("real_total")}</span>
+                询单: <span class="badge">${analysis.get("query_total")}</span></span>
+                成交单数: <span class="badge">${analysis.get("deal_total")}</span>
             </div>
         </div>
     </a>
@@ -112,7 +112,7 @@
 <div class="row text-center enquiry-main" style="position: relative;top:20px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${queryList}">
         <div class="col-md-6 model2">
-            <a href="/enquiry/enquiryDetailPage" class="thumbnail" style="text-decoration: none">
+            <a href="/enquiry/queryDetailPage" class="thumbnail" style="text-decoration: none">
                 <div class="description" style="height: 160px">
                     <div class="img col-md-4">
                         <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>

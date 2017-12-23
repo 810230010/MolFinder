@@ -26,6 +26,7 @@ public class IndexController {
     public String view2index(HttpServletRequest request, Model model){
         model.addAttribute("realList", indexService.getRealOrderOfIndex());
         model.addAttribute("queryList", indexService.getQueryOrderOfIndex());
+        model.addAttribute("analysis", indexService.getRealtimeTotalSale());
         return "/index";
     }
 }

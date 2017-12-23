@@ -20,4 +20,6 @@ public interface GoodsOrderService {
     List<GoodsOrderDTO> searchMypurchaseOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String state);
 
     int updateGoodsOrderState(String goodsOrderId, String state);
+
+    List<GoodsOrderDTO> searchMySendOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String state);
 }

@@ -50,4 +50,9 @@ public class GoodsOrderServiceImpl implements GoodsOrderService {
     public int updateGoodsOrderState(String goodsOrderId, String state) {
         return goodsOrderMapper.updateGoodsOrderState(goodsOrderId, state);
     }
+
+    @Override
+    public List<GoodsOrderDTO> searchMySendOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String state) {
+        return goodsOrderMapper.listMyPurchaseOrdersWithStatus(orderColumn, orderType, searchKey, userId, state);
+    }
 }

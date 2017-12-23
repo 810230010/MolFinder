@@ -39,13 +39,14 @@ public class OrderController {
     private GoodsOrderService goodsOrderService;
     @Autowired
     private QueryOrderCallpriceService queryOrderCallpriceService;
+
     /**
-     *
      * 跳转到实单下单页面
+     *
      * @return
      */
     @RequestMapping("/realMakeOrderPage")
-    public String view2RealMakeOrder(HttpServletRequest request, Model model, Integer realCallId, Integer realOrderId){
+    public String view2RealMakeOrder(HttpServletRequest request, Model model, Integer realCallId, Integer realOrderId) {
         RealCallpriceDetailDTO realCallpriceDetailDTO = realOrderCallpriceService.getRealCallpriceDetail(realCallId, realOrderId);
         CommonUtil.getRealCallpriceCompleted2(realCallpriceDetailDTO);
         Integer userId = WebUtil.getCurrentUser(request).getUserId();
@@ -54,13 +55,14 @@ public class OrderController {
         model.addAttribute("realCallpriceDetail", realCallpriceDetailDTO);
         return "real_make_order";
     }
+
     /**
-     *
      * 跳转到询单下单页面
+     *
      * @return
      */
     @RequestMapping("/queryMakeOrderPage")
-    public String view2queryMakeOrder(HttpServletRequest request, Model model, Integer queryCallId, Integer queryOrderId){
+    public String view2queryMakeOrder(HttpServletRequest request, Model model, Integer queryCallId, Integer queryOrderId) {
         QueryCallpriceDetailDTO queryCallpriceDetailDTO = queryOrderCallpriceService.getQueryCallpriceDetail(queryCallId, queryOrderId);
         Integer userId = WebUtil.getCurrentUser(request).getUserId();
         List<AcceptGoodsAddressInfo> list = acceptAddressService.listAcceptAddress(userId);
@@ -71,34 +73,37 @@ public class OrderController {
 
     /**
      * 跳转到添加收货地址页面
+     *
      * @return
      */
     @RequestMapping("/addAcceptOrderAddressPage")
-    public String view2addAdress(AcceptAddress acceptAddress){
+    public String view2addAdress(AcceptAddress acceptAddress) {
 
         return "add_address";
     }
 
     /**
      * 获得收货地址列表
+     *
      * @param userId
      * @return
      */
     @RequestMapping("/getAcceptGoodsAddress")
     @ResponseBody
-    public List getAcceptGoodsAddress(Integer userId){
-         List<AcceptGoodsAddressInfo> acceptGoodsAddressInfoList = acceptAddressService.listAcceptAddress(userId);
-         return acceptGoodsAddressInfoList;
+    public List getAcceptGoodsAddress(Integer userId) {
+        List<AcceptGoodsAddressInfo> acceptGoodsAddressInfoList = acceptAddressService.listAcceptAddress(userId);
+        return acceptGoodsAddressInfoList;
     }
 
     /**
      * 添加收货地址
+     *
      * @param acceptAddress
      * @return
      */
     @RequestMapping("/addAcceptOrderAddress")
     @ResponseBody
-    public Object addAcceptAddress(AcceptAddress acceptAddress){
+    public Object addAcceptAddress(AcceptAddress acceptAddress) {
         RestResult result = new RestResult();
         acceptAddressService.addAcceptAddress(acceptAddress);
         return result;
@@ -106,12 +111,13 @@ public class OrderController {
 
     /**
      * 删除收货地址
+     *
      * @param addressId
      * @return
      */
     @RequestMapping("/deleteAcceptAddress")
     @ResponseBody
-    public Object deleteAcceptAddress(@RequestParam("id") Integer addressId){
+    public Object deleteAcceptAddress(@RequestParam("id") Integer addressId) {
         RestResult result = new RestResult();
         int affectedRow = acceptAddressService.deleteAcceptAddress(addressId);
         return result;
@@ -119,11 +125,12 @@ public class OrderController {
 
     /**
      * 下单
+     *
      * @return
      */
     @RequestMapping("/makeOrderBill")
     @ResponseBody
-    public Object makeRealOrder(GoodsOrder goodsOrder){
+    public Object makeRealOrder(GoodsOrder goodsOrder) {
         RestResult result = new RestResult();
         int affectedRow = goodsOrderService.createOrderBill(goodsOrder);
         return result;
@@ -137,7 +144,7 @@ public class OrderController {
                                                 @RequestParam(value = "orderType", required = false) String orderType,
                                                 @RequestParam(value = "searchKey", required = false) String searchKey,
                                                 @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                                                @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize){
+                                                @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize) {
         orderColumn = StringUtils.camelToUnderline(orderColumn);
         Integer userId = WebUtil.getCurrentUser(request).getUserId();
         List<GoodsOrderDTO> orders = goodsOrderService.searchMypurchaseOrdersWithStatus(page, pageSize, orderColumn, orderType, searchKey, userId, state);
@@ -146,7 +153,7 @@ public class OrderController {
 
     @RequestMapping("/updateGoodsOrderStatus/{state}")
     @ResponseBody
-    public Object updateGoodsOrderState(@PathVariable String state, String goodsOrderId){
+    public Object updateGoodsOrderState(@PathVariable String state, String goodsOrderId) {
         RestResult result = new RestResult();
         goodsOrderService.updateGoodsOrderState(goodsOrderId, state);
         return result;
@@ -154,15 +161,29 @@ public class OrderController {
 
     /**
      * 订单详情页面
+     *
      * @param goodsOrderId
      * @param model
      * @return
      */
     @RequestMapping("/goodsOrderDetailPage")
-    public String view2goodsOrderDetail(String goodsOrderId, Model model){
+    public String view2goodsOrderDetail(String goodsOrderId, Model model) {
         return "";
     }
 
-
+    @RequestMapping("/mySendOrders/{state}")
+    @ResponseBody
+    public Object getMySendOrdersWithStatus(@PathVariable String state,
+                                            @RequestParam("draw") int draw,
+                                            @RequestParam(value = "orderColumn", required = false) String orderColumn,
+                                            @RequestParam(value = "orderType", required = false) String orderType,
+                                            @RequestParam(value = "searchKey", required = false) String searchKey,
+                                            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                            @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize) {
+        orderColumn = StringUtils.camelToUnderline(orderColumn);
+        Integer userId = WebUtil.getCurrentUser(request).getUserId();
+        List<GoodsOrderDTO> orders = goodsOrderService.searchMySendOrdersWithStatus(page, pageSize, orderColumn, orderType, searchKey, userId, state);
+        return new PageResult2<GoodsOrderDTO>(orders, draw);
+    }
 }
 

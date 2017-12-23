@@ -4,6 +4,7 @@ import com.mol.entity.QueryOrder;
 import com.mol.entity.RealOrder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 江建平 on 2017/8/10.
@@ -20,4 +21,6 @@ public interface IndexService {
      * @return
      */
     List<QueryOrder> getQueryOrderOfIndex();
+
+    Map<String, Integer> getRealtimeTotalSale();
 }
