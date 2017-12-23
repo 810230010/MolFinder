@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>我购买的订单</title>
+    <title>我生产的订单</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
@@ -19,14 +19,14 @@
 <body style="background-color: white">
 <div style="padding-top: 30px;">
     <div style="border-left: 5px solid #c23;height:44px;line-height:44px;padding-left:10px;box-shadow: grey">
-        <font style="font-size: 24px"><b>我购买的订单</b></font>
+        <font style="font-size: 24px"><b>我生产的订单</b></font>
     </div>
     <div class="hr-line-dashed"></div>
     <div class="filter2" style="box-shadow: 0 5px 3px #e8e8e8;margin-top:20px">
         <ul style="list-style: none">
-            <li class="active"><b>已发货</b></li>
+            <li class="active"><b>买家已确认</b></li>
             <li><b>未发货</b></li>
-            <li><b>已确认</b></li>
+            <li><b>买家未确认</b></li>
         </ul>
     </div>
     <div class="table-responsive" style="font-size: 14px">
@@ -45,13 +45,13 @@
         $(this).addClass('active');
         $("#dataTable tbody tr").remove();
         switch($(this).text()){
-            case "已发货":
+            case "买家未确认":
                 fun1();
                 break;
             case "未发货":
                 fun2();
                 break;
-            case "已确认":
+            case "买家已确认":
                 fun3();
                 break;
         }
@@ -60,7 +60,7 @@
         fun1();
     });
 
-    //获取已发货订单列表
+    //获取买家未确认订单列表
     function fun1(){
         $('#dataTable').DataTable({
             "ajax": {
@@ -119,8 +119,8 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-info btn-xs table-action confirm" href="javascript:void(0)">',
-                            '确认收货 <i class="fa fa-eye"></i>',
+                            '<a class="btn btn-info btn-xs table-action remind" href="javascript:void(0)">',
+                            '提醒买家 <i class="fa fa-eye"></i>',
                             '</a>',
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '订单详情 <i class="fa fa-eye"></i>',
@@ -203,8 +203,8 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-danger btn-xs table-action cancel" href="javascript:void(0)">',
-                            '取消订单 <i class="fa fa-eye"></i>',
+                            '<a class="btn btn-danger btn-xs table-action sended" href="javascript:void(0)">',
+                            '我已发货 <i class="fa fa-eye"></i>',
                             '</a>',
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '订单详情 <i class="fa fa-eye"></i>',
@@ -229,7 +229,7 @@
         });
        tableAction();
     }
-    //已确认列表
+    //买家已确认列表
     function fun3(){
         $('#dataTable').DataTable({
             "ajax": {
@@ -287,9 +287,6 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-info btn-xs table-action comment" href="javascript:void(0)">',
-                            '去评论 <i class="fa fa-eye"></i>',
-                            '</a>',
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '订单详情 <i class="fa fa-eye"></i>',
                             '</a>',
@@ -318,29 +315,6 @@
     function tableAction(){
         var table = $('#dataTable').DataTable();
 
-        //评论
-        table.on( 'click', '.comment', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            $.ajax({
-                url: "/order/makeOrderComments",
-                data: {
-                    goodsOrderId: data.goodsOrderId
-                },
-                success: function (result) {
-                    if(result.code == 200){
-                        layer.msg("取消订单成功!");
-                        setTimeout(function () {
-                            window.location.reload();
-                        },2000)
-                    }
-                },
-                error: function(result){
-                    alert("系统出错")
-                }
-            })
-
-        });
         //查看订单详情
         table.on( 'click', '.scan', function () {
             var tr = $(this).children('tr:first');
@@ -352,17 +326,17 @@
              });
         });
         //订单确认
-        table.on( 'click', '.confirm', function () {
+        table.on( 'click', '.sended', function () {
             var tr = $(this).closest('tr');
             var data = table.row(tr).data();
             $.ajax({
-                url: "/order/updateGoodsOrderStatus/" + "SUCCESS",
+                url: "/order/updateGoodsOrderStatus/" + "SEND",
                 data: {
                     goodsOrderId: data.goodsOrderId
                 },
                 success: function (result) {
                     if(result.code == 200){
-                        layer.msg("该订单已确认!");
+                        layer.msg("已修改订单状态为已发货!");
                         setTimeout(function () {
                             window.location.reload();
                         },2000)
@@ -397,7 +371,6 @@
             })
 
         });
-
     }
 </script>
 </html>

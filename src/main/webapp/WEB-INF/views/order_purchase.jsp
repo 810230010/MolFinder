@@ -92,7 +92,15 @@
                         return html;
                     }
                 },
-                {"data":"orderPrice","width": "10%","title":"订单价","orderable": false},
+                {
+                    "data":"orderPrice",
+                    "width": "10%",
+                    "title":"订单价",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        return data + "元";
+                    }
+                },
                 {"data":"createTime","width": "10%","title":"下单时间","orderable": false},
                 {"data":"orderType","width": "10%","title":"订单类型","orderable": false},
                 {
@@ -168,7 +176,15 @@
                         return html;
                     }
                 },
-                {"data":"orderPrice","width": "10%","title":"订单价","orderable": false},
+                {
+                    "data":"orderPrice",
+                    "width": "10%",
+                    "title":"订单价",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        return data + "元";
+                    }
+                },
                 {"data":"createTime","width": "10%","title":"下单时间","orderable": false},
                 {"data":"orderType","width": "11%","title":"订单来源","orderable": false},
                 {
@@ -244,7 +260,15 @@
                         return html;
                     }
                 },
-                {"data":"orderPrice","width": "10%","title":"订单价","orderable": false},
+                {
+                    "data":"orderPrice",
+                    "width": "10%",
+                    "title":"订单价",
+                    "orderable": false,
+                    "render": function (data, type, row) {
+                        return data + "元";
+                    }
+                },
                 {"data":"createTime","width": "10%","title":"下单时间","orderable": false},
                 {"data":"orderType","width": "10%","title":"订单类型","orderable": false},
                 {
@@ -294,15 +318,38 @@
     function tableAction(){
         var table = $('#dataTable').DataTable();
 
+        //评论
+        table.on( 'click', '.comment', function () {
+            var tr = $(this).closest('tr');
+            var data = table.row(tr).data();
+            $.ajax({
+                url: "/order/makeOrderComments",
+                data: {
+                    goodsOrderId: data.goodsOrderId
+                },
+                success: function (result) {
+                    if(result.code == 200){
+                        layer.msg("取消订单成功!");
+                        setTimeout(function () {
+                            window.location.reload();
+                        },2000)
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
+
+        });
         //查看订单详情
         table.on( 'click', '.scan', function () {
             var tr = $(this).children('tr:first');
             var data = table.row(tr).data();
             swal({
-                title: "HTML <small>标题</small>!",
-                text: "自定义<span style='color:#F8BB86'>html<span>信息。",
+                title: "订单详情!",
+                text: "<table><thead></thead><tbody></tbody></table>",
                 html: true
-        });
+             });
         });
         //订单确认
         table.on( 'click', '.confirm', function () {
@@ -350,6 +397,7 @@
             })
 
         });
+
     }
 </script>
 </html>

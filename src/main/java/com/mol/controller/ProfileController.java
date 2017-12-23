@@ -245,4 +245,12 @@ public class ProfileController
     public String view2purchaseOrder(){
         return "order_purchase";
     }
+    /**
+     * 我生产的订单
+     * @return
+     */
+    @RequestMapping("/orders/sellPage")
+    public String view2sellOrder(){
+        return "order_send";
+    }
 }

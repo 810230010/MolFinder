@@ -162,5 +162,7 @@ public class OrderController {
     public String view2goodsOrderDetail(String goodsOrderId, Model model){
         return "";
     }
+
+
 }
 
