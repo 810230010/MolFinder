@@ -10,6 +10,7 @@ import com.mol.dao.RealOrderMapper;
 import com.mol.dto.GoodsOrderDTO;
 import com.mol.entity.GoodsOrder;
 import com.mol.service.GoodsOrderService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Service
 public class GoodsOrderServiceImpl implements GoodsOrderService {
+    private static Logger logger = Logger.getLogger(GoodsOrderServiceImpl.class);
     @Autowired
     private GoodsOrderMapper goodsOrderMapper;
     @Autowired

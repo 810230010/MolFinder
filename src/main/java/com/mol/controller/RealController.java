@@ -41,6 +41,8 @@ public class RealController {
     private RealOrderCallpriceService realOrderCallpriceService;
     @Autowired
     private RealOrderCallpriceMapper realOrderCallpriceMapper;
+    @Autowired
+    private RealOrderMapper realOrderMapper;
     /**
      * 跳转到实单发布页面
      * @return
@@ -173,6 +175,13 @@ public class RealController {
         return result;
     }
 
+    @RequestMapping("/updateRealOrderState/{state}")
+    @ResponseBody
+    public Object changeRealOrderState(Integer realOrderId, @PathVariable String state){
+        RestResult result = new RestResult();
+        realOrderMapper.changeRealOrderState(realOrderId, state);
+        return result;
+    }
     /**
      * 取消我报价的实单
      * @param realCallId

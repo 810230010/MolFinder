@@ -4,6 +4,7 @@ import com.mol.common.dao.BaseDao;
 import com.mol.entity.QueryOrder;
 import com.mol.entity.RealOrder;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -32,5 +33,5 @@ public interface QueryOrderMapper extends BaseDao<QueryOrder, Integer> {
                                                @Param("userId") Integer userId,
                                                @Param("status") String status);
 
-    int changeQueryOrderState(Integer queryOrderId, String state);
+    int changeQueryOrderState(@Param("queryOrderId") Integer queryOrderId, @Param("state") String state);
 }

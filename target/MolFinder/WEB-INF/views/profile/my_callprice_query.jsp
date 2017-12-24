@@ -80,7 +80,8 @@
                 },
             },
             "columns": [
-                {"data":"queryCallId","width":"7%","title":"","visible": false},
+                {"data":"queryCallId","width":"7%","title":"报价编号"},
+                {"data":"queryCallId","width":"7%","title":"询单编号"},
                 {"data":"companyName","width": "10%","title":"发单者","orderable": false},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
@@ -176,7 +177,8 @@
                 },
             },
             "columns": [
-                {"data":"queryCallId","width":"7%","title":"","visible": false},
+                {"data":"queryCallId","width":"7%","title":"报价编号"},
+                {"data":"queryCallId","width":"7%","title":"询单编号"},
                 {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"companyName","width": "10%","title":"发单者","orderable": false},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
@@ -258,7 +260,8 @@
                 },
             },
             "columns": [
-                {"data":"realCallId","width":"7%","title":"","visible": false},
+                {"data":"queryCallId","width":"7%","title":"报价编号"},
+                {"data":"queryCallId","width":"7%","title":"询单编号"},
                 {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"vilationMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"companyName","width": "10%","title":"发单者","orderable": false},
@@ -366,7 +369,8 @@
                 },
             },
             "columns": [
-                {"data":"queryCallId","width":"7%","title":"","visible": false},
+                {"data":"queryCallId","width":"7%","title":"报价编号"},
+                {"data":"queryCallId","width":"7%","title":"询单编号"},
                 {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"vilationMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"companyName","width": "10%","title":"发单者","orderable": false},
@@ -450,17 +454,16 @@
     function tableAction(){
         var table = $('#dataTable').DataTable();
         table.on( 'click', '.update', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            window.top.location = "/enquiry/queryCallpriceUpdatePage?queryOrderId=" + data.queryOrderId + "&queryCallId=" + data.queryCallId;
+            var queryCallId = $(this).parent().siblings().first().text();
+            var queryOrderId = $(this).parent().siblings().first().next().text();
+            window.top.location = "/enquiry/queryCallpriceUpdatePage?queryOrderId=" + queryOrderId + "&queryCallId=" + queryCallId;
         });
         table.on( 'click', '.cancel', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
+            var queryCallId = $(this).parent().siblings().first().text();
             $.ajax({
                 url: "/enquiry/cancelMyQueryCallprice",
                 data: {
-                    queryCallId: data.queryCallId
+                    queryCallId: queryCallId
                 },
                 success: function (result) {
                     if(result.code == 200){

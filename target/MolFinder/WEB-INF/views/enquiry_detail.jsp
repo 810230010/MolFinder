@@ -29,19 +29,18 @@
 <div style="background: #f4f4f4">
     <div class="container" style="padding-top: 20px; padding-bottom: 20px">
         <div class="real-content" style="height:200px">
-            <div class="real-img col-md-3"><img src="${realDetail.image}" style="width: 200px;height:200px" alt="图片"/></div>
+            <div class="real-img col-md-3"><img src="${queryDetail.image}" style="width: 200px;height:200px" alt="图片"/></div>
             <div class="real-des col-md-9">
-                <h3>CAS号：${realDetail.casNo}</h3>
-                <div class="pull-left"><i class="fa fa-user"></i>已报名:${realDetail.joinCount}人</div>
-                <div class="pull-right"><i class="fa fa-clock-o"></i>距离时间结束还有：<span class="timespan" style="color: red" endTime="<fmt:formatDate value="${realDetail.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />"></span></div>
+                <h3>CAS号：${queryDetail.casNo}</h3>
+                <div class="pull-left"><i class="fa fa-user"></i>已报名:${queryDetail.joinCount}人</div>
+                <div class="pull-right"><i class="fa fa-clock-o"></i>距离时间结束还有：<span class="timespan" style="color: red" endTime="<fmt:formatDate value="${queryDetail.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />"></span></div>
                 <div class="col-md-12 text-center" style="height: 50px;line-height: 50px; border: 1px solid #ddd;background: white;margin-top: 10px">
-                    <div class="col-md-3" style="border-right: 1px solid #ddd">采购量:${realDetail.buyAmount}</div>
-                    <div class="col-md-3" style="border-right: 1px solid #ddd">发票要求:${realDetail.makeBill}</div>
-                    <div class="col-md-3" style="border-right: 1px solid #ddd">纯度要求:${realDetail.purity}</div>
-                    <div class="col-md-3" >交货期:${realDetail.submitDeadline}周</div>
+                    <div class="col-md-3" style="border-right: 1px solid #ddd">采购量:${queryDetail.buyAmount}</div>
+                    <div class="col-md-3" style="border-right: 1px solid #ddd">发票要求:${queryDetail.makeBill}</div>
+                    <div class="col-md-3" style="border-right: 1px solid #ddd">纯度要求:${queryDetail.purity}</div>
+                    <div class="col-md-3" >交货期:${queryDetail.submitDeadline}周</div>
                 </div>
-                <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
-                <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" id="rub" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
+                <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" id="rub" style="width:120px" href="/real/realCallpricePage?realOrderId=${queryDetail.queryOrderId}">立即抢单</a></div>
             </div>
 
         </div>
@@ -62,28 +61,27 @@
                         <h3><i class="fa fa-building-o" style="color: red"></i>实单详情</h3>
                         <div class="text-left" style="margin-top: 20px">
                             <div class="col-md-4" style="border-right: 1px dashed grey">
-                                <p><strong>CAS号</strong>： ${realDetail.casNo}</p>
-                                <p><strong>英文名称</strong>： ${realDetail.englishName}</p>
-                                <p><strong>中文名称</strong>：${realDetail.chineseName}</p>
-                                <p><strong>其他要求</strong>：${realDetail.remark}</p>
+                                <p><strong>CAS号</strong>： ${queryDetail.casNo}</p>
+                                <p><strong>英文名称</strong>： ${queryDetail.englishName}</p>
+                                <p><strong>中文名称</strong>：${queryDetail.chineseName}</p>
+                                <p><strong>其他要求</strong>：${queryDetail.otherRequire}</p>
                             </div>
                             <div class="col-md-4" style="border-right: 1px dashed grey">
-                                <p><strong>采购量</strong>：${realDetail.buyAmount}</p>
-                                <p><strong>纯度要求</strong>： ${realDetail.purity}</p>
-                                <p><strong>图谱要求</strong>：${realDetail.diagramRequire}</p>
-                                <p><strong>实单价格</strong>：${realDetail.priceBetween}元</p>
+                                <p><strong>采购量</strong>：${queryDetail.buyAmount}</p>
+                                <p><strong>纯度要求</strong>： ${queryDetail.purity}</p>
+                                <p><strong>图谱要求</strong>：${queryDetail.diagramRequire}</p>
                             </div>
                             <div class="col-md-4">
-                                <p><strong>交货期</strong>：${realDetail.submitDeadline}</p>
-                                <p><strong>发布日期</strong>： <fmt:formatDate value="${realDetail.beginTime}" pattern="yyyy-MM-dd hh:mm:ss" /></p>
-                                <p><strong>发票类型</strong>： ${realDetail.makeBill}</p>
+                                <p><strong>交货期</strong>：${queryDetail.submitDeadline}</p>
+                                <p><strong>发布日期</strong>： <fmt:formatDate value="${queryDetail.beginTime}" pattern="yyyy-MM-dd hh:mm:ss" /></p>
+                                <p><strong>发票类型</strong>： ${queryDetail.makeBill}</p>
                             </div>
-                            <c:if test="${realDetail.guaranteeMoneyPercent != null}">
+                            <c:if test="${queryDetail.guaranteeMoneyPercent != null}">
                                 <div class="col-md-12">
                                     <div class="hr-line-dashed"></div>
-                                    <p><b>成交后买方预付全款${realDetail.guaranteeMoneyPercent}%至网站作为保证金</b></p>
-                                    <c:if test="${realDetail.rewardMoneyPercent != null}">
-                                        <p><b>提前完成奖励订单价${realDetail.rewardMoneyPercent}%每天</b></p>
+                                    <p><b>成交后买方预付全款${queryDetail.guaranteeMoneyPercent}%至网站作为保证金</b></p>
+                                    <c:if test="${queryDetail.rewardMoneyPercent != null}">
+                                        <p><b>提前完成奖励订单价${queryDetail.rewardMoneyPercent}%每天</b></p>
                                     </c:if>
                                 </div>
                             </c:if>
@@ -92,7 +90,7 @@
                 </div>
                 <div id="tab-2" class="tab-pane fade">
                     <div class="panel-body text-center">
-                        ${realDetail.referDoc}
+                        ${queryDetail.referDoc}
                     </div>
                 </div>
                 <div id="tab-3" class="tab-pane fade">

@@ -7,7 +7,9 @@ import com.mol.common.util.PropertyReader;
 import com.mol.common.util.RequestUtil;
 import com.mol.common.util.StringUtils;
 import com.mol.dao.QueryOrderCallpriceMapper;
+import com.mol.dao.QueryOrderMapper;
 import com.mol.dto.*;
+import com.mol.entity.QueryOrder;
 import com.mol.entity.QueryOrderCallprice;
 import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
@@ -17,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +42,8 @@ public class EnquiryController {
     private QueryOrderCallpriceService queryOrderCallpriceService;
     @Autowired
     private QueryOrderCallpriceMapper queryOrderCallpriceMapper;
+    @Autowired
+    private QueryOrderMapper queryOrderMapper;
 
     /**
      * 跳转到询单发布页面
@@ -68,6 +73,7 @@ public class EnquiryController {
      */
     @RequestMapping("/queryDetailPage")
     public String view2queryDetail(Integer queryOrderId, Model model){
+        model.addAttribute("queryDetail", queryService.getQueryOrderDetail(queryOrderId));
         return "enquiry_detail";
     }
 
@@ -157,6 +163,14 @@ public class EnquiryController {
     public Object cancelMyRealCallprice(Integer queryCallId){
         RestResult result = new RestResult();
         queryOrderCallpriceMapper.updateQueryOrderCallpriceStatusWithCancel(queryCallId);
+        return result;
+    }
+
+    @RequestMapping("/updateQueryOrderState/{state}")
+    @ResponseBody
+    public Object updateQueryOrderState(Integer queryOrderId, @PathVariable String state){
+        RestResult result = new RestResult();
+        queryOrderMapper.changeQueryOrderState(queryOrderId, state);
         return result;
     }
 }

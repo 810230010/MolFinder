@@ -5,6 +5,7 @@ import com.mol.dao.AcceptAddressMapper;
 import com.mol.dto.AcceptGoodsAddressInfo;
 import com.mol.entity.AcceptAddress;
 import com.mol.service.AcceptAddressService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class AcceptAddressServiceImpl implements AcceptAddressService {
+    private static Logger logger = Logger.getLogger(AcceptAddressServiceImpl.class);
     @Autowired
     private AcceptAddressMapper acceptAddressMapper;
     @Override

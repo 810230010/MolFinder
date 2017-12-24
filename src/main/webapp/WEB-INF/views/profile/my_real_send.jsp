@@ -4,10 +4,12 @@
     <title>Title</title>
     <%@include file="/WEB-INF/views/common/resource_css.jsp"%>
     <link href="/static/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/plugins/layer/layer.js"></script>
     <script src="/static/js/plugins/dataTables/datatables.min.js"></script>
+    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="/static/js/util.js"></script>
     <style>
         .filter2 ul{height: 40px;padding-left: 0px;background: #f8f8f8}
@@ -67,7 +69,7 @@
     function fun1(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/profile/mypublish/realOrders/' + 'ONSALE',
+                'url': '/profile/mypublish/realOrders/' + 'BIDDING',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;
@@ -221,7 +223,7 @@
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
                             '<a class="table-button btn btn-danger btn-xs table-action update" href="javascript:void(0)">',
-                            '修改订单 <i class="fa fa-trash-o"></i>',
+                            '修改实单 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
                     }},
@@ -247,7 +249,7 @@
     function fun3(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/profile/mypublish/realOrders/' + 'STOPPED',
+                'url': '/profile/mypublish/realOrders/' + 'CLOSE',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;
@@ -310,7 +312,7 @@
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action republish" href="javascript:void(0)">',
                             '再次发单 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -436,6 +438,31 @@
                 success: function (result) {
                     if(result.code == 200){
                         swal("关闭实单成功!", "该实单已停止发布!", "success");
+                        setTimeout(function () {
+                            window.location.reload();
+                        },2000)
+                    }
+                },
+                error: function(result){
+                    alert("系统出错")
+                }
+            })
+
+        });
+
+        table.on( 'click', '.republish', function () {
+            var realOrderId = $(this).parent().siblings().first().text();
+            $.ajax({
+                url: "/real/updateRealOrderState/" + "BIDDING",
+                data: {
+                    realOrderId: realOrderId
+                },
+                success: function (result) {
+                    if(result.code == 200){
+                        swal("重新发布实单成功!", "该实单已重新发布!", "success");
+                        setTimeout(function () {
+                            window.location.reload();
+                        },2000)
                     }
                 },
                 error: function(result){

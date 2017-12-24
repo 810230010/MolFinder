@@ -92,10 +92,10 @@
             <div class="deadline text-left" style="height: 40px;">
             <div style="color: black" class="col-md-8">
                <i class="fa fa-clock-o fa-2x"></i>
-                <span endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" class="timespan" style="font-size: 18px;font-weight: 400"></span>
+                <span flag="real" data="${item.realOrderId}" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" class="timespan" style="font-size: 18px;font-weight: 400"></span>
             </div>
             <div class="col-md-4">
-               <button style="display: none" class="btn btn-danger col-md-12 rub">立即抢单</button>
+               <button style="display: none" class="btn btn-danger col-md-12 rub" data="${item.realOrderId}">立即抢单</button>
             </div>
           </div>
         </a>
@@ -112,7 +112,7 @@
 <div class="row text-center enquiry-main" style="position: relative;top:20px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${queryList}">
         <div class="col-md-6 model2">
-            <a href="/enquiry/queryDetailPage" class="thumbnail" style="text-decoration: none">
+            <a href="/enquiry/queryDetailPage?queryOrderId=${item.queryOrderId}" class="thumbnail" style="text-decoration: none">
                 <div class="description" style="height: 160px">
                     <div class="img col-md-4">
                         <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>
@@ -129,7 +129,7 @@
                 <div class="deadline text-left" style="height: 40px;">
                     <div style="color: black" class="col-md-8">
                         <i class="fa fa-clock-o fa-2x"></i>
-                        <span class="timespan" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss" />" style="font-size: 18px;font-weight: 400"></span>
+                        <span flag="query" data="${item.queryOrderId}" class="timespan" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss"/>" style="font-size: 18px;font-weight: 400"></span>
                     </div>
                     <div class="col-md-4">
                         <button class="btn btn-danger col-md-12 rub">立即报价</button>
@@ -194,6 +194,8 @@
                 $(this).html("已经结束");
                 $(this).parent().siblings().children('.rub').html('报价结束');
                 $(this).parent().siblings().children('.rub').css('background-color', 'grey');
+                changeOrderState($(this).attr('data'), $(this).attr('flag'),'CLOSE');
+
             }
         });
         setTimeout("updateEndTime()",1000);
@@ -210,5 +212,39 @@
     $(".model2").mouseleave(function () {
         $(this).children().find('.rub').hide();
     })
+
+    function changeOrderState(orderId, orderType,state){
+        if(orderType == "real"){
+            $.ajax({
+                url: "/real/updateRealOrderState/" + state,
+                data:{
+                    realOrderId: orderId
+                },
+                success:function(result){
+                    if(result.code != 200){
+
+                    }
+                },
+                error:function (result) {
+                    alert("系统出错!")
+                }
+            })
+        }else{
+            $.ajax({
+                url: "/enquiry/updateQueryOrderState/" + state,
+                data:{
+                    queryOrderId: orderId
+                },
+                success:function(result){
+                    if(result.code != 200){
+
+                    }
+                },
+                error:function (result) {
+                    alert("系统出错!")
+                }
+            })
+        }
+    }
 </script>
 </html>

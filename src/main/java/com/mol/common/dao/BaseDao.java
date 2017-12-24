@@ -15,4 +15,5 @@ public interface BaseDao<T, ID>{
     int updateByPrimaryKeySelective(T entity);
 
     int updateByPrimaryKey(T entity);
+
 }
