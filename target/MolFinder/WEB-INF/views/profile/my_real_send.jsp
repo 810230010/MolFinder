@@ -80,7 +80,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -170,7 +170,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -260,7 +260,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -350,7 +350,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -423,13 +423,11 @@
     function tableAction(){
         var table = $('#dataTable').DataTable();
         table.on( 'click', '.scan', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + data.realOrderId;
+            var realOrderId = $(this).parent().siblings().first().text();
+            window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + realOrderId;
         });
         table.on( 'click', '.stop', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
+            var realOrderId = $(this).parent().siblings().first().text();
             $.ajax({
                 url: "/real/closeMyRealOrder",
                 data: {

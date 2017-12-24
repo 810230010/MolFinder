@@ -76,7 +76,7 @@
                 },
             },
             "columns": [
-                {"data":"queryOrderId","width":"7%","title":"","visible": false},
+                {"data":"queryOrderId","width":"7%","title":"询单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -166,7 +166,7 @@
                 },
             },
             "columns": [
-                {"data":"queryOrderId","width":"7%","title":"","visible": false},
+                {"data":"queryOrderId","width":"7%","title":"询单编号","visible": false},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -259,7 +259,7 @@
                 },
             },
             "columns": [
-                {"data":"queryOrderId","width":"7%","title":"","visible": false},
+                {"data":"queryOrderId","width":"7%","title":"询单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -343,17 +343,15 @@
     function tableAction(){
         var table = $('#dataTable').DataTable();
         table.on( 'click', '.scan', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            window.top.location = "/enquiry/queryCallpriceMembersPage?queryOrderId=" + data.queryOrderId;
+            var queryOrderId = $(this).parent().siblings().first().text();
+            window.top.location = "/enquiry/queryCallpriceMembersPage?queryOrderId=" + queryOrderId;
         });
         table.on( 'click', '.stop', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
+            var queryOrderId = $(this).parent().siblings().first().text();
             $.ajax({
                 url: "/enquiry/closeMyQueryOrder",
                 data: {
-                    queryOrderId: data.queryOrderId
+                    queryOrderId: queryOrderId
                 },
                 success: function (result) {
                     if(result.code == 200){

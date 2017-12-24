@@ -80,7 +80,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -170,7 +170,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -220,7 +220,7 @@
                             '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs table-action update" href="javascript:void(0)">',
                             '修改订单 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -260,7 +260,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -350,7 +350,7 @@
                 },
             },
             "columns": [
-                {"data":"realOrderId","width":"7%","title":"","visible": false},
+                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"casNo","width": "10%","title":"CAS","orderable": false},
                 {
                     "data":"image",
@@ -423,17 +423,15 @@
     function tableAction(){
         var table = $('#dataTable').DataTable();
         table.on( 'click', '.scan', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
-            window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + data.realOrderId;
+            var realOrderId = $(this).parent().siblings().first().text();
+            window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + realOrderId;
         });
         table.on( 'click', '.stop', function () {
-            var tr = $(this).closest('tr');
-            var data = table.row(tr).data();
+            var realOrderId = $(this).parent().siblings().first().text();
             $.ajax({
                 url: "/real/closeMyRealOrder",
                 data: {
-                    realOrderId: data.realOrderId
+                    realOrderId: realOrderId
                 },
                 success: function (result) {
                     if(result.code == 200){
