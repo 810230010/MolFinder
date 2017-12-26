@@ -51,14 +51,14 @@
     <div class="row" style="margin-top:40px;">
         <div class="tabs-container">
             <ul class="nav nav-tabs">
-                <li class="active col-md-4" style="padding-left: 0"><a data-toggle="tab" href="#tab-1"><i class="fa fa-eye"> </i>实单详情</a></li>
+                <li class="active col-md-4" style="padding-left: 0"><a data-toggle="tab" href="#tab-1"><i class="fa fa-eye"> </i>询单详情</a></li>
                 <li class="col-md-4"><a data-toggle="tab" href="#tab-2"><i class="fa fa-book"></i>参考文献与路线</a></li>
                 <li class="col-md-4" style="padding-right: 0"><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i>发单人</a></li>
             </ul>
             <div class="tab-content" style="height:400px">
                 <div id="tab-1" class="tab-pane fade in active">
                     <div class="panel-body text-center">
-                        <h3><i class="fa fa-building-o" style="color: red"></i>实单详情</h3>
+                        <h3><i class="fa fa-building-o" style="color: red"></i>询单详情</h3>
                         <div class="text-left" style="margin-top: 20px">
                             <div class="col-md-4" style="border-right: 1px dashed grey">
                                 <p><strong>CAS号</strong>： ${queryDetail.casNo}</p>

@@ -11,7 +11,14 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/plugins/layer/layer.js"></script>
 </head>
-
+<style>
+    .model1,.model2{
+        transition: all .4s;
+    }
+    .model1:hover,.model2:hover{
+        transform: scale(1.1);
+    }
+</style>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
 <div class="top-logo" style="height: 200px; background: white; width: 66%;margin: 0 auto">
@@ -132,7 +139,7 @@
                         <span flag="query" data="${item.queryOrderId}" class="timespan" endTime="<fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd hh:mm:ss"/>" style="font-size: 18px;font-weight: 400"></span>
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-danger col-md-12 rub">立即报价</button>
+                        <button style="display: none" class="btn btn-danger col-md-12 rub">立即报价</button>
                     </div>
                 </div>
             </a>
@@ -194,6 +201,7 @@
                 $(this).html("已经结束");
                 $(this).parent().siblings().children('.rub').html('报价结束');
                 $(this).parent().siblings().children('.rub').css('background-color', 'grey');
+                $(this).parent().siblings().children('.rub').css('border', 'none');
                 changeOrderState($(this).attr('data'), $(this).attr('flag'),'CLOSE');
 
             }
