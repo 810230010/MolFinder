@@ -11,6 +11,7 @@ public class RealOrder {
     private Integer realOrderId;
 
     private Integer userId;
+    private Integer buyerId;
 
     private String casNo;
 
@@ -118,6 +119,14 @@ public class RealOrder {
 
     public void setSubmitDeadline(String submitDeadline) {
         this.submitDeadline = submitDeadline == null ? null : submitDeadline.trim();
+    }
+
+    public Integer getBuyerId() {
+        return buyerId;
+    }
+
+    public void setBuyerId(Integer buyerId) {
+        this.buyerId = buyerId;
     }
 
     @JsonSerialize(using= JsonDateSerializer.class)

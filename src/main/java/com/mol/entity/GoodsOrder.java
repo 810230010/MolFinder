@@ -1,6 +1,7 @@
 package com.mol.entity;
 
 public class GoodsOrder {
+    private Integer sellerId;
     private String goodsOrderId;
 
     private Integer callPriceId;
@@ -22,6 +23,7 @@ public class GoodsOrder {
     private String createTime;
 
     private Long orderPrice;
+    private Integer orderId;
 
     public String getGoodsOrderId() {
         return goodsOrderId;
@@ -109,5 +111,21 @@ public class GoodsOrder {
 
     public void setOrderPrice(Long orderPrice) {
         this.orderPrice = orderPrice;
+    }
+
+    public Integer getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 }

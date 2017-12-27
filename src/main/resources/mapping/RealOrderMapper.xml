@@ -78,6 +78,21 @@
     </if>
   </select>
   <select id="listRealOrderWithStatus" resultType="com.mol.entity.RealOrder">
+    <if test="status == 'SENDED'">
+      select * from t_real_callprice a, t_real_order b
+      <where>
+         a.real_order_id = b.real_order_id
+        and b.user_id = #{userId} and a.state = 'SENDED'
+        <if test="searchKey != null and searchKey != '' ">
+          and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+        </if>
+      </where>
+      order by
+      real_order_id asc
+      <if test="orderColumn != null and orderColumn != '' and orderType != null and orderType != '' ">
+        , ${orderColumn} ${orderType}
+      </if>
+    </if>
     select * from t_real_order
     <where>
       user_id = #{userId} and state = #{status}
@@ -87,7 +102,7 @@
     </where>
     order by
     real_order_id asc
-    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+    <if test="orderColumn != null and orderColumn != '' and orderType != null and orderType != '' ">
       , ${orderColumn} ${orderType}
     </if>
   </select>
