@@ -78,17 +78,41 @@
     </if>
   </select>
   <select id="listRealOrderWithStatus" resultType="com.mol.entity.RealOrder">
-    select * from t_real_order
-    <where>
-      user_id = #{userId} and state = #{status}
-      <if test="searchKey != null and searchKey != '' ">
-        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+    <if test="status == 'SENDED'">
+      select b.real_order_id realOrderId,
+      a.seller_id sellerId,
+      a.buyer_id,
+      b.*
+      from t_goods_order a, t_real_order b
+      <where>
+         a.order_id = b.real_order_id
+        and a.buyer_id = #{userId} and a.state = 'SEND'
+         and a.order_type = 'REAL'
+        <if test="searchKey != null and searchKey != '' ">
+          and (b.cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+        </if>
+      </where>
+      order by
+      a.order_id asc
+      <if test="orderColumn != null and orderColumn != '' and orderType != null and orderType != '' ">
+        , ${orderColumn} ${orderType}
       </if>
-    </where>
-    order by
-    real_order_id asc
-    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
-      , ${orderColumn} ${orderType}
     </if>
+
+    <if test="status != 'SENDED'">
+      select * from t_real_order
+      <where>
+        user_id = #{userId} and state = #{status}
+        <if test="searchKey != null and searchKey != '' ">
+          and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+        </if>
+      </where>
+      order by
+      real_order_id asc
+      <if test="orderColumn != null and orderColumn != '' and orderType != null and orderType != '' ">
+        , ${orderColumn} ${orderType}
+      </if>
+    </if>
+
   </select>
 </mapper>

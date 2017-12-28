@@ -1,5 +1,6 @@
 package com.mol.schedule;
 
+import com.mol.dao.IndexMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -9,8 +10,8 @@ import java.util.Date;
  */
 public class CheckOrderJob {
     @Autowired
-    private JobMapper jobMapper;
+    private IndexMapper indexMapper;
     public void execute(){
-        jobMapper.updateInvalidOrder();
+        indexMapper.updateInvalidOrder();
     }
 }

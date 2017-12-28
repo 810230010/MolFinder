@@ -10,7 +10,7 @@ import java.util.Date;
 public class RealOrder {
     private Integer realOrderId;
 
-    private Integer userId;
+    private Integer sellerId;
     private Integer buyerId;
 
     private String casNo;
@@ -57,12 +57,12 @@ public class RealOrder {
         this.realOrderId = realOrderId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getSellerId() {
+        return sellerId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setSellerId(Integer sellerId) {
+        this.sellerId = sellerId;
     }
 
     public String getCasNo() {

@@ -195,7 +195,7 @@
 
         <h1>确认下单</h1>
         <fieldset>
-            <h2>最后一部，请确认!</h2>
+            <h2>最后一步，请确认!</h2>
         </fieldset>
     </form>
 </div>
@@ -397,10 +397,12 @@
                     data:{
                         buyerId: ${currentUser.userId},
                         callPriceId: ${realCallpriceDetail.realCallId},
+                        orderId: ${realCallpriceDetail.realOrderId},
                         expressWay: ${realCallpriceDetail.expressType},
                         remark: $("#remark").val(),
                         orderType: "REAL",
                         acceptGoodsInfoId: accept_goods_info_id,
+                        sellerId:${realCallpriceDetail.userId},
                         orderPrice: total
                     },
                     success: function (result) {

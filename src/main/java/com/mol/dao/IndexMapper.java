@@ -7,4 +7,5 @@ import java.util.Map;
  */
 public interface IndexMapper {
     Map<String, Integer> getSaleAnalysis();
+    int updateInvalidOrder();
 }
