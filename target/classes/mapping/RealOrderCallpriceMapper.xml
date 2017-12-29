@@ -64,6 +64,7 @@
   <!--获得实单报价详情-->
     <select id="getRealOrderCallpriceDetail" resultType="com.mol.dto.RealCallpriceDetailDTO">
       select
+      a.user_id,
       a.real_call_id,
       a.real_order_id,
       b.cas_no,

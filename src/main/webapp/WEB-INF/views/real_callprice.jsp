@@ -19,7 +19,6 @@
 <div>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
 </div>
-<div class="hr-line-dashed" style="margin-top: 10px"></div>
 <div class="col-md-8 col-md-offset-2" >
     <!--规则-->
     <div class="rules col-md-3" style="height:400px;padding-left: 0">
@@ -209,7 +208,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="text-center">
-                            <input id="submit" type="submit" class="btn btn-primary" value="填好了,去发布"/>
+                            <input id="submit" type="submit" class="btn btn-primary" value="下一步"/>
                         </div>
                     </div>
                 </form>
@@ -217,7 +216,32 @@
         </div>
     </div>
 </div>
-
+<!--录入报价-->
+<div style="border-top: 1px solid green; position:relative;top: -40px;padding-top: 20px;padding-bottom: 100px" class="col-md-12">
+    <div class="content container">
+        <div class="content_title" style="background: darkgreen;color:white;height: 40px;width:150px;border-radius: 50px">
+            <center><label style="line-height: 40px"><i class="fa fa-pencil" style="margin-right: 20px"></i>录入报价</label></center>
+        </div>
+        <div class="content_basic_inf" style="margin-top: 30px">
+            <div class="col-md-3">
+                <label>CAS号：</label>
+                <label>askdjka-12</label>
+            </div>
+            <div class="col-md-3">
+                <label>中文名：</label>
+                <label>阿克江好的尽快</label>
+            </div>
+            <div class="col-md-3">
+                <label>重量：</label>
+                <label>40g</label>
+            </div>
+            <div class="col-md-3">
+                <label>发布日期：</label>
+                <label>2017-12-28 09:00:00</label>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/static/js/jquery-3.1.1.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
