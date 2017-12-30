@@ -5,12 +5,14 @@ import com.mol.dao.RealOrderCallpriceMapper;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.dto.RealOrderCallpriceDTO;
+import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
 import com.mol.service.RealOrderCallpriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,5 +39,11 @@ public class RealOrderCallpriceImpl implements RealOrderCallpriceService {
     @Override
     public RealCallpriceDetailDTO getRealCallpriceDetail(Integer realCallId, Integer realOrderId) {
         return realOrderCallpriceMapper.getRealOrderCallpriceDetail(realCallId, realOrderId);
+    }
+
+    @Override
+    public int addRealOrderCallprice(RealOrderCallprice realOrder) {
+        realOrder.setCreateTime(new Date());
+      return realOrderCallpriceMapper.insert(realOrder);
     }
 }

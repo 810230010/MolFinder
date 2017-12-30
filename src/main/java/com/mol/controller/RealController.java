@@ -194,6 +194,19 @@ public class RealController {
         realOrderCallpriceMapper.updateRealOrderCallpriceStatusWithCancel(realCallId);
         return result;
     }
+
+    /**
+     * 发布实单报价
+     * @param callprice
+     * @return
+     */
+    @RequestMapping("/publishRealCallprice")
+    @ResponseBody
+    public Object publishRealCallprice(RealOrderCallprice callprice){
+        RestResult result = new RestResult();
+        realOrderCallpriceService.addRealOrderCallprice(callprice);
+        return result;
+    }
     //获得形如xxx元/xxxg形式的数据
     private static void getRealCallpriceCompleted(List<RealCallpriceMemberDTO> dto){
         dto.forEach(item->{

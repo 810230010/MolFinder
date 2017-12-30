@@ -1,7 +1,10 @@
 package com.mol.dto;
 
+import com.sun.org.apache.xalan.internal.xsltc.dom.SAXImpl;
 import lombok.Data;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -28,4 +31,9 @@ public class RealDetailDTO{
     private String remark;
     private Double guaranteeMoneyPercent;
     private Double rewardMoneyPercent;
+
+    @JsonSerialize
+    public Date getBeginTime() {
+        return beginTime;
+    }
 }

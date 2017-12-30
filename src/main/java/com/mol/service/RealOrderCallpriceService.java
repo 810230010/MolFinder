@@ -3,6 +3,7 @@ package com.mol.service;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.dto.RealOrderCallpriceDTO;
+import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
 
 import java.util.List;
@@ -41,4 +42,11 @@ public interface RealOrderCallpriceService {
      * @return
      */
     RealCallpriceDetailDTO getRealCallpriceDetail(Integer realCallId, Integer realOrderId);
+
+    /**
+     * 实单报价
+     * @param realOrder
+     * @return
+     */
+    int addRealOrderCallprice(RealOrderCallprice realOrder);
 }

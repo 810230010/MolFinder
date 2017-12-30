@@ -13,13 +13,18 @@
 
     <style>
         .select2-hidden-accessible{display: none}
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 <div>
 <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
 </div>
-<div class="col-md-8 col-md-offset-2" >
+<div id="top" class="col-md-8 col-md-offset-2">
     <!--规则-->
     <div class="rules col-md-3" style="height:400px;padding-left: 0">
 
@@ -83,7 +88,7 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">上传图片</label>
+                        <label class="col-sm-3 control-label">图片</label>
                         <div class="col-sm-7">
                             <div id="preview">
                                 <img style="width:90px;height:90px" src="${realDetail.image}">
@@ -94,32 +99,25 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">纯度要求:</label>
                         <div class="col-sm-7">
-                            <input id="purity" type="text" class="form-control" value="${realDetail.purity}">
+                            <input id="purity" type="text" class="form-control" value="${realDetail.purity}" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">采购量:</label>
-                        <div class="col-sm-4">
-                           <span class="col-sm-8">
-                            <input id="amount" type="text" class="form-control" style="height:30px">
-                           </span>
-                            <span class="col-sm-4">
-                            <select class="weight">
-                                <option>g</option>
-                                <option>mg</option>
-                                <option>kg</option>
-                            </select>
-                           </span>
+                        <c:set var="g_index" value="${fn:indexOf(realDetail.buyAmount, 'g')}"></c:set>
+                        <c:set var="amount" value="${fn:substring(realDetail.buyAmount, 0, g_index)}"></c:set>
+                        <c:set var="unit" value="${fn:substring(realDetail.buyAmount, g_index, fn:length(realDetail.buyAmount))}"></c:set>
+                        <div class="col-sm-4 input-group" style="position: relative;left:20px">
+                            <input id="amount" type="number" class="input-sm form-control" name="lowPrice" value="${amount}">
+                            <span class="input-group-addon">${unit}</span>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">实单价格:</label>
+                        <label class="col-sm-3 control-label">出价:</label>
                         <div class="input-group col-sm-4" style="position:relative;left: 20px">
-                            <input id="lowPrice" type="text" class="input-sm form-control" name="lowPrice">
-                            <span class="input-group-addon">-</span>
-                            <input id="highPrice" type="text" class="input-sm form-control" name="highPrice">
+                            <input id="callprice" type="number" class="input-sm form-control" name="lowPrice">
                             <span class="input-group-addon">元</span>
                         </div>
                     </div>
@@ -127,10 +125,10 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">期望交货期:</label>
                         <div class="input-group col-sm-4" style="position:relative;left: 20px">
-                            <c:set value="${ fn:split(realDetail.submitDeadline, '-') }" var="names" />
-                            <input id="beginWeek" type="text" class="input-sm form-control" name="lowPrice" value="${names[0]}">
+                            <%--<c:set value="${ fn:split(realDetail.submitDeadline, '-') }" var="names" />--%>
+                            <input id="beginWeek" type="number" class="input-sm form-control" name="lowPrice">
                             <span class="input-group-addon">-</span>
-                            <input id="endWeek" type="text" class="input-sm form-control" name="highPrice" value="${names[1]}">
+                            <input id="endWeek" type="number" class="input-sm form-control" name="highPrice">
                             <span class="input-group-addon">周</span>
                         </div>
                     </div>
@@ -162,15 +160,6 @@
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">抢单截止日期:</label>
-                        <div class="col-sm-7">
-                            <button id="1" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(1)">1天</button>
-                            <button id="2" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(2)">2天</button>
-                            <button id="3" class="medium ui inverted grey button" style="color: black;width:100px" onclick="getDeadline(3)">3天</button>
-                            <input type="hidden" id="days"/>
-                        </div>
-                    </div>
                     <div class="ibox-title">
                         <h4>其他项设置</h4>
                     </div>
@@ -189,8 +178,8 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <p><input id="item1" type="checkbox">可付订单价<input id="content1" type="text" style="width: 60px">%至网站作保证金(默认0.5%)</p>
-                                            <p><input id="item2" type="checkbox">提前交货可奖励订单价<input id="content2" type="text" style="width: 60px">%/天(默认0.5)</p>
+                                            <p><input id="item1" type="checkbox">需要预付款订单金额<input id="content1" type="text" style="width: 60px">%</p>
+                                            <p><input id="item2" type="checkbox">接受预约金过期<input id="content2" type="text" style="width: 60px">%/天(默认1)订单金额</p>
                                         </div>
                                     </div>
                                 </div>
@@ -217,28 +206,105 @@
     </div>
 </div>
 <!--录入报价-->
-<div style="border-top: 1px solid green; position:relative;top: -40px;padding-top: 20px;padding-bottom: 100px" class="col-md-12">
+<div id="bottom" style="border-top: 1px solid grey;padding-top: 20px;padding-bottom: 100px;display: none" class="col-md-12">
     <div class="content container">
         <div class="content_title" style="background: darkgreen;color:white;height: 40px;width:150px;border-radius: 50px">
             <center><label style="line-height: 40px"><i class="fa fa-pencil" style="margin-right: 20px"></i>录入报价</label></center>
         </div>
-        <div class="content_basic_inf" style="margin-top: 30px">
+        <div class="content_basic_inf" style="margin-top: 30px;border-bottom: 1px dashed silver">
             <div class="col-md-3">
                 <label>CAS号：</label>
-                <label>askdjka-12</label>
+                <label>${realDetail.casNo}</label>
             </div>
             <div class="col-md-3">
                 <label>中文名：</label>
-                <label>阿克江好的尽快</label>
+                <label>${realDetail.chineseName}</label>
             </div>
             <div class="col-md-3">
                 <label>重量：</label>
-                <label>40g</label>
+                <label>${realDetail.buyAmount}</label>
             </div>
             <div class="col-md-3">
                 <label>发布日期：</label>
-                <label>2017-12-28 09:00:00</label>
+                <label><fmt:formatDate value="${realDetail.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></label>
             </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="select_content" style="margin-top: 40px">
+            <div class="col-md-3">
+                <span>形状：</span>
+                <select class="shape">
+                    <option>固体</option>
+                    <option>液体</option>
+                    <option>油</option>
+                    <option>晶体</option>
+                    <option>粉末</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <span>颜色：</span>
+                <select class="color">
+                    <option>白色</option>
+                    <option>米白色</option>
+                    <option>黄色</option>
+                    <option>无色/透明</option>
+                    <option>棕色/褐色</option>
+                </select>
+            </div>
+            <div style="clear: both;"></div>
+            <table class="table table-bordered" style="margin-top: 30px;border-radius:50px">
+                <thead>
+                    <tr>
+                        <th>包装</th>
+                        <th>规格</th>
+                        <th>总价</th>
+                        <th>纯度</th>
+                        <th>配送方式</th>
+                        <th>开票类型</th>
+                        <th>期限</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <c:set var="unit_index" value="${fn:contains(realDetail.buyAmount, 'g') ? fn:indexOf(realDetail.buyAmount, 'g'): fn:indexOf(realDetail.buyAmount, 'kg')}"/>
+                        <td>${fn:substring(realDetail.buyAmount, 0, unit_index)}</td>
+                        <td>${fn:substring(realDetail.buyAmount, unit_index, fn:length(realDetail.buyAmount))}</td>
+                        <td>
+                            <div class="input-group">
+                                <input id="callprice1" type="number" class="input-sm form-control">
+                                <span class="input-group-addon">元</span>
+                            </div>
+                        </td>
+                        <td><input type="text" id="purity1" class="form-control"/></td>
+                        <td>
+                            <select class="form-control express">
+                                <option>送货上门</option>
+                                <option>物流自提</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control bill1">
+                                <option>不开票</option>
+                                <option>增值税发票(普通)</option>
+                                <option>增值税发票(17%)</option>
+                            </select>
+                        </td>
+                        <td id="deadline"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="remark" >
+                <span>报价备注:</span>
+                <textarea id="remark1" class="form-control" style="display: block;margin-top:10px;width: 100%;height:100px"></textarea>
+            </div>
+        </div>
+
+        <div class="sumbit_area" style="margin-top: 50px">
+            <div class="left_button col-md-6">
+                <button id="back" class="btn btn-default pull-right col-md-4">返回</button>
+            </div>
+            <div class="right_button col-md-6">
+                <button id="sub" class="btn btn-warning pull-left col-md-4">提交</button>
         </div>
     </div>
 </div>
@@ -247,14 +313,12 @@
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/plugins/layer/layer.js"></script>
 <script src="/static/js/plugins/semantic/semantic.min.js" type="text/javascript"></script>
-<!--预览图片-->
-<script src="/static/js/preview.js" type="text/javascript"></script>
+
 <!--bootstrap select-->
 <script src="/static/js/plugins/select2/select2.full.min.js" type="text/javascript"></script>
 <!--jquery validate-->
 <script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="/static/js/plugins/validate/messages_zh.js"></script>
-<script src="/static/js/ajaxfileupload.js"></script>
 </body>
 
 
@@ -262,7 +326,12 @@
 
     $(function(){
         $('#collapseOne').collapse('hide');
-        $(".diagram").select2();
+        $(".diagram").select2({
+            minimumResultsForSearch: -1
+        });
+        var diagrams = "${realDetail.diagramRequire}";
+        var diagramArr = diagrams.split(",");
+        $('.diagram').val(diagramArr).trigger('change');
         $(".weight").select2({
             minimumResultsForSearch: -1
         });
@@ -274,110 +343,84 @@
     //表单验证提交
     $("#form").validate({
         submitHandler:function(form){
-            var guaranteend = $("#item1").is(':checked');
-            var reward = $("#item2").is(':checked')
-            var guaranteeMoney;
-            var rewardMoney;
-            if(guaranteend == true && $("#content1").val() != ""){
-                guaranteeMoney = $("#content1").val();
-            }else if(guaranteend == true && $("#content1").val() == ""){
-                guaranteeMoney = "0.5%";
+            var prepayed = $("#item1").is(':checked');
+            var vilation = $("#item2").is(':checked')
+            var prepayedMoney;
+            var vilationMoney;
+            if(prepayed == true && $("#content1").val() != ""){
+                prepayedMoney = $("#content1").val();
+            }else if(prepayed == true && $("#content1").val() == ""){
+                prepayedMoney = "1%";
             }else{
-                guaranteeMoney = "";
+                prepayedMoney = "";
             }
-            if(reward == true && $("#content2").val() != ""){
-                rewardMoney = $("#content2").val();
-            }else if(reward == true && $("#content2").val() == ""){
-                rewardMoney = "0.5%";
+            if(vilation == true && $("#content2").val() != ""){
+                vilationMoney = $("#content2").val();
+            }else if(vilation == true && $("#content2").val() == ""){
+                vilationMoney = "1%";
             }else{
-                guaranteeMoney = "";
+                vilationMoney = "";
             }
-            $.ajaxFileUpload({
-                url: '/real/publishReal', //用于文件上传的服务器端请求地址
-                secureuri: false, //是否需要安全协议，一般设置为false
-                fileElementId: 'previewImg', //文件上传域的ID
-                dataType: 'json', //返回值类型 一般设置为json
-                data:{
-                    <%--userId: ${currentUser.userId},--%>
-                    casNo: $("#cas").val(),
-                    englishName: $("#en_name").val(),
-                    chineseName: $("#cn_name").val(),
-                    buyAmount: $("#amount").val() + $(".weight").val(),
-                    image: $("#previewImg").val(),
-                    purity: $("#purity").val(),
-                    diagramRequire:$(".diagram").val(),
-                    makeBill: $(".bill").val(),
-                    endTime:$("#days").val(),
-                    guaranteeMoneyPercent: guaranteeMoney,
-                    rewardMoneyPercent: rewardMoney,
-                    remark: $("#remark").val(),
-                    priceBetween: $("#lowPrice").val() + "-" + $("#highPrice").val(),
-                    submitDeadline: $("#beginWeek").val() + $("#endWeek").val(),
-                    buyerId:${realDetail.userId}
-                },
-                success: function (data, status)  //服务器成功响应处理函数
-                {
-                    alert(data.code)
-                    if(data.code == 200){
-                        swal("成功！", "发布实单成功", "success");
-                        setTimeout(function () {
-                            window.location.href = "/index/indexPage";
-                        },2000)
+            if($("#callprice").val() == ""){
+                layer.msg("报价不得为空!");
+                return;
+            }
+            if($("#beginWeek").val() == "" || $("#endWeek").val() == ""){
+                layer.msg("期限不得为空");
+                return;
+            }
+            $("#callprice1").val($("#callprice").val());
+            $("#purity1").val($("#purity").val());
+            $("#deadline").html($("#beginWeek").val() + "-" + $("#endWeek").val() + "周");
+            $("#remark1").val($("#remark").val());
+            $("#top").hide(100);
+            $("#bottom").show(500);
+
+            $("#back").click(function () {
+                window.location.reload();
+            });
+            $("#sub").click(function () {
+                $.ajax({
+                    url: '/real/publishRealCallprice',
+                    dataType: 'json',
+                    data:{
+                        userId: ${currentUser.userId},
+                        realOrderId: ${realDetail.realOrderId},
+                        buyerId: ${realDetail.userId},
+                        callPriceMoney: $("#callprice1").val() + "元",
+                        callPriceAmount: '${realDetail.buyAmount}',
+                        callPurity: $("#purity1").val(),
+                        callSubmitDeadline: $("#deadline").text(),
+                        offerDiagram:$(".diagram").val(),
+                        makeBill: $(".bill1").val(),
+                        prepayedMoneyAmount: prepayedMoney,
+                        vilationMoneyAmount: vilationMoney,
+                        otherRequire: $("#remark1").val(),
+                        expressType: $(".express").val(),
+                        shape: $(".shape").val(),
+                        color: $(".color").val()
+                    },
+                    success: function (data, status)  //服务器成功响应处理函数
+                    {
+                        if(data.code == 200){
+                            layer.msg("实单报价成功!");
+                            setTimeout(function () {
+                                window.location.reload();
+                            },2000)
+                        }
+                    },
+                    error: function (result)//服务器响应失败处理函数
+                    {
+                        alert("系统出错");
                     }
-                },
-                error: function (data, status, e)//服务器响应失败处理函数
-                {
-                    alert("系统出错");
-                }
+                })
             })
+
         },
         invalidHandler: function(form, validator) {return false;}
     });
 
 
 
-    //点击期限事件
-    function getDeadline(days){
-        $("#"+days).addClass('active');
-        removeOtherSelectedStyle(days);
-       var deadLine = dateFtt("yyyy-MM-dd hh:mm:ss",addDays(new Date(), days));
-       $("#days").val(deadLine);
-       var show = "截止日期:" + deadLine;
-        layer.tips(show, '#'+days, {
-            tips: 3,
-        });
-    }
-
-    //格式化日期
-function dateFtt(fmt,date)
-{
-    var o = {
-        "M+" : date.getMonth()+1,                 //月份
-        "d+" : date.getDate(),                    //日
-        "h+" : date.getHours(),                   //小时
-        "m+" : date.getMinutes(),                 //分
-        "s+" : date.getSeconds(),                 //秒
-        "q+" : Math.floor((date.getMonth()+3)/3), //季度
-        "S"  : date.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt))
-        fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
-    for(var k in o)
-        if(new RegExp("("+ k +")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-    return fmt;
-}
-function addDays(theDate, days) {
-    return new Date(theDate.getTime() + days*24*60*60*1000);
-}
-function removeOtherSelectedStyle(k){
-    for(var i=1; i<=3; i++){
-        if(i == k){
-            continue;
-        }else{
-            $("#"+i).removeClass('active');
-        }
-    }
-}
 </script>
 </html>

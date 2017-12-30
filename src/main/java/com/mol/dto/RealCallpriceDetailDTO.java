@@ -10,9 +10,7 @@ import java.util.List;
 @Getter
 public class RealCallpriceDetailDTO {
     private Integer realCallId;
-
     private Integer realOrderId;
-
     private Integer userId;
     private String casNo;
     private String englishName;

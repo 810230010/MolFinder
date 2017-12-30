@@ -8,11 +8,13 @@ public class RealOrderCallprice {
 
     private Integer realOrderId;
 
+    private Integer buyerId;
+
     private Integer userId;
 
-    private String callPriceMoney;
-
     private String callPriceAmount;
+
+    private String callPriceMoney;
 
     private String callPriceValidtime;
 
@@ -30,9 +32,15 @@ public class RealOrderCallprice {
 
     private String attachment;
 
+    private String shape;
+
+    private String color;
+
     private Long vilationMoneyAmount;
 
     private String state;
+
+    private String expressType;
 
     private Date createTime;
     private List<String> realCallpriceCompleted;
@@ -61,12 +69,28 @@ public class RealOrderCallprice {
         this.realOrderId = realOrderId;
     }
 
+    public Integer getBuyerId() {
+        return buyerId;
+    }
+
+    public void setBuyerId(Integer buyerId) {
+        this.buyerId = buyerId;
+    }
+
     public Integer getUserId() {
         return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getCallPriceAmount() {
+        return callPriceAmount;
+    }
+
+    public void setCallPriceAmount(String callPriceAmount) {
+        this.callPriceAmount = callPriceAmount == null ? null : callPriceAmount.trim();
     }
 
     public String getCallPriceMoney() {
@@ -141,6 +165,22 @@ public class RealOrderCallprice {
         this.attachment = attachment == null ? null : attachment.trim();
     }
 
+    public String getShape() {
+        return shape;
+    }
+
+    public void setShape(String shape) {
+        this.shape = shape == null ? null : shape.trim();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color == null ? null : color.trim();
+    }
+
     public Long getVilationMoneyAmount() {
         return vilationMoneyAmount;
     }
@@ -157,19 +197,19 @@ public class RealOrderCallprice {
         this.state = state == null ? null : state.trim();
     }
 
+    public String getExpressType() {
+        return expressType;
+    }
+
+    public void setExpressType(String expressType) {
+        this.expressType = expressType == null ? null : expressType.trim();
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getCallPriceAmount() {
-        return callPriceAmount;
-    }
-
-    public void setCallPriceAmount(String callPriceAmount) {
-        this.callPriceAmount = callPriceAmount;
     }
 }

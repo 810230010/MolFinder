@@ -102,7 +102,7 @@
                <!--enableDeleteByExample="false" enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table tableName="t_goods_order" domainObjectName="GoodsOrder"
+        <table tableName="t_real_order_callprice" domainObjectName="RealOrderCallprice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
