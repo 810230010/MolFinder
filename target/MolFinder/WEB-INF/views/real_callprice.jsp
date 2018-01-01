@@ -197,7 +197,7 @@
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="text-center">
-                            <input id="submit" type="submit" class="btn btn-primary" value="下一步"/>
+                            <input id="submit" type="button" class="btn btn-primary" value="下一步"/>
                         </div>
                     </div>
                 </form>
@@ -340,85 +340,86 @@
         });
 
     });
-    //表单验证提交
-    $("#form").validate({
-        submitHandler:function(form){
-            var prepayed = $("#item1").is(':checked');
-            var vilation = $("#item2").is(':checked')
-            var prepayedMoney;
-            var vilationMoney;
-            if(prepayed == true && $("#content1").val() != ""){
-                prepayedMoney = $("#content1").val();
-            }else if(prepayed == true && $("#content1").val() == ""){
-                prepayedMoney = "1%";
-            }else{
-                prepayedMoney = "";
-            }
-            if(vilation == true && $("#content2").val() != ""){
-                vilationMoney = $("#content2").val();
-            }else if(vilation == true && $("#content2").val() == ""){
-                vilationMoney = "1%";
-            }else{
-                vilationMoney = "";
-            }
-            if($("#callprice").val() == ""){
-                layer.msg("报价不得为空!");
-                return;
-            }
-            if($("#beginWeek").val() == "" || $("#endWeek").val() == ""){
-                layer.msg("期限不得为空");
-                return;
-            }
-            $("#callprice1").val($("#callprice").val());
-            $("#purity1").val($("#purity").val());
-            $("#deadline").html($("#beginWeek").val() + "-" + $("#endWeek").val() + "周");
-            $("#remark1").val($("#remark").val());
-            $("#top").hide(100);
-            $("#bottom").show(500);
 
-            $("#back").click(function () {
-                window.location.reload();
-            });
-            $("#sub").click(function () {
-                $.ajax({
-                    url: '/real/publishRealCallprice',
-                    dataType: 'json',
-                    data:{
-                        userId: ${currentUser.userId},
-                        realOrderId: ${realDetail.realOrderId},
-                        buyerId: ${realDetail.userId},
-                        callPriceMoney: $("#callprice1").val() + "元",
-                        callPriceAmount: '${realDetail.buyAmount}',
-                        callPurity: $("#purity1").val(),
-                        callSubmitDeadline: $("#deadline").text(),
-                        offerDiagram:$(".diagram").val(),
-                        makeBill: $(".bill1").val(),
-                        prepayedMoneyAmount: prepayedMoney,
-                        vilationMoneyAmount: vilationMoney,
-                        otherRequire: $("#remark1").val(),
-                        expressType: $(".express").val(),
-                        shape: $(".shape").val(),
-                        color: $(".color").val()
-                    },
-                    success: function (data, status)  //服务器成功响应处理函数
-                    {
-                        if(data.code == 200){
-                            layer.msg("实单报价成功!");
-                            setTimeout(function () {
-                                window.location.reload();
-                            },2000)
-                        }
-                    },
-                    error: function (result)//服务器响应失败处理函数
-                    {
-                        alert("系统出错");
-                    }
-                })
-            })
 
-        },
-        invalidHandler: function(form, validator) {return false;}
-    });
+      $("#submit").click(function () {
+          var prepayed = $("#item1").is(':checked');
+          var vilation = $("#item2").is(':checked')
+          var prepayedMoney;
+          var vilationMoney;
+          if(prepayed == true && $("#content1").val() != ""){
+              prepayedMoney = $("#content1").val();
+          }else if(prepayed == true && $("#content1").val() == ""){
+              prepayedMoney = "1";
+          }else{
+              prepayedMoney = "";
+          }
+          if(vilation == true && $("#content2").val() != ""){
+              vilationMoney = $("#content2").val();
+          }else if(vilation == true && $("#content2").val() == ""){
+              vilationMoney = "1";
+          }else{
+              vilationMoney = "";
+          }
+          if($("#callprice").val() == ""){
+              layer.msg("报价不得为空!");
+              return;
+          }
+          if($("#beginWeek").val() == "" || $("#endWeek").val() == ""){
+              layer.msg("期限不得为空");
+              return;
+          }
+          $("#callprice1").val($("#callprice").val());
+          $("#purity1").val($("#purity").val());
+          $("#deadline").html($("#beginWeek").val() + "-" + $("#endWeek").val() + "周");
+          $("#remark1").val($("#remark").val());
+          $("#top").hide(100);
+          $("#bottom").show(500);
+
+          $("#back").click(function () {
+              window.location.reload();
+          });
+          $("#sub").click(function () {
+              $.ajax({
+                  url: '/real/publishRealCallprice',
+                  dataType: "json",
+                  data:{
+                      userId: ${currentUser.userId},
+                      realOrderId: ${realDetail.realOrderId},
+                      buyerId: ${realDetail.userId},
+                      callPriceMoney: $("#callprice1").val() + "元",
+                      callPriceAmount: '${realDetail.buyAmount}',
+                      callPurity: $("#purity1").val(),
+                      callSubmitDeadline: $("#deadline").text(),
+                      offerDiagram:$(".diagram").val().join(','),
+                      makeBill: $(".bill1").val(),
+                      prepayedMoneyAmount: prepayedMoney,
+                      vilationMoneyAmount: vilationMoney,
+                      otherRequire: $("#remark1").val(),
+                      expressType: $(".express").val(),
+                      shape: $(".shape").val(),
+                      color: $(".color").val()
+                  },
+                  success: function (result)  //服务器成功响应处理函数
+                  {
+                      if(result.code == 200){
+                          layer.msg("实单报价成功!");
+                          setTimeout(function () {
+                              window.location.reload();
+                          },2000)
+                      }
+                  },
+                  error: function (result)//服务器响应失败处理函数
+                  {
+                      alert("系统出错");
+                  }
+              })
+          })
+
+      })
+
+
+
 
 
 

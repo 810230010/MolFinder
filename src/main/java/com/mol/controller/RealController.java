@@ -16,6 +16,7 @@ import com.mol.entity.RealOrderCallprice;
 import com.mol.service.RealOrderCallpriceService;
 import com.mol.service.RealService;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -197,13 +199,15 @@ public class RealController {
 
     /**
      * 发布实单报价
-     * @param callprice
+     * @param
      * @return
      */
-    @RequestMapping("/publishRealCallprice")
+    @RequestMapping(value = "/publishRealCallprice")
     @ResponseBody
-    public Object publishRealCallprice(RealOrderCallprice callprice){
+    public Object publishRealCallprice(HttpServletRequest request, HttpServletResponse response){
         RestResult result = new RestResult();
+        RealOrderCallprice callprice = new RealOrderCallprice();
+        RequestUtil.populate(callprice, request);
         realOrderCallpriceService.addRealOrderCallprice(callprice);
         return result;
     }

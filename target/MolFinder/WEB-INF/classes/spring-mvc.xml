@@ -15,10 +15,8 @@
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
     <!--支持注解映射-->
-    <mvc:annotation-driven conversion-service="conversionService"/>
-    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+    <mvc:annotation-driven/>
 
-    </bean>
     <!--支持静态资源-->
     <mvc:default-servlet-handler/>
     <!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
@@ -44,7 +42,7 @@
           class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
-                <value>text/html;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
             </list>
         </property>
     </bean>

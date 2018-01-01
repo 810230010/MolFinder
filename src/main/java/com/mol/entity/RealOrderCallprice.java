@@ -43,15 +43,15 @@ public class RealOrderCallprice {
     private String expressType;
 
     private Date createTime;
-    private List<String> realCallpriceCompleted;
+//    private List<String> realCallpriceCompleted;
 
-    public List<String> getRealCallpriceCompleted() {
-        return realCallpriceCompleted;
-    }
-
-    public void setRealCallpriceCompleted(List<String> realCallpriceCompleted) {
-        this.realCallpriceCompleted = realCallpriceCompleted;
-    }
+//    public List<String> getRealCallpriceCompleted() {
+//        return realCallpriceCompleted;
+//    }
+//
+//    public void setRealCallpriceCompleted(List<String> realCallpriceCompleted) {
+//        this.realCallpriceCompleted = realCallpriceCompleted;
+//    }
 
     public Integer getRealCallId() {
         return realCallId;
