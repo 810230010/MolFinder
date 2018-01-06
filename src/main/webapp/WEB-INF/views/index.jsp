@@ -90,7 +90,7 @@
                 <span>纯度:${item.purity}</span></br>
                 实单价:<font color="red" style="font-size: 24px">${item.priceBetween}</font><br/>
                 采购量:<font color="red">${item.buyAmount}</font><br/>
-                交货期:<font color="red">${item.submitDeadline}</font>周<br/>
+                交货期:<font color="red">${item.submitDeadline1}</font><br/>
                 已报名:<font color="red">${item.joinCount}</font>人
                 </p>
             </div>
@@ -128,7 +128,7 @@
                         <h4>CAS号:${item.casNo}</h4>
                         <p>纯度:${item.purity}</p>
                         <p>采购量:<font color="red">${item.buyAmount}</font></p>
-                        <p>交货期:<font color="red">${item.submitDeadline}</font>周</p>
+                        <p>交货期:<font color="red">${item.submitDeadline1}</font></p>
                         <p>已报名:<font color="red">${item.joinCount}</font>人</p>
                     </div>
                 </div>

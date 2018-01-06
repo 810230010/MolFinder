@@ -39,7 +39,7 @@
                 <div class="col-md-3" style="border-right: 1px solid #ddd">采购量:${realDetail.buyAmount}</div>
                 <div class="col-md-3" style="border-right: 1px solid #ddd">发票要求:${realDetail.makeBill}</div>
                 <div class="col-md-3" style="border-right: 1px solid #ddd">纯度要求:${realDetail.purity}</div>
-                <div class="col-md-3" >交货期:${realDetail.submitDeadline}周</div>
+                <div class="col-md-3" >交货期:${realDetail.submitDeadline1}</div>
             </div>
             <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
             <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" id="rub" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
@@ -75,7 +75,7 @@
                         <p><strong>实单价格</strong>：${realDetail.priceBetween}元</p>
                     </div>
                     <div class="col-md-4">
-                        <p><strong>交货期</strong>：${realDetail.submitDeadline}</p>
+                        <p><strong>交货期</strong>：${realDetail.submitDeadline1}</p>
                         <p><strong>发布日期</strong>： <fmt:formatDate value="${realDetail.beginTime}" pattern="yyyy-MM-dd hh:mm:ss" /></p>
                         <p><strong>发票类型</strong>： ${realDetail.makeBill}</p>
                     </div>

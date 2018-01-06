@@ -83,7 +83,7 @@
                         <td>${callItems[1]}</td>
                         <td>${callItems[0]}(${queryCallpriceDetail.makeBill})</td>
                         <td>${queryCallpriceDetail.callPurity}%</td>
-                        <td>${queryCallpriceDetail.callSubmitDeadline}</td>
+                        <td>${queryCallpriceDetail.submitDeadline1}</td>
                         <td>${queryCallpriceDetail.expressType}</td>
                     </tr>
                     </tbody>

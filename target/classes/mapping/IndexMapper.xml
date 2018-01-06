@@ -11,4 +11,7 @@
     <update id="updateInvalidOrder">
         update t_query_order set state = 'CLOSE'  where NOW() > end_time
     </update>
+    <update id="updateInvalidOrder2">
+        update t_real_order set state = 'CLOSE'  where NOW() > end_time
+    </update>
 </mapper>

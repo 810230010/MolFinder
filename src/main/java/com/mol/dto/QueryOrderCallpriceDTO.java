@@ -23,4 +23,7 @@ public class QueryOrderCallpriceDTO {
     private String state;
     private Date createTime;
     private String image;
+    public String getSubmitDeadline1(){
+        return callSubmitDeadline.contains("周") ? callSubmitDeadline : callSubmitDeadline + "周";
+    }
 }

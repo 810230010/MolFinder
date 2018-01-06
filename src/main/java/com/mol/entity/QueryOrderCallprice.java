@@ -32,7 +32,9 @@ public class QueryOrderCallprice {
     private String state;
 
     private Date createTime;
-
+    public String getSubmitDeadline1(){
+        return callSubmitDeadline.contains("周") ? callSubmitDeadline : callSubmitDeadline + "周";
+    }
     public Integer getQueryCallId() {
         return queryCallId;
     }

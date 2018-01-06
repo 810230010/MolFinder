@@ -14,7 +14,9 @@ public class RealOrderIndexDTO {
     private String submitDeadline;
     private Integer joinCount;//参与抢实单人数
     private Date endTime;
-
+    public String getSubmitDeadline1(){
+        return submitDeadline.contains("周") ? submitDeadline : submitDeadline + "周";
+    }
     public Integer getRealOrderId() {
         return realOrderId;
     }

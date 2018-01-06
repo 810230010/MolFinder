@@ -40,7 +40,9 @@ public class QueryOrder {
     private Integer joinCount;
 
     private String state;
-
+    public String getSubmitDeadline1(){
+        return submitDeadline.contains("周") ? submitDeadline : submitDeadline + "周";
+    }
     public Integer getQueryOrderId() {
         return queryOrderId;
     }

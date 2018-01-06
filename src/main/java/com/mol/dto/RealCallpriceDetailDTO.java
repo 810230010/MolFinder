@@ -43,4 +43,7 @@ public class RealCallpriceDetailDTO {
     private Date createTime;
     private String expressType;
     private List<String> realCallpriceCompleted;
+    public String getSubmitDeadline1(){
+        return callSubmitDeadline.contains("周") ? callSubmitDeadline : callSubmitDeadline + "周";
+    }
 }

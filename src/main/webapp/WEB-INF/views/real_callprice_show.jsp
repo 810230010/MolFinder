@@ -94,7 +94,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">纯度要求:</label>
                         <div class="col-sm-7">
-                            <input id="purity" type="text" class="form-control" value="${realCallpriceDetail.callPurity}%">
+                            <input id="purity" type="text" class="form-control" value="${realCallpriceDetail.callPurity}">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -172,18 +172,105 @@
                             <textarea id="remark" class="form-control" style="height:120px" readonly>${realCallpriceDetail.otherRequire}</textarea>
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group">
-                        <div class="text-center">
-                            <input id="submit" type="button" class="btn btn-primary" value="生成订单" onclick="jump2makeOrder()"/>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<!--录入报价-->
+<div id="bottom" style="border-top: 1px solid grey;padding-top: 20px;padding-bottom: 100px" class="col-md-12">
+    <div class="content container">
+        <div class="content_title" style="background: darkgreen;color:white;height: 40px;width:150px;border-radius: 50px">
+            <center><label style="line-height: 40px"><i class="fa fa-pencil" style="margin-right: 20px"></i>报价介绍</label></center>
+        </div>
+        <div class="content_basic_inf" style="margin-top: 30px;border-bottom: 1px dashed silver">
+            <div class="col-md-3">
+                <label>CAS号：</label>
+                <label>${realCallpriceDetail.casNo}</label>
+            </div>
+            <div class="col-md-3">
+                <label>中文名：</label>
+                <label>${realCallpriceDetail.chineseName}</label>
+            </div>
+            <div class="col-md-3">
+                <label>重量：</label>
+                <label>${realCallpriceDetail.callPriceAmount}</label>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="select_content" style="margin-top: 40px">
+            <div class="col-md-3">
+                <span>形状：</span>
+                <select class="shape">
+                    <option>固体</option>
+                    <option>液体</option>
+                    <option>油</option>
+                    <option>晶体</option>
+                    <option>粉末</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <span>颜色：</span>
+                <select class="color">
+                    <option>白色</option>
+                    <option>米白色</option>
+                    <option>黄色</option>
+                    <option>无色/透明</option>
+                    <option>棕色/褐色</option>
+                </select>
+            </div>
+            <div style="clear: both;"></div>
+            <table class="table table-bordered" style="margin-top: 30px;border-radius:50px">
+                <thead>
+                <tr>
+                    <th>包装</th>
+                    <th>规格</th>
+                    <th>总价</th>
+                    <th>纯度</th>
+                    <th>配送方式</th>
+                    <th>开票类型</th>
+                    <th>期限</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <c:set var="unit_index" value="${fn:contains(realDetail.buyAmount, 'g') ? fn:indexOf(realDetail.buyAmount, 'g'): fn:indexOf(realDetail.buyAmount, 'kg')}"/>
+                    <td>${fn:substring(realDetail.buyAmount, 0, unit_index)}</td>
+                    <td>${fn:substring(realDetail.buyAmount, unit_index, fn:length(realDetail.buyAmount))}</td>
+                    <td>
+                        <div class="input-group">
+                            <input id="callprice1" type="number" class="input-sm form-control">
+                            <span class="input-group-addon">元</span>
+                        </div>
+                    </td>
+                    <td><input type="text" id="purity1" class="form-control"/></td>
+                    <td>
+                        <select class="form-control express">
+                            <option>送货上门</option>
+                            <option>物流自提</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control bill1">
+                            <option>不开票</option>
+                            <option>增值税发票(普通)</option>
+                            <option>增值税发票(17%)</option>
+                        </select>
+                    </td>
+                    <td id="deadline"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="remark" >
+                <span>报价备注:</span>
+                <textarea id="remark1" class="form-control" style="display: block;margin-top:10px;width: 100%;height:100px"></textarea>
+            </div>
+        </div>
 
+        <button id="submit" class="btn btn-warning  col-md-6 col-md-offset-3" style="margin-top: 40px" onclick="jump2makeOrder()">生成订单</button>
+
+    </div>
+</div>
 
 <script src="/static/js/jquery-3.1.1.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
@@ -209,7 +296,6 @@
         $(".bill").select2({
             minimumResultsForSearch: -1
         });
-
     });
 
 

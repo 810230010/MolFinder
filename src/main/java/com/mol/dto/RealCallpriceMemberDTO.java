@@ -29,5 +29,7 @@ public class RealCallpriceMemberDTO{
     private Integer certificateId;
     private List<String> callPriceCompleted;
 
-
+    public String getSubmitDeadline1(){
+        return callSubmitDeadline.contains("周") ? callSubmitDeadline : callSubmitDeadline + "周";
+    }
 }

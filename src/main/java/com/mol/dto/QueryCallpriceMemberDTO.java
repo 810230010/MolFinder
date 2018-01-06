@@ -19,4 +19,7 @@ public class QueryCallpriceMemberDTO {
     private BigDecimal prepayedMoneyAmount;
     private String callPurity;
     private Integer certificateId;
+    public String getSubmitDeadline1(){
+        return callSubmitDeadline.contains("周") ? callSubmitDeadline : callSubmitDeadline + "周";
+    }
 }

@@ -127,7 +127,7 @@
                     <label class="col-sm-12 control-label">快递方式: <u>${realCallpriceDetail.expressType}</u></label>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">交货期: <u>${realCallpriceDetail.callSubmitDeadline}</u></label>
+                    <label class="col-sm-12 control-label">交货期: <u>${realCallpriceDetail.submitDeadline1}</u></label>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label">提供图谱:</label>

@@ -43,8 +43,9 @@ public class RealOrderCallprice {
     private String expressType;
 
     private Date createTime;
-//    private List<String> realCallpriceCompleted;
-
+    public String getSubmitDeadline1(){
+        return callSubmitDeadline.contains("周") ? callSubmitDeadline : callSubmitDeadline + "周";
+    }
 //    public List<String> getRealCallpriceCompleted() {
 //        return realCallpriceCompleted;
 //    }

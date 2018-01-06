@@ -40,7 +40,7 @@
                 <div class="col-md-3" style="border-right: 1px solid #ddd">采购量:${realDetail.buyAmount}</div>
                 <div class="col-md-3" style="border-right: 1px solid #ddd">发票要求:${realDetail.makeBill}</div>
                 <div class="col-md-3" style="border-right: 1px solid #ddd">纯度要求:${realDetail.purity}</div>
-                <div class="col-md-3" >交货期:${realDetail.submitDeadline}周</div>
+                <div class="col-md-3" >交货期:${realDetail.submitDeadline1}</div>
             </div>
             <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
         </div>
@@ -195,7 +195,7 @@ function loadTable(){
             },
             {"data":"companyName","width": "10%","title":"发单者","orderable": false},
             {"data":"callPurity","width": "10%","title":"纯度","orderable": false},
-            {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+            {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
             {"data":"realOrderId","width": "10%","title":"其他设置","orderable": false,
                 "render": function (data, type, row) {
                     var str = '';

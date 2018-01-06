@@ -97,7 +97,7 @@
                     }
                 },
                 {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
                 {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
                     "render": function (data, type, row) {
                          var str = '';
@@ -136,10 +136,10 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action update" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs block table-action update" href="javascript:void(0)">',
                             '修改 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action cancel" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs block table-action cancel" href="javascript:void(0)">',
                             '取消报价 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -195,7 +195,7 @@
                     }
                 },
                 {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
                 {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
                     "render": function (data, type, row) {
                         var str = '';
@@ -279,7 +279,7 @@
                     }
                 },
                 {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
                 {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
                     "render": function (data, type, row) {
                         var str = '';
@@ -322,13 +322,13 @@
                     "render": function (data, type, row) {
                         if(row.state == 'HERE'){
                             return [
-                                '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                                '<a class="btn btn-primary btn-xs block table-action scan" href="javascript:void(0)">',
                                 '订单确认 <i class="fa fa-eye"></i>',
                                 '</a>'
                             ].join('');
                         }else{
                             return [
-                                '<a class="table-button btn btn-danger btn-xs table-action delete" href="javascript:void(0)">',
+                                '<a class="table-button btn btn-danger btn-xs block table-action delete" href="javascript:void(0)">',
                                 '删除 <i class="fa fa-trash-o"></i>',
                                 '</a>',
                             ].join('');
@@ -388,7 +388,7 @@
                     }
                 },
                 {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"callSubmitDeadline","width": "10%","title":"交货期","orderable": false},
+                {"data":"submitDeadline","width": "10%","title":"交货期","orderable": false},
                 {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
                     "render": function (data, type, row) {
                         var str = '';
@@ -429,7 +429,7 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                             return [
-                                '<a class="table-button btn btn-danger btn-xs table-action delete" href="javascript:void(0)">',
+                                '<a class="table-button btn btn-danger btn-xs block table-action delete" href="javascript:void(0)">',
                                 '删除 <i class="fa fa-trash-o"></i>',
                                 '</a>',
                             ].join('');

@@ -31,7 +31,9 @@ public class RealDetailDTO{
     private String remark;
     private Double guaranteeMoneyPercent;
     private Double rewardMoneyPercent;
-
+    public String getSubmitDeadline1(){
+        return submitDeadline.contains("周") ? submitDeadline : submitDeadline + "周";
+    }
     @JsonSerialize
     public Date getBeginTime() {
         return beginTime;

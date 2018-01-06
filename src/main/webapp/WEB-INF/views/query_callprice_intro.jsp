@@ -40,7 +40,7 @@
                 <div class="col-md-3" style="border-right: 1px solid #ddd">采购量:${queryDetail.buyAmount}</div>
                 <div class="col-md-3" style="border-right: 1px solid #ddd">发票要求:${queryDetail.makeBill}</div>
                 <div class="col-md-3" style="border-right: 1px solid #ddd">纯度要求:${queryDetail.purity}</div>
-                <div class="col-md-3" >交货期:${queryDetail.submitDeadline}周</div>
+                <div class="col-md-3" >交货期:${queryDetail.submitDeadline1}</div>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
                         <p><strong>图谱要求</strong>：${queryDetail.diagramRequire}</p>
                     </div>
                     <div class="col-md-4">
-                        <p><strong>交货期</strong>：${queryDetail.submitDeadline}</p>
+                        <p><strong>交货期</strong>：${queryDetail.submitDeadline1}</p>
                         <p><strong>发布日期</strong>： <fmt:formatDate value="${queryDetail.beginTime}" pattern="yyyy-MM-dd hh:mm:ss" /></p>
                         <p><strong>发票类型</strong>： ${queryDetail.makeBill}</p>
                     </div>

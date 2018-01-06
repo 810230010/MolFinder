@@ -49,6 +49,10 @@ public class RealOrder {
 
     private String state;
 
+    public String getSubmitDeadline1(){
+        return submitDeadline.contains("周") ? submitDeadline : submitDeadline + "周";
+    }
+
     public Integer getRealOrderId() {
         return realOrderId;
     }
@@ -114,7 +118,7 @@ public class RealOrder {
     }
 
     public String getSubmitDeadline() {
-        return submitDeadline;
+            return submitDeadline;
     }
 
     public void setSubmitDeadline(String submitDeadline) {
