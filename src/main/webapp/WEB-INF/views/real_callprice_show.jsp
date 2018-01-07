@@ -94,7 +94,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">纯度要求:</label>
                         <div class="col-sm-7">
-                            <input id="purity" type="text" class="form-control" value="${realCallpriceDetail.callPurity}">
+                            <input id="purity" type="text" class="form-control" value="${realCallpriceDetail.callPurity}" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -201,23 +201,11 @@
         <div class="select_content" style="margin-top: 40px">
             <div class="col-md-3">
                 <span>形状：</span>
-                <select class="shape">
-                    <option>固体</option>
-                    <option>液体</option>
-                    <option>油</option>
-                    <option>晶体</option>
-                    <option>粉末</option>
-                </select>
+                <span>${realCallpriceDetail.shape}</span>
             </div>
             <div class="col-md-3">
                 <span>颜色：</span>
-                <select class="color">
-                    <option>白色</option>
-                    <option>米白色</option>
-                    <option>黄色</option>
-                    <option>无色/透明</option>
-                    <option>棕色/褐色</option>
-                </select>
+                <span>${realCallpriceDetail.color}</span>
             </div>
             <div style="clear: both;"></div>
             <table class="table table-bordered" style="margin-top: 30px;border-radius:50px">
@@ -234,40 +222,30 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <c:set var="unit_index" value="${fn:contains(realDetail.buyAmount, 'g') ? fn:indexOf(realDetail.buyAmount, 'g'): fn:indexOf(realDetail.buyAmount, 'kg')}"/>
-                    <td>${fn:substring(realDetail.buyAmount, 0, unit_index)}</td>
-                    <td>${fn:substring(realDetail.buyAmount, unit_index, fn:length(realDetail.buyAmount))}</td>
+                    <c:set var="unit_index" value="${fn:contains(realCallpriceDetail.callPriceAmount, 'g') ? fn:indexOf(realCallpriceDetail.callPriceAmount, 'g'): fn:indexOf(realCallpriceDetail.callPriceAmount, 'kg')}"/>
+                    <td>${fn:substring(realCallpriceDetail.callPriceAmount, 0, unit_index)}</td>
+                    <td>${fn:substring(realCallpriceDetail.callPriceAmount, unit_index, fn:length(realCallpriceDetail.callPriceAmount))}</td>
                     <td>
-                        <div class="input-group">
-                            <input id="callprice1" type="number" class="input-sm form-control">
-                            <span class="input-group-addon">元</span>
-                        </div>
+                        ${realCallpriceDetail.callPriceMoney}
                     </td>
-                    <td><input type="text" id="purity1" class="form-control"/></td>
+                    <td>${realCallpriceDetail.callPurity}</td>
                     <td>
-                        <select class="form-control express">
-                            <option>送货上门</option>
-                            <option>物流自提</option>
-                        </select>
+                        ${realCallpriceDetail.expressType}
                     </td>
                     <td>
-                        <select class="form-control bill1">
-                            <option>不开票</option>
-                            <option>增值税发票(普通)</option>
-                            <option>增值税发票(17%)</option>
-                        </select>
+                        ${realCallpriceDetail.makeBill}
                     </td>
-                    <td id="deadline"></td>
+                    <td id="deadline">${realCallpriceDetail.submitDeadline1}</td>
                 </tr>
                 </tbody>
             </table>
             <div class="remark" >
                 <span>报价备注:</span>
-                <textarea id="remark1" class="form-control" style="display: block;margin-top:10px;width: 100%;height:100px"></textarea>
+                <textarea id="remark1" class="form-control" style="display: block;margin-top:10px;width: 100%;height:100px" readonly>${realCallpriceDetail.otherRequire}</textarea>
             </div>
         </div>
 
-        <button id="submit" class="btn btn-warning  col-md-6 col-md-offset-3" style="margin-top: 40px" onclick="jump2makeOrder()">生成订单</button>
+        <button id="submit" class="btn btn-primary  col-md-6 col-md-offset-3" style="margin-top: 40px" onclick="jump2makeOrder()">生成订单</button>
 
     </div>
 </div>
@@ -292,7 +270,6 @@
     $(function(){
         $('#collapseOne').collapse('show');
         var diagrams = "${realCallpriceDetail.offerDiagram}";
-        var diagramArr = diagrams.split(",");
         $(".bill").select2({
             minimumResultsForSearch: -1
         });

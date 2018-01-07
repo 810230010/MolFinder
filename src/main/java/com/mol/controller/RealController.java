@@ -11,6 +11,7 @@ import com.mol.dao.RealOrderCallpriceMapper;
 import com.mol.dao.RealOrderMapper;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
+import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
 import com.mol.service.RealOrderCallpriceService;
@@ -45,6 +46,8 @@ public class RealController {
     private RealOrderCallpriceMapper realOrderCallpriceMapper;
     @Autowired
     private RealOrderMapper realOrderMapper;
+    @Autowired
+    private HttpServletRequest request;
     /**
      * 跳转到实单发布页面
      * @return
@@ -62,7 +65,8 @@ public class RealController {
      */
     @RequestMapping("/realDetailPage")
     public String view2realDetail(Integer realOrderId, Model model){
-        model.addAttribute("realDetail", realService.getRealDetail(realOrderId));
+        RealDetailDTO r = realService.getRealDetail(realOrderId);
+        model.addAttribute("realDetail", r);
         return "real_detail";
     }
 
@@ -72,7 +76,8 @@ public class RealController {
      */
     @RequestMapping("/realCallpriceMembersPage")
     public String view2realCallpriceMember(Integer realOrderId, Model model){
-        model.addAttribute("realDetail", realService.getRealDetail(realOrderId));
+        RealDetailDTO r = realService.getRealDetail(realOrderId);
+        model.addAttribute("realDetail", r);
         return "real_callprice_intro";
     }
     /**
@@ -84,13 +89,16 @@ public class RealController {
     @ResponseBody
     public Object publishReal(@RequestParam("previewImg")MultipartFile file,HttpServletRequest request) throws IOException{
         RestResult result = new RestResult();
-        RealOrder realOrder = RequestUtil.request2Bean(request, RealOrder.class);
+        RealOrder realOrder = new RealOrder();
+        RequestUtil.populate(realOrder, request);
         String docPath = PropertyReader.getProperty("docPath");
         String originalFilename = file.getOriginalFilename();
         String fileSuffix = originalFilename.substring(
                 originalFilename.lastIndexOf(".")).toLowerCase();
         String newFile = UUID.randomUUID().toString().replace("-", "") + fileSuffix;
-        realOrder.setImage(newFile);
+        //获取图片地址
+        String filePath = "/pic/" + newFile;
+        realOrder.setImage(filePath);
         int affectedRows = realService.publishReal(realOrder);
         FileUtils.copyInputStreamToFile(file.getInputStream(), new File(docPath, newFile));
         return result;
@@ -139,7 +147,8 @@ public class RealController {
      */
     @RequestMapping("/realCallpricePage")
     public String view2realCallprice(Integer realOrderId, Model model){
-        model.addAttribute("realDetail", realService.getRealDetail(realOrderId));
+        RealDetailDTO r = realService.getRealDetail(realOrderId);
+        model.addAttribute("realDetail", r);
         return "real_callprice";
     }
 
@@ -210,6 +219,46 @@ public class RealController {
         RequestUtil.populate(callprice, request);
         realOrderCallpriceService.addRealOrderCallprice(callprice);
         return result;
+    }
+
+    /**
+     * 修改实单
+     * @param
+     * @return
+     */
+    @RequestMapping("/republishRealOrder")
+    @ResponseBody
+    public Object republishRealOrder(@RequestParam("previewImg")MultipartFile file,HttpServletRequest request) throws Exception{
+        RestResult result = new RestResult();
+        RealOrder realOrder = new RealOrder();
+        RequestUtil.populate(realOrder, request);
+        String docPath = PropertyReader.getProperty("docPath");
+        String originalFilename = file.getOriginalFilename();
+        String fileSuffix = "";
+        if(originalFilename != null && !originalFilename.equals("")){
+            fileSuffix = originalFilename.substring(
+                    originalFilename.lastIndexOf(".")).toLowerCase();
+            String newFile = UUID.randomUUID().toString().replace("-", "") + fileSuffix;
+            //获取图片地址
+            String filePath = "/pic/" + newFile;
+            realOrder.setImage(filePath);
+            FileUtils.copyInputStreamToFile(file.getInputStream(), new File(docPath, newFile));
+        }
+
+        realService.republishRealOrder(realOrder);
+        return result;
+    }
+
+    /**
+     * 修改实单页面
+     * @param realOrderId
+     * @return
+     */
+    @RequestMapping("/realOrderUpdatePage")
+    public String updateRealOrderPage(Integer realOrderId, Model model){
+        RealDetailDTO realDetailDTO = realService.getRealDetail(realOrderId);
+        model.addAttribute("realDetail", realDetailDTO);
+        return "real_update";
     }
     //获得形如xxx元/xxxg形式的数据
     private static void getRealCallpriceCompleted(List<RealCallpriceMemberDTO> dto){

@@ -9,6 +9,7 @@ import com.mol.service.RealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +40,13 @@ public class RealServiceImpl implements RealService{
     @Override
     public int changeRealOrderState(Integer realOrderId, String state) {
         return realOrderMapper.changeRealOrderState(realOrderId, state);
+    }
+
+    @Override
+    public int republishRealOrder(RealOrder realOrder) {
+        realOrder.setBeginTime(new Date());
+        realOrder.setState("BIDDING");
+        return realOrderMapper.updateByPrimaryKeySelective(realOrder);
     }
 
 

@@ -8,6 +8,12 @@
       where real_order_id = #{realOrderId}
 
     </update>
+    <update id="republishRealOrder">
+      update t_real_order set
+      end_time = #{endtime},
+      state = 'BIDDING'
+      where real_order_id = #{realOrderId}
+    </update>
     <!--查询首页实单-->
   <select id="getRealOrderList" resultType="com.mol.entity.RealOrder">
     select real_order_id, cas_no, buy_amount, purity, price_between, submit_deadline, image, join_count, end_time
@@ -78,7 +84,7 @@
     </if>
   </select>
   <select id="listRealOrderWithStatus" resultType="com.mol.entity.RealOrder">
-    <if test="status == 'SENDED'">
+    <if test="status == 'SEND' or status == 'SUCCESS'">
       select b.real_order_id realOrderId,
       a.seller_id sellerId,
       a.buyer_id,
@@ -86,7 +92,7 @@
       from t_goods_order a, t_real_order b
       <where>
          a.order_id = b.real_order_id
-        and a.buyer_id = #{userId} and a.state = 'SEND'
+        and a.buyer_id = #{userId} and a.state = #{status}
          and a.order_type = 'REAL'
         <if test="searchKey != null and searchKey != '' ">
           and (b.cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
@@ -99,7 +105,7 @@
       </if>
     </if>
 
-    <if test="status != 'SENDED'">
+    <if test="status == 'BIDDING' or status == 'CLOSE'" >
       select * from t_real_order
       <where>
         user_id = #{userId} and state = #{status}
@@ -115,4 +121,7 @@
     </if>
 
   </select>
+    <select id="getRealOrderEndtime" resultType="java.util.Date">
+        select end_time from t_real_order where real_order_id = #{realOrderId}
+    </select>
 </mapper>

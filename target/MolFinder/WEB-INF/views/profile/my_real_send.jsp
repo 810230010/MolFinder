@@ -90,7 +90,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
@@ -129,10 +129,10 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs block table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action stop" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs block table-action stop" href="javascript:void(0)">',
                             '停止发单 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -159,7 +159,7 @@
     function fun2(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/profile/mypublish/realOrders/' + 'SENDED',
+                'url': '/profile/mypublish/realOrders/' + 'SEND',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;
@@ -180,7 +180,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
@@ -219,12 +219,9 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs block table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
-                            '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action update" href="javascript:void(0)">',
-                            '修改实单 <i class="fa fa-trash-o"></i>',
-                            '</a>',
+                            '</a>'
                         ].join('');
                     }},
             ],
@@ -270,7 +267,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
@@ -309,10 +306,10 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs block table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>',
-                            '<a class="table-button btn btn-danger btn-xs table-action republish" href="javascript:void(0)">',
+                            '<a class="table-button btn btn-danger btn-xs block table-action republish" href="javascript:void(0)">',
                             '再次发单 <i class="fa fa-trash-o"></i>',
                             '</a>',
                         ].join('');
@@ -360,7 +357,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
@@ -399,7 +396,7 @@
                     "orderable": false,
                     "render": function (data, type, row) {
                         return [
-                            '<a class="btn btn-primary btn-xs table-action scan" href="javascript:void(0)">',
+                            '<a class="btn btn-primary btn-xs block table-action scan" href="javascript:void(0)">',
                             '查看报价 <i class="fa fa-eye"></i>',
                             '</a>'
                         ].join('');
@@ -449,28 +446,31 @@
             })
 
         });
-
-        table.on( 'click', '.republish', function () {
+        table.on('click', '.republish', function () {
             var realOrderId = $(this).parent().siblings().first().text();
-            $.ajax({
-                url: "/real/updateRealOrderState/" + "BIDDING",
-                data: {
-                    realOrderId: realOrderId
-                },
-                success: function (result) {
-                    if(result.code == 200){
-                        swal("重新发布实单成功!", "该实单已重新发布!", "success");
-                        setTimeout(function () {
-                            window.location.reload();
-                        },2000)
-                    }
-                },
-                error: function(result){
-                    alert("系统出错")
-                }
-            })
-
-        });
+            window.top.location.href = "/real/realOrderUpdatePage?realOrderId=" + realOrderId;
+        })
+//        table.on( 'click', '.republish', function () {
+//            var realOrderId = $(this).parent().siblings().first().text();
+//            $.ajax({
+//                url: "/real/republishRealOrder",
+//                data: {
+//                    realOrderId: realOrderId
+//                },
+//                success: function (result) {
+//                    if(result.code == 200){
+//                        swal("重新发布实单成功!", "该实单已重新发布!", "success");
+//                        setTimeout(function () {
+//                            window.location.reload();
+//                        },2000)
+//                    }
+//                },
+//                error: function(result){
+//                    alert("系统出错")
+//                }
+//            })
+//
+//        });
     }
 </script>
 </html>

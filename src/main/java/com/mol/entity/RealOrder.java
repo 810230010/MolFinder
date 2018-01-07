@@ -5,13 +5,13 @@ import com.mol.common.util.JsonDateSerializer;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class RealOrder {
     private Integer realOrderId;
 
-    private Integer sellerId;
-    private Integer buyerId;
+    private Integer userId;
 
     private String casNo;
 
@@ -61,13 +61,6 @@ public class RealOrder {
         this.realOrderId = realOrderId;
     }
 
-    public Integer getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
-    }
 
     public String getCasNo() {
         return casNo;
@@ -125,12 +118,12 @@ public class RealOrder {
         this.submitDeadline = submitDeadline == null ? null : submitDeadline.trim();
     }
 
-    public Integer getBuyerId() {
-        return buyerId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setBuyerId(Integer buyerId) {
-        this.buyerId = buyerId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @JsonSerialize(using= JsonDateSerializer.class)
@@ -187,7 +180,7 @@ public class RealOrder {
     }
 
     public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
+        this.image = (image == null || image.equals("null")) ? null : image.trim();
     }
 
     public String getReferDoc() {

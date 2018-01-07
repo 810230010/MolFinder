@@ -81,6 +81,8 @@
       a.prepayed_money_amount,
       a.vilation_money_amount,
       a.express_type,
+      a.shape,
+      a.color,
       a.create_time
       from
       t_real_order_callprice a, t_real_order b

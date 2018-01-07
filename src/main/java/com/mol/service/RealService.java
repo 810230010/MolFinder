@@ -44,4 +44,11 @@ public interface RealService {
      * @return
      */
     int changeRealOrderState(Integer realOrderId, String state);
+
+    /**
+     * 重新发布实单
+     * @param
+     * @return
+     */
+    int republishRealOrder(RealOrder realOrder);
 }

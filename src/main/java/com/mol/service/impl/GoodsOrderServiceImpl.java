@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by usher on 2017/11/5.
@@ -50,6 +51,14 @@ public class GoodsOrderServiceImpl implements GoodsOrderService {
 
     @Override
     public int updateGoodsOrderState(String goodsOrderId, String state) {
+        Map<String, Integer> map= goodsOrderMapper.getRealOrderIdAndRealCallIdByGoodsOrderId(goodsOrderId);
+        Integer realCallId = map.get("realCallId");
+        Integer realOrderId = map.get("realOrderId");
+        if(state.equals("SUCCESS")){
+            realOrderMapper.changeRealOrderState(realOrderId, "SUCCESS");
+        }else if(state.equals("SEND")){
+            realOrderMapper.changeRealOrderState(realOrderId, "SEND");
+        }
         return goodsOrderMapper.updateGoodsOrderState(goodsOrderId, state);
     }
 

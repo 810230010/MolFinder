@@ -101,4 +101,11 @@
         and b.user_id = #{userId}
         and a.state = #{state}) rs
     </select>
+    <select id="getRealOrderIdAndRealCallIdByGoodsOrderId" resultType="java.util.Map">
+        select order_id realOrderId,
+        call_price_id realCallId
+        from t_goods_order
+        where order_type = 'REAL'
+        and goods_order_id = #{goodsOrderId}
+    </select>
 </mapper>

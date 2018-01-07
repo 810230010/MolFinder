@@ -6,6 +6,7 @@ import com.mol.entity.GoodsOrder;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by usher on 2017/11/5.
@@ -33,4 +34,6 @@ public interface GoodsOrderMapper extends BaseDao<GoodsOrder, String> {
                                                        @Param("searchKey") String searchKey,
                                                        @Param("userId") Integer sellerId,
                                                        @Param("state") String state);
+
+    Map<String,Integer> getRealOrderIdAndRealCallIdByGoodsOrderId(String goodsOrderId);
 }

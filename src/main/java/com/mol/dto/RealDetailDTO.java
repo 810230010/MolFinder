@@ -3,7 +3,9 @@ package com.mol.dto;
 import com.sun.org.apache.xalan.internal.xsltc.dom.SAXImpl;
 import lombok.Data;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -38,4 +40,23 @@ public class RealDetailDTO{
     public Date getBeginTime() {
         return beginTime;
     }
+    public String getUnit(){
+        if(buyAmount.contains("g"))
+            return "g";
+        else if(buyAmount.contains("mg"))
+            return "mg";
+        else
+            return "kg";
+    }
+    public String getBuyAmountWithoutUnit(){
+        String unit = getUnit();
+        return buyAmount.substring(0, buyAmount.indexOf(unit));
+    }
+    public String[] getPrices(){
+        return priceBetween.split("-");
+    }
+    public String[] getDeadlines(){
+        return submitDeadline.split("-");
+    }
+
 }

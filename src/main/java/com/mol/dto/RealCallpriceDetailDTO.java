@@ -16,6 +16,8 @@ public class RealCallpriceDetailDTO {
     private String englishName;
     private String chineseName;
     private String image;
+    private String shape;
+    private String color;
     private String callPriceMoney;
 
     private String callPriceAmount;
@@ -39,7 +41,7 @@ public class RealCallpriceDetailDTO {
     private Long vilationMoneyAmount;
 
     private String state;
-
+    private String buyAmount;
     private Date createTime;
     private String expressType;
     private List<String> realCallpriceCompleted;

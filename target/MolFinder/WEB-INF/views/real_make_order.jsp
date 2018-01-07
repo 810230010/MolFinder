@@ -83,8 +83,8 @@
                     <tr>
                         <td>${callItems[0]}</td>
                         <td>${callItems[1]}(${realCallpriceDetail.makeBill})</td>
-                        <td>${realCallpriceDetail.callPurity}%</td>
-                        <td>${realCallpriceDetail.callSubmitDeadline}</td>
+                        <td>${realCallpriceDetail.callPurity}</td>
+                        <td>${realCallpriceDetail.submitDeadline1}</td>
                         <td>${realCallpriceDetail.expressType}</td>
                     </tr>
                     </c:forEach>
@@ -121,7 +121,7 @@
 
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">纯度: <u>${realCallpriceDetail.callPurity}%</u></label>
+                    <label class="col-sm-12 control-label">纯度: <u>${realCallpriceDetail.callPurity}</u></label>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-12 control-label">快递方式: <u>${realCallpriceDetail.expressType}</u></label>

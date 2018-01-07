@@ -39,8 +39,7 @@
         <setting name="jdbcTypeForNull" value="NULL" />
 
         <!-- 设置日志 -->
-        <setting name="logImpl" value="SLF4J"/>
-
+        <setting name="logImpl" value="LOG4J" />
     </settings>
 
     <plugins>

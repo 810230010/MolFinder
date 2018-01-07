@@ -5,6 +5,8 @@ import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
 import org.apache.ibatis.annotations.Param;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -89,4 +91,14 @@ public interface RealOrderMapper extends BaseDao<RealOrder, Integer>{
      * @return
      */
     int changeRealOrderState(@Param("realOrderId") Integer realOrderId, @Param("state") String state);
+
+    /**
+     * 重新发布实单
+     * @param realOrderId
+     * @param endtime
+     * @return
+     */
+    int republishRealOrder(@Param("realOrderId") Integer realOrderId, @Param("endtime") Date endtime);
+
+    Date getRealOrderEndtime(Integer realOrderId);
 }
