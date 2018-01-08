@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2017-11-19 21:12:17
+Date: 2018-01-08 23:15:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -107,6 +107,8 @@ DROP TABLE IF EXISTS `t_goods_order`;
 CREATE TABLE `t_goods_order` (
   `goods_order_id` varchar(100) NOT NULL COMMENT '订单id',
   `call_price_id` int(11) DEFAULT NULL COMMENT '报价实单或者询单id',
+  `order_id` int(11) DEFAULT NULL COMMENT '实单、询单号',
+  `seller_id` int(11) DEFAULT NULL COMMENT '卖家编号',
   `buyer_id` int(11) DEFAULT NULL,
   `express_way` varchar(20) DEFAULT NULL,
   `accept_goods_info_id` varchar(100) DEFAULT NULL,
@@ -122,8 +124,8 @@ CREATE TABLE `t_goods_order` (
 -- ----------------------------
 -- Records of t_goods_order
 -- ----------------------------
-INSERT INTO `t_goods_order` VALUES ('90123asda', '1', '2', null, null, null, 'ORDER', null, 'REAL', '2017-11-18 11:00:21', null);
-INSERT INTO `t_goods_order` VALUES ('asdasd', '1', '2', null, null, null, 'SEND', null, 'QUERY', '2017-11-18 11:00:21', null);
+INSERT INTO `t_goods_order` VALUES ('90123asda', '1', '1', '2', '2', null, null, null, 'SUCCESS', null, 'REAL', '2017-11-18 11:00:21', '6000');
+INSERT INTO `t_goods_order` VALUES ('asdasd', '1', '1', '2', '2', null, null, null, 'ORDER', null, 'QUERY', '2017-11-18 11:00:21', '4000');
 
 -- ----------------------------
 -- Table structure for `t_material_purchase`
@@ -170,7 +172,7 @@ CREATE TABLE `t_material_supply` (
 DROP TABLE IF EXISTS `t_query_order`;
 CREATE TABLE `t_query_order` (
   `query_order_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL COMMENT '买家id',
   `cas_no` varchar(50) DEFAULT NULL COMMENT 'CAS号',
   `english_name` varchar(50) DEFAULT NULL,
   `chinese_name` varchar(50) DEFAULT NULL,
@@ -187,14 +189,14 @@ CREATE TABLE `t_query_order` (
   `refer_doc` varchar(200) DEFAULT NULL,
   `make_bill` varchar(50) DEFAULT NULL,
   `join_count` int(11) DEFAULT '0',
-  `state` varchar(20) DEFAULT NULL,
+  `state` varchar(20) DEFAULT 'BIDDING',
   PRIMARY KEY (`query_order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_query_order
 -- ----------------------------
-INSERT INTO `t_query_order` VALUES ('1', '2', '2311', 'asdgf', 'dsaf', '99%', '29.00', '3-4', null, null, null, '2017-08-16 16:40:10', '2017-08-25 16:40:05', '啊手机打开', 'http://otncoonon.bkt.clouddn.com/1502243426324.png', null, '不开票', '0', 'ONSALE');
+INSERT INTO `t_query_order` VALUES ('1', '2', '2311', 'asdgf', 'dsaf', '99%', '29.00g', '3-4', null, null, null, '2017-08-16 16:40:10', '2017-08-25 16:40:05', '啊手机打开', 'http://otncoonon.bkt.clouddn.com/1502243426324.png', null, '不开票', '0', 'CLOSE');
 
 -- ----------------------------
 -- Table structure for `t_query_order_callprice`
@@ -203,6 +205,7 @@ DROP TABLE IF EXISTS `t_query_order_callprice`;
 CREATE TABLE `t_query_order_callprice` (
   `query_call_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `query_order_id` int(11) NOT NULL,
+  `buyer_id` int(11) DEFAULT NULL COMMENT '买家id',
   `user_id` int(11) DEFAULT '0' COMMENT '报价人id',
   `call_price_money` varchar(20) DEFAULT NULL,
   `call_price_validtime` varchar(20) DEFAULT NULL COMMENT '报价有效期',
@@ -223,7 +226,7 @@ CREATE TABLE `t_query_order_callprice` (
 -- ----------------------------
 -- Records of t_query_order_callprice
 -- ----------------------------
-INSERT INTO `t_query_order_callprice` VALUES ('1', '1', '2', '4000元/10g', null, '98%', '3-4', '', '不开发票', '无啊啊啊', '1', null, '1', 'BIDDING', '送货上门', '2017-09-01 21:05:23');
+INSERT INTO `t_query_order_callprice` VALUES ('1', '1', null, '2', '4000元/10g', null, '98%', '3-4', '', '不开发票', '无啊啊啊', '1', null, '1', 'BIDDING', '送货上门', '2017-09-01 21:05:23');
 
 -- ----------------------------
 -- Table structure for `t_real_order`
@@ -249,14 +252,14 @@ CREATE TABLE `t_real_order` (
   `refer_doc` varchar(255) DEFAULT NULL COMMENT '参考文献',
   `remark` varchar(1024) DEFAULT NULL,
   `join_count` int(11) DEFAULT '0' COMMENT '参与人数',
-  `state` varchar(20) DEFAULT 'BIDDING' COMMENT 'BIDDING:抢单中 DELETED:已删除 NOSEND:报价结束未派单 SENDED:已派单 FINISHED:已成单',
+  `state` varchar(20) DEFAULT 'BIDDING' COMMENT 'BIDDING:抢单中 CLOSE:已删除 NOSEND:报价结束未派单 SENDED:已派单 FINISHED:已成单',
   PRIMARY KEY (`real_order_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_real_order
 -- ----------------------------
-INSERT INTO `t_real_order` VALUES ('1', '2', '21312', 'ASD', 'ASD', '25g', '97%', '4000-5000', '3-4', '2017-08-10 12:54:07', '2017-08-12 12:54:11', 'HNMR', '不开票', '0.50', '0.50', 'http://otncoonon.bkt.clouddn.com/1502243426324.png', null, null, '0', 'ONSALE');
+INSERT INTO `t_real_order` VALUES ('1', '2', 'as23123-2', 'ASD', '阿斯达啊', '25g', '97%', '4000-5000', '3-4', '2018-01-08 22:23:40', '2018-01-10 20:58:47', 'LCMS,FNMR', '不开发票', '0.50', '0.50', '/pic/d941673f802c4725ae5e2619956c5654.jpg', null, 'asdas啊aaa', '1', 'BIDDING');
 
 -- ----------------------------
 -- Table structure for `t_real_order_callprice`
@@ -265,6 +268,7 @@ DROP TABLE IF EXISTS `t_real_order_callprice`;
 CREATE TABLE `t_real_order_callprice` (
   `real_call_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `real_order_id` int(11) NOT NULL,
+  `buyer_id` int(11) DEFAULT NULL COMMENT '买家id',
   `user_id` int(11) DEFAULT '0' COMMENT '报价人id',
   `call_price_amount` varchar(20) DEFAULT NULL,
   `call_price_money` varchar(20) DEFAULT NULL,
@@ -276,17 +280,20 @@ CREATE TABLE `t_real_order_callprice` (
   `other_require` varchar(2024) DEFAULT NULL,
   `prepayed_money_amount` decimal(10,0) DEFAULT NULL,
   `attachment` varchar(50) DEFAULT NULL,
+  `shape` varchar(20) DEFAULT NULL,
+  `color` varchar(20) DEFAULT NULL,
   `vilation_money_amount` decimal(10,0) DEFAULT NULL,
-  `state` varchar(10) DEFAULT NULL,
+  `state` varchar(10) DEFAULT 'BIDDING' COMMENT 'BIDDING:竞拍中  SENDED:竞拍成功',
   `express_type` varchar(20) DEFAULT '快递到门',
   `create_time` datetime DEFAULT NULL COMMENT '报价/抢单时间',
   PRIMARY KEY (`real_call_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_real_order_callprice
 -- ----------------------------
-INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '10g,20g', '4000元,8000元', null, '98%', '3-4', 'HNMR,FNMR', '不开发票', 'asda', '1', null, '1', 'BIDDING', '送货上门', null);
+INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '2', '10g', '4000元', null, '98%', '3-4', 'HNMR,FNMR', '不开发票', 'asda', '1', null, '固体', '白色', '1', 'BIDDING', '送货上门', null);
+INSERT INTO `t_real_order_callprice` VALUES ('3', '1', '2', '2', '25g', '4000元', null, '97%', '3-4周', 'HNMR', '不开票', 'adasd', null, null, '固体', '白色', null, null, '送货上门', '2018-01-01 12:20:10');
 
 -- ----------------------------
 -- Table structure for `t_setting`
@@ -347,3 +354,13 @@ CREATE TABLE `t_user_accept_address` (
 INSERT INTO `t_user_accept_address` VALUES ('1', '2', '江建平', '浙江杭州余杭闲林', '17858936109', '2017-10-29', '2017-10-29');
 INSERT INTO `t_user_accept_address` VALUES ('2', '2', '江建平', '北京西三旗小营东路5号院', '17858936109', '2017-10-29 21:06:20', '2017-10-29 21:06:20');
 INSERT INTO `t_user_accept_address` VALUES ('4', '2', '马云', '杭州alibaba', '17858112312', '2017-10-29 21:12:41', '2017-10-29 21:12:41');
+DROP TRIGGER IF EXISTS `addJoinCount`;
+DELIMITER ;;
+CREATE TRIGGER `addJoinCount` AFTER INSERT ON `t_real_order_callprice` FOR EACH ROW update t_real_order set join_count = join_count+1 where real_order_id = new.real_order_id
+;;
+DELIMITER ;
+DROP TRIGGER IF EXISTS `decreaseJoincount`;
+DELIMITER ;;
+CREATE TRIGGER `decreaseJoincount` AFTER DELETE ON `t_real_order_callprice` FOR EACH ROW update t_real_order set join_count = join_count-1 where real_order_id = old.real_order_id
+;;
+DELIMITER ;

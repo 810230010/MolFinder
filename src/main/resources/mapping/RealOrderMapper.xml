@@ -17,7 +17,7 @@
     <!--查询首页实单-->
   <select id="getRealOrderList" resultType="com.mol.entity.RealOrder">
     select real_order_id, cas_no, buy_amount, purity, price_between, submit_deadline, image, join_count, end_time
-    from t_real_order limit 6
+    from t_real_order where state = 'BIDDING' limit 6
   </select>
   <!--实单详情-->
   <select id="getRealDetail" resultType="com.mol.dto.RealDetailDTO">
@@ -84,28 +84,6 @@
     </if>
   </select>
   <select id="listRealOrderWithStatus" resultType="com.mol.entity.RealOrder">
-    <if test="status == 'SEND' or status == 'SUCCESS'">
-      select b.real_order_id realOrderId,
-      a.seller_id sellerId,
-      a.buyer_id,
-      b.*
-      from t_goods_order a, t_real_order b
-      <where>
-         a.order_id = b.real_order_id
-        and a.buyer_id = #{userId} and a.state = #{status}
-         and a.order_type = 'REAL'
-        <if test="searchKey != null and searchKey != '' ">
-          and (b.cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
-        </if>
-      </where>
-      order by
-      a.order_id asc
-      <if test="orderColumn != null and orderColumn != '' and orderType != null and orderType != '' ">
-        , ${orderColumn} ${orderType}
-      </if>
-    </if>
-
-    <if test="status == 'BIDDING' or status == 'CLOSE'" >
       select * from t_real_order
       <where>
         user_id = #{userId} and state = #{status}
@@ -118,7 +96,6 @@
       <if test="orderColumn != null and orderColumn != '' and orderType != null and orderType != '' ">
         , ${orderColumn} ${orderType}
       </if>
-    </if>
 
   </select>
     <select id="getRealOrderEndtime" resultType="java.util.Date">

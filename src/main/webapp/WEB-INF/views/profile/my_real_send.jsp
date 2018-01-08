@@ -425,6 +425,7 @@
             var realOrderId = $(this).parent().siblings().first().text();
             window.top.location = "/real/realCallpriceMembersPage?realOrderId=" + realOrderId;
         });
+        //停止发单，所有的报价关闭
         table.on( 'click', '.stop', function () {
             var realOrderId = $(this).parent().siblings().first().text();
             $.ajax({

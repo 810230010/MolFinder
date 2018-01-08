@@ -9,9 +9,9 @@
         (select count(*) from t_goods_order where state = 'SUCCESS') deal_total
     </select>
     <update id="updateInvalidOrder">
-        update t_query_order set state = 'CLOSE'  where NOW() > end_time
+        update t_query_order set state = 'CLOSE'  where NOW() > end_time and state = 'BIDDING'
     </update>
     <update id="updateInvalidOrder2">
-        update t_real_order set state = 'CLOSE'  where NOW() > end_time
+        update t_real_order set state = 'CLOSE'  where NOW() > end_time and state = 'BIDDING'
     </update>
 </mapper>

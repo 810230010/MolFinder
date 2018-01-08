@@ -35,10 +35,11 @@ public class GoodsOrderServiceImpl implements GoodsOrderService {
         goodsOrder.setGoodsOrderId(orderId);
         String date = DateUtil.convertCurrentDatetimeToString();
         goodsOrder.setCreateTime(date);
+        //下单，改变实单状态为已派单SEND
         if(goodsOrder.getOrderType().equals("REAL")){
-            realOrderMapper.changeRealOrderState(goodsOrder.getCallPriceId(), GlobalConstant.REAL_ORDER_SENDED);
+            realOrderMapper.changeRealOrderState(goodsOrder.getOrderId(), GlobalConstant.REAL_ORDER_SEND);
         }else{
-            queryOrderMapper.changeQueryOrderState(goodsOrder.getCallPriceId(), GlobalConstant.QUERY_ORDER_SENDED);
+            queryOrderMapper.changeQueryOrderState(goodsOrder.getOrderId(), GlobalConstant.QUERY_ORDER_SEND);
         }
 
         return goodsOrderMapper.insertSelective(goodsOrder);

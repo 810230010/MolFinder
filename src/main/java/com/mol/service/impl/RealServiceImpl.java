@@ -1,6 +1,7 @@
 package com.mol.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.mol.dao.RealOrderCallpriceMapper;
 import com.mol.dao.RealOrderMapper;
 import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
@@ -20,6 +21,8 @@ import java.util.List;
 public class RealServiceImpl implements RealService{
     @Autowired
     private RealOrderMapper realOrderMapper;
+    @Autowired
+    private RealOrderCallpriceMapper realOrderCallpriceMapper;
     @Override
     public RealDetailDTO getRealDetail(Integer realOrderId) {
         return realOrderMapper.getRealDetail(realOrderId);
@@ -39,6 +42,10 @@ public class RealServiceImpl implements RealService{
 
     @Override
     public int changeRealOrderState(Integer realOrderId, String state) {
+        //如果取消实单，实单对应的报价都清零
+        if(state.equals("CLOSE")){
+            realOrderCallpriceMapper.cancelAllCallprice(realOrderId);
+        }
         return realOrderMapper.changeRealOrderState(realOrderId, state);
     }
 
