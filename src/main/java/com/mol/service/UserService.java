@@ -27,5 +27,5 @@ public interface UserService {
      * @param password
      * @return
      */
-    RestResult loginUser(String phone, String password, HttpServletRequest request);
+    RestResult loginUser(String phone, String password, String checkCode, HttpServletRequest request);
 }

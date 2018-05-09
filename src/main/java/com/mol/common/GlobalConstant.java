@@ -8,6 +8,7 @@ public class GlobalConstant {
     public static final int SERVER_ERROR = 500;
     public static final int REGISTER_ERROR = 501;
     public static final int WRONG_USER_CODE = 502;
+    public static final int WRONG_CHECK_CODE = 503;
 
     public static final String SUCCESS_MESSAGE = "success";
     public static final String RMB_UNIT = "元";

@@ -54,15 +54,6 @@
       <if test="password != null" >
         password,
       </if>
-      <if test="district != null" >
-        district,
-      </if>
-      <if test="credit != null" >
-        credit,
-      </if>
-      <if test="creditRank != null" >
-        credit_rank,
-      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -82,15 +73,6 @@
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="district != null" >
-        #{district,jdbcType=VARCHAR},
-      </if>
-      <if test="credit != null" >
-        #{credit,jdbcType=INTEGER},
-      </if>
-      <if test="creditRank != null" >
-        #{creditRank,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},

@@ -13,7 +13,7 @@
     <script src="/static/js/plugins/layer/layer.js"></script>
 </head>
 
-<body style="background: url(/static/img/login-al.png)">
+<body style="background: url(/static/img/body.jpg);">
 <div class="nav text-center" style="background-color: #354b56;height: 44px;color: white;line-height: 44px;font-size: 20px">欢迎来到精细化工交易平台</div>
 <div class="container">
 
@@ -21,24 +21,36 @@
         <div class="col-sm-9" style="margin-top: 100px;" >
             <div class="ibox">
                 <div class="ibox-title text-center">
-                    <h4>精细化网站注册</h4>
+                    <h4>精细化网站登录</h4>
                 </div>
 
                 <div class="ibox-content">
                     <form class="form-horizontal" id="form" onsubmit="return false">
                         <div class="form-group">
-                            <label for="phone" class="col-sm-3 control-label">手机号:</label>
-                            <div class="col-sm-6 input-group">
+                            <div class="col-sm-6 col-sm-offset-3 input-group">
                                 <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
                                 <input type="text" class="form-control" id="phone" placeholder="请输入手机号" required/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label for="password1" class="col-sm-3 control-label">密码:</label>
-                            <div class="col-sm-6 input-group">
+                            <div class="col-sm-6 col-sm-offset-3 input-group">
                                 <span class="input-group-addon"><span class="fa fa-lock"></span></span>
                                 <input type="password" class="form-control" id="password1" placeholder="请输入密码" required/>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <div class="form-group has-feedback">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-qrcode"></span></span>
+                                        <input id="checkCodeText" class="form-control" placeholder="请输入验证码" maxlength="4" type="text" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <img id="checkCode" src="/user/getCheckCode" alt="" onclick="refreshCheckCode()">
                             </div>
                         </div>
                         <div class="form-group">
@@ -65,17 +77,22 @@
         submitHandler:function(form){
             var password = $("#password1").val();
             var phone = $("#phone").val();
+            var checkCode = $("#checkCodeText").val();
             $.ajax({
                 url: "/user/checkLogin",
-                data: {password: password, phone: phone},
+                data: {
+                        password: password,
+                        phone: phone,
+                        checkCode: checkCode
+                },
                 success: function(result){
                     if(result.code == 200){
-                        swal("成功！", "登陆成功", "success");
+                        swal("成功！", "登录成功", "success");
                         setTimeout(function () {
                             window.location.href = "/index/indexPage";
                         },2000)
                     }else{
-                        layer.msg("用户名或密码错误");
+                        layer.msg(result.msg);
                     }
                 },
                 error: function(result){
@@ -85,5 +102,9 @@
         },
         invalidHandler: function(form, validator) {return false;}
     });
+    function refreshCheckCode() {
+        var date = new Date(); // 创建一个 Date 对象的 一个 实例
+        $("#checkCode").attr('src','/user/getCheckCode?time='+date.getTime());
+    }
 </script>
 </html>

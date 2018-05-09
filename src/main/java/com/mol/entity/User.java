@@ -13,12 +13,6 @@ public class User {
 
     private String password;
 
-    private String district;
-
-    private Integer credit;
-
-    private String creditRank;
-
     private Date createTime;
 
     public Integer getUserId() {
@@ -59,30 +53,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district == null ? null : district.trim();
-    }
-
-    public Integer getCredit() {
-        return credit;
-    }
-
-    public void setCredit(Integer credit) {
-        this.credit = credit;
-    }
-
-    public String getCreditRank() {
-        return creditRank;
-    }
-
-    public void setCreditRank(String creditRank) {
-        this.creditRank = creditRank == null ? null : creditRank.trim();
     }
 
     public Date getCreateTime() {

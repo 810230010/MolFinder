@@ -38,9 +38,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RestResult loginUser(String phone, String password, HttpServletRequest request) {
-        User user = userMapper.selectUserByPhoneAndPassword(phone, password);
+    public RestResult loginUser(String phone, String password, String checkCode, HttpServletRequest request) {
+        //检验验证码
         RestResult result = new RestResult();
+        String code = (String) request.getSession().getAttribute("CHECK_CODE");
+        if(!code.equals(checkCode)){
+            result = new RestResult("验证码错误", GlobalConstant.WRONG_CHECK_CODE);
+            return result;
+        }
+        User user = userMapper.selectUserByPhoneAndPassword(phone, password);
+
         if(user == null){
             result = new RestResult("用户名或密码错误", GlobalConstant.WRONG_USER_CODE);
             return result;

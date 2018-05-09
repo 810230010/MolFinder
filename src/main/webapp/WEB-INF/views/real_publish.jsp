@@ -273,7 +273,7 @@
                 fileElementId: 'previewImg', //文件上传域的ID
                 dataType: 'json', //返回值类型 一般设置为json
                 data:{
-                    <%--userId: ${currentUser.userId},--%>
+                    userId: ${currentUser.userId},
                     casNo: $("#cas").val(),
                     englishName: $("#en_name").val(),
                     chineseName: $("#cn_name").val(),
@@ -287,11 +287,10 @@
                     rewardMoneyPercent: rewardMoney,
                     remark: $("#remark").val(),
                     priceBetween: $("#lowPrice").val() + "-" + $("#highPrice").val(),
-                    submitDeadline: $("#beginWeek").val() + $("#endWeek").val(),
+                    submitDeadline: $("#beginWeek").val() + "-" + $("#endWeek").val(),
                 },
                 success: function (data, status)  //服务器成功响应处理函数
                 {
-                    alert(data.code)
                     if(data.code == 200){
                         swal("成功！", "发布实单成功", "success");
                         setTimeout(function () {
