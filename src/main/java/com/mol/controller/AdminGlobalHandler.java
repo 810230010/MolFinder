@@ -2,6 +2,7 @@ package com.mol.controller;
 
 import com.mol.common.util.WebUtil;
 import com.mol.entity.User;
+import com.mol.entity.admin.Admin;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -17,6 +18,10 @@ public class AdminGlobalHandler {
       User currentUser = WebUtil.getCurrentUser(request);
       return currentUser;
    }
-
+    @ModelAttribute("currentAdmin")
+    public Admin setCurrentAdmin(HttpServletRequest request){
+        Admin currentAdmin = WebUtil.getCurrentAdmin(request);
+        return currentAdmin;
+    }
 
 }

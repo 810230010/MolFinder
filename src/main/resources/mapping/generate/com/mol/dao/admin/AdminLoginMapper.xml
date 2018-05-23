@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mol.dao.admin.AdminMemberMapper" >
+  <update id="forbidMember">
+    update t_user set state = 0 where user_id = #{userId}
+  </update>
+  <update id="recoverMember">
+    update t_user set state = 1 where user_id = #{userId}
+  </update>
+  <select id="listNormalMembers" resultType="com.mol.entity.admin.AdminMemberDTO">
+    select user_id, phone userName,  email, create_time, state stateFlag from t_user
+    <where>
+      state = 1
+      <if test="searchKey != null and searchKey != '' ">
+        and (phone like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%')
+        or email like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      ${orderColumn} ${orderType},
+    </if>
+    user_id desc
+  </select>
+  <select id="listForbiddenMembers" resultType="com.mol.entity.admin.AdminMemberDTO">
+    select user_id, phone userName,  email, create_time, state stateFlag from t_user
+    <where>
+      state = 0
+      <if test="searchKey != null and searchKey != '' ">
+        and (phone like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%')
+        or email like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      ${orderColumn} ${orderType},
+    </if>
+    user_id desc
+  </select>
+</mapper>

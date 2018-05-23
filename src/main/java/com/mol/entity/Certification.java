@@ -1,7 +1,10 @@
 package com.mol.entity;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+import java.util.List;
+@Data
 public class Certification {
     private Integer certificateId;
 
@@ -17,13 +20,22 @@ public class Certification {
 
     private String realname;
 
-    private String qq;
+    private String IDNumber;
 
     private String guaranteenMaterial;
 
     private String isPass;
 
     private Date createTime;
+
+    public String getCertificateType1(){
+        if(certificateType.equals("COMPANY"))
+            return "企业";
+        return "个人";
+    }
+    public String[] getImages(){
+        return guaranteenMaterial.split(",");
+    }
 
     public Integer getCertificateId() {
         return certificateId;
@@ -81,12 +93,12 @@ public class Certification {
         this.realname = realname == null ? null : realname.trim();
     }
 
-    public String getQq() {
-        return qq;
+    public String getIDNumber() {
+        return IDNumber;
     }
 
-    public void setQq(String qq) {
-        this.qq = qq == null ? null : qq.trim();
+    public void setIDNumber(String IDNumber) {
+        this.IDNumber = IDNumber;
     }
 
     public String getGuaranteenMaterial() {

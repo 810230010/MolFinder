@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mol.dao.QueryOrderMapper" >
+    <update id="changeQueryOrderState">
+       update t_query_order
+      set state = #{state}
+      where query_order_id = #{queryOrderId}
+    </update>
+    <!--查询首页询单列表-->
+  <select id="getQueryOrderList" resultType="com.mol.entity.QueryOrder">
+    select query_order_id, cas_no, buy_amount, purity, submit_deadline, image, join_count, end_time
+    from t_query_order where state = 'BIDDING' limit 6
+  </select>
+  <!--根据状态查询我的询单-->
+  <select id="listQueryOrdersWithStatus" resultType="com.mol.entity.QueryOrder">
+    select * from t_query_order
+    <where>
+      user_id = #{userId} and state = #{status}
+      <if test="searchKey != null and searchKey != '' ">
+        and (cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    query_order_id asc
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      , ${orderColumn} ${orderType}
+    </if>
+  </select>
+</mapper>

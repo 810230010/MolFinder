@@ -52,6 +52,10 @@ public class UserServiceImpl implements UserService {
             result = new RestResult("用户名或密码错误", GlobalConstant.WRONG_USER_CODE);
             return result;
         }
+        if(user != null && user.getState() == 0){
+            result = new RestResult("您已被限制登录", GlobalConstant.FORBID_USER_CODE);
+            return result;
+        }
         WebUtil.registerCurrentUser(request, user);
         return result;
     }

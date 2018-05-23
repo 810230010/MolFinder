@@ -10,6 +10,7 @@ import com.mol.dto.RealOrderCallpriceDTO;
 import com.mol.entity.Certification;
 import com.mol.entity.QueryOrder;
 import com.mol.entity.RealOrder;
+import com.mol.entity.User;
 import com.mol.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -217,10 +218,12 @@ public class ProfileController
      * @return
      */
     @RequestMapping("/certificationPage")
-    public String view2certification(Model model){
+    public String view2certification(Model model, HttpServletRequest request){
         String token = QiniuUtil.getUploadToken();
         model.addAttribute("uploadToken", token);
         model.addAttribute("domain", QiniuUtil.getBaseUrl());
+        Certification certificate = certificationService.getCurrentUserCertificateState(request);
+        model.addAttribute("certification", certificate);
         return "profile/certification";
     }
 
@@ -252,5 +255,17 @@ public class ProfileController
     @RequestMapping("/orders/sellPage")
     public String view2sellOrder(){
         return "order_send";
+    }
+
+    /**
+     * 重新认证
+     * @return
+     */
+    @RequestMapping("/recertificate")
+    @ResponseBody
+    public Object recertificate(Integer certificateId){
+        RestResult result = new RestResult();
+        result = certificationService.deleteCertification(certificateId);
+        return result;
     }
 }

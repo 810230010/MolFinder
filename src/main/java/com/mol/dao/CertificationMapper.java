@@ -8,4 +8,5 @@ import com.mol.entity.Certification;
  */
 public interface CertificationMapper extends BaseDao<Certification, Integer> {
 
+    Certification queryUserCertificateState(Integer userId);
 }

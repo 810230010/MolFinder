@@ -14,6 +14,15 @@ public class User {
     private String password;
 
     private Date createTime;
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public Integer getUserId() {
         return userId;

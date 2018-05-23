@@ -95,7 +95,9 @@ public class RealOrder {
     }
 
     public String getPurity() {
-        return purity;
+        if(purity.contains("%"))
+            return purity;
+        return purity.concat("%");
     }
 
     public void setPurity(String purity) {
@@ -103,7 +105,9 @@ public class RealOrder {
     }
 
     public String getPriceBetween() {
-        return priceBetween;
+        if(priceBetween.contains("元"))
+            return priceBetween;
+        return priceBetween.concat("元");
     }
 
     public void setPriceBetween(String priceBetween) {

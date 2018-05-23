@@ -40,6 +40,11 @@ public class RealDetailDTO{
     public Date getBeginTime() {
         return beginTime;
     }
+    public String getPurity() {
+        if(purity.contains("%"))
+            return purity;
+        return purity.concat("%");
+    }
     public String getUnit(){
         if(buyAmount.contains("g"))
             return "g";
