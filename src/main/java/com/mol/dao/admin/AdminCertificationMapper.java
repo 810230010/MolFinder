@@ -13,4 +13,10 @@ public interface AdminCertificationMapper {
     List<AdminCertificationTableDTO> listCertificated(@Param("searchKey") String searchKey,
                                                       @Param("orderColumn") String orderColumn,
                                                       @Param("orderType") String orderType);
+
+    List<AdminCertificationTableDTO> listCertificating(@Param("searchKey") String searchKey,
+                                                       @Param("orderColumn") String orderColumn,
+                                                       @Param("orderType") String orderType);
+
+    int updateCertificationState(@Param("certificateId") Integer certificateId, @Param("state") String state);
 }

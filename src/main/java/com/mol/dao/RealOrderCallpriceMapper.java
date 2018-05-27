@@ -48,4 +48,6 @@ public interface RealOrderCallpriceMapper extends BaseDao<RealOrderCallprice, In
     int updateRealOrderCallpriceStatusWithCancel(Integer realCallId);
 
     int cancelAllCallprice(Integer realOrderId);
+
+    RealOrderCallprice queryCurrentUserCallpriceState(@Param("userId") Integer userId, @Param("realOrderId") Integer realOrderId);
 }

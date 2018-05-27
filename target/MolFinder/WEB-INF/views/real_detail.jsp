@@ -32,6 +32,9 @@
     <c:if test="${currentUser.userId != null && currentUser.isCertificated == false}">
         <div class="alert alert-warning">实名认证过后才可以报价!</div>
     </c:if>
+    <c:if test="${alreadyCallprice == true}">
+        <div class="alert alert-warning">该单您已报价!</div>
+    </c:if>
 </div>
 <div style="background: #f4f4f4">
 <div class="container" style="padding-top: 20px; padding-bottom: 20px">
@@ -48,7 +51,7 @@
                 <div class="col-md-3" >交货期:${realDetail.submitDeadline1}</div>
             </div>
             <div class="col-md-6 text-left" style="color: red;font-size: 24px;margin-top: 30px">¥ ${realDetail.priceBetween}</div>
-            <c:if test="${currentUser.userId != null && currentUser.userId != realDetail.userId && currentUser.isCertificated == true}">
+            <c:if test="${currentUser.userId != null && currentUser.userId != realDetail.userId && currentUser.isCertificated == true && alreadyCallprice == false}">
                 <div class="col-md-6 text-right" style="margin-top: 30px"><a type="button" class="btn btn-danger" id="rub" style="width:120px" href="/real/realCallpricePage?realOrderId=${realDetail.realOrderId}">立即抢单</a></div>
             </c:if>
         </div>
@@ -80,7 +83,7 @@
                         <p><strong>采购量</strong>：${realDetail.buyAmount}</p>
                         <p><strong>纯度要求</strong>： ${realDetail.purity}</p>
                         <p><strong>图谱要求</strong>：${realDetail.diagramRequire}</p>
-                        <p><strong>实单价格</strong>：${realDetail.priceBetween}元</p>
+                        <p><strong>实单价格</strong>：${realDetail.priceBetween}</p>
                     </div>
                     <div class="col-md-4">
                         <p><strong>交货期</strong>：${realDetail.submitDeadline1}</p>
@@ -109,29 +112,29 @@
                     <div class="col-md-6 text-center" style="border-right:2px solid silver;height: 220px">
                         <h5><img src="/static/img/icons/phone.png">联系人信息</h5>
                         <div class="hr-line-dashed"></div>
-                        <div>
-                            <div class="alert alert-warning">
-                                <strong><img src="/static/img/icons/exclaim.png">报价后方可查看发单人信息!</strong>
+                        <c:if test="${alreadyCallprice == false}">
+                            <div>
+                                <div class="alert alert-warning">
+                                    <strong><img src="/static/img/icons/exclaim.png">报价后方可查看发单人信息!</strong>
+                                </div>
                             </div>
-                        </div>
-                        <div style="font-size: 16px;display: none">
-                            <p>
-                                <span>企业地址:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
-                            </p>
-                            <p>
-                                <span>联系人:<font style="font-size: 18px;font-weight: bold">闲林</font>；</span>
-                                <span>联系号码:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
-                            </p>
-                            <p>
-                                <span>qq:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
-                            </p>
-                            <p>
-                                <span>邮箱:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
-                            </p>
-                            <p>
-                                <span>传真:<font style="font-size: 18px;font-weight: bold">闲林</font></span>
-                            </p>
-                        </div>
+                        </c:if>
+                       <c:if test="${alreadyCallprice == true}">
+                           <div>
+                               <p>
+                                   <span>联系人:<font style="font-size: 18px;font-weight: bold">${userCertification.realname}</font>；</span>
+                               </p>
+                               <p>
+                                   <span>联系号码:<font style="font-size: 18px;font-weight: bold">${userCertification.phone}</font></span>
+                               </p>
+                               <p>
+                                   <span>经营单位:<font style="font-size: 18px;font-weight: bold">${userCertification.certificateType1}</font></span>
+                               </p>
+                               <p>
+                                   <span>单位名称:<font style="font-size: 18px;font-weight: bold">${userCertification.companyName}</font></span>
+                               </p>
+                           </div>
+                       </c:if>
                     </div>
                     <div class="col-md-6 text-center" style="height: 220px">
                         <h5><img src="/static/img/icons/info.png" style="width:20px; height: 20px;">他的概况</h5>

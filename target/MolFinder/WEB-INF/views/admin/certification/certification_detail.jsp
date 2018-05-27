@@ -206,44 +206,45 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">申请用户</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" readonly value="aaa"/>
+                                <input type="text" class="form-control" readonly value="${certification.phone}"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">真实姓名</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" readonly value="aaa"/>
+                                <input type="text" class="form-control" readonly value="${certification.realname}"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">身份证号</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" readonly value="aaa"/>
+                                <input type="text" class="form-control" readonly value="${certification.IDNumber}"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">认证类型</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" readonly value="aaa"/>
+                                <input type="text" class="form-control" readonly value="${certification.certificateType}"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">公司名称</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" readonly value="aaa"/>
+                                <input type="text" class="form-control" readonly value="${certification.companyName}"/>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">认证资料</label>
                             <div class="image_set col-md-8" >
-                                <div class="image_item" style="height:200px;width:200px;background-color: #a3c293">
-                                    <img src="http://ouk4xua6o.bkt.clouddn.com/Fnctmkhrp5C3pijU8rFgUGFXJmS4" alt=""style="height:200px;width:200px;">
-                                </div>
+                                <c:forEach items="${certification.images}" var="item">
+                                    <img src="${item}" class="col-md-2"/>
+                                </c:forEach>
+
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>

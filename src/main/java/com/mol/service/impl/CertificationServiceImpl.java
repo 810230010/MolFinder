@@ -43,4 +43,14 @@ public class CertificationServiceImpl implements CertificationService {
         certificationMapper.deleteByPrimaryKey(certificateId);
         return new RestResult();
     }
+
+    @Override
+    public Certification getCertificationDetail(int certificateId) {
+        return certificationMapper.selectByPrimaryKey(certificateId);
+    }
+
+    @Override
+    public Certification getUserCertificationInfoByUserID(Integer userId) {
+        return certificationMapper.queryUserCertificateState(userId);
+    }
 }

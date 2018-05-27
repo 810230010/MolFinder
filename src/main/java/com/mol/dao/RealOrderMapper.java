@@ -101,4 +101,6 @@ public interface RealOrderMapper extends BaseDao<RealOrder, Integer>{
     int republishRealOrder(@Param("realOrderId") Integer realOrderId, @Param("endtime") Date endtime);
 
     Date getRealOrderEndtime(Integer realOrderId);
+
+    boolean queryCurrentUserCallpriceState(Integer userId, Integer realOrderId);
 }

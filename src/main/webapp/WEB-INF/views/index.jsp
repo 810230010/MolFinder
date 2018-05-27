@@ -79,7 +79,7 @@
 <div class="row text-center" style="position: relative;top:40px;width: 70%; margin:0 auto">
     <c:forEach var="item" items="${realList}">
         <div class="col-md-6 model1">
-        <a href="/real/realDetailPage?realOrderId=${item.realOrderId}" class="thumbnail" style="text-decoration: none">
+        <a href="/real/realDetailPage?realOrderId=${item.realOrderId}&userId=${item.userId}" class="thumbnail" style="text-decoration: none">
             <div class="description" style="height: 170px">
                 <div class="img col-md-4">
                    <img src="${item.image}" alt="通用的占位符缩略图" style="width: 100%; height: 150px;border: 0"/>

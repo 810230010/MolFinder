@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mol.dao.admin.AdminCertificationMapper" >
+  <update id="updateCertificationState">
+    update t_certification
+    set is_pass = #{state}
+    where certificate_id = #{certificateId}
+  </update>
 
   <select id="listCertificated" resultType="com.mol.dto.AdminCertificationTableDTO">
     select certificate_id, user_id,certificate_type,  phone,  realname,  is_pass, create_time, ID_number from t_certification
     <where>
       is_pass != 'CHECKING'
+      <if test="searchKey != null and searchKey != '' ">
+        and (phone like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%')
+        or certificate_type like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
+      </if>
+    </where>
+    order by
+    <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+      ${orderColumn} ${orderType},
+    </if>
+    certificate_id desc
+  </select>
+  <select id="listCertificating" resultType="com.mol.dto.AdminCertificationTableDTO">
+    select certificate_id, user_id,certificate_type,  phone,  realname,  is_pass, create_time, ID_number from t_certification
+    <where>
+      is_pass = 'CHECKING'
       <if test="searchKey != null and searchKey != '' ">
         and (phone like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%')
         or certificate_type like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))

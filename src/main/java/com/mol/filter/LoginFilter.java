@@ -20,9 +20,13 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(WebUtil.getCurrentUser(request) == null){
-            response.sendRedirect("/index.jsp");
-        }
+        String path = ((HttpServletRequest) servletRequest).getRequestURI();
+        if(WebUtil.getCurrentUser(request) == null && ((path.contains("page") && !path.contains("admin")) || path.equals("/"))){
+            response.sendRedirect("/");
+        }else if(WebUtil.getCurrentAdmin(request) == null && path.contains("admin") && (path.contains("page") || path.contains("html") || path.contains("/page/login"))){
+            response.sendRedirect("/admin/page/login");
+        }else if(WebUtil.getCurrentAdmin(request) != null || WebUtil.getCurrentAdmin(request) != null)
+            filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

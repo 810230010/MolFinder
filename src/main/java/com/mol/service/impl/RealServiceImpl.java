@@ -1,15 +1,18 @@
 package com.mol.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.mol.common.util.WebUtil;
 import com.mol.dao.RealOrderCallpriceMapper;
 import com.mol.dao.RealOrderMapper;
 import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
+import com.mol.entity.User;
 import com.mol.service.RealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +57,18 @@ public class RealServiceImpl implements RealService{
         realOrder.setBeginTime(new Date());
         realOrder.setState("BIDDING");
         return realOrderMapper.updateByPrimaryKeySelective(realOrder);
+    }
+
+    @Override
+    public boolean getCurrentUserCallpriceState(HttpServletRequest request, Integer realOrderId) {
+        User currentUser = WebUtil.getCurrentUser(request);
+        if(currentUser != null){
+            RealOrderCallprice flag = realOrderCallpriceMapper.queryCurrentUserCallpriceState(currentUser.getUserId(), realOrderId);
+            if(flag == null)
+                return false;
+            return true;
+        }
+        return false;
     }
 
 

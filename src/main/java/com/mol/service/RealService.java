@@ -4,6 +4,7 @@ import com.mol.dto.RealDetailDTO;
 import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -51,4 +52,6 @@ public interface RealService {
      * @return
      */
     int republishRealOrder(RealOrder realOrder);
+
+    boolean getCurrentUserCallpriceState(HttpServletRequest request, Integer realOrderId);
 }

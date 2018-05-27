@@ -123,7 +123,7 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">期望交货期:</label>
+                        <label class="col-sm-3 control-label">交货期:</label>
                         <div class="input-group col-sm-4" style="position:relative;left: 20px">
                             <%--<c:set value="${ fn:split(realDetail.submitDeadline, '-') }" var="names" />--%>
                             <input id="beginWeek" type="number" class="input-sm form-control" name="lowPrice">
@@ -152,7 +152,7 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">发票要求:</label>
+                        <label class="col-sm-3 control-label">发票:</label>
                         <div class="col-sm-7">
                             <select class="col-sm-12 bill">
                                 <option>不开发票</option>
@@ -189,7 +189,7 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">其他要求:</label>
+                        <label class="col-sm-3 control-label">备注:</label>
                         <div class="col-sm-7">
                             <textarea id="remark" class="form-control" style="height:120px"></textarea>
                         </div>
@@ -405,7 +405,7 @@
                       if(result.code == 200){
                           layer.msg("实单报价成功!");
                           setTimeout(function () {
-                              window.location.reload();
+                              window.location.href = "real/realDetailPage?realOrderId" + ${realDetail.realOrderId};
                           },2000)
                       }
                   },

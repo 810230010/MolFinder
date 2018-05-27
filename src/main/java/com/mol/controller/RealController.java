@@ -7,15 +7,19 @@ import com.mol.common.qiniu.QiniuUtil;
 import com.mol.common.util.PropertyReader;
 import com.mol.common.util.RequestUtil;
 import com.mol.common.util.StringUtils;
+import com.mol.dao.CertificationMapper;
 import com.mol.dao.RealOrderCallpriceMapper;
 import com.mol.dao.RealOrderMapper;
 import com.mol.dto.RealCallpriceDetailDTO;
 import com.mol.dto.RealCallpriceMemberDTO;
 import com.mol.dto.RealDetailDTO;
+import com.mol.entity.Certification;
 import com.mol.entity.RealOrder;
 import com.mol.entity.RealOrderCallprice;
+import com.mol.service.CertificationService;
 import com.mol.service.RealOrderCallpriceService;
 import com.mol.service.RealService;
+import com.mol.service.UserService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +51,8 @@ public class RealController {
     @Autowired
     private RealOrderMapper realOrderMapper;
     @Autowired
+    private CertificationService certificationService;
+    @Autowired
     private HttpServletRequest request;
     /**
      * 跳转到实单发布页面
@@ -64,9 +70,13 @@ public class RealController {
      * @return
      */
     @RequestMapping("/realDetailPage")
-    public String view2realDetail(Integer realOrderId, Model model){
+    public String view2realDetail(Integer realOrderId, Model model,Integer userId, HttpServletRequest request){
         RealDetailDTO r = realService.getRealDetail(realOrderId);
         model.addAttribute("realDetail", r);
+        Certification certification = certificationService.getUserCertificationInfoByUserID(userId);
+        model.addAttribute("userCertification", certification);
+        boolean alreadyCallprice = realService.getCurrentUserCallpriceState(request, realOrderId);
+        model.addAttribute("alreadyCallprice", alreadyCallprice);
         return "real_detail";
     }
 

@@ -1,5 +1,6 @@
 package com.mol.service.admin;
 
+import com.mol.common.controller.RestResult;
 import com.mol.dto.AdminCertificationTableDTO;
 import com.mol.entity.admin.AdminMemberDTO;
 
@@ -19,4 +20,8 @@ public interface AdminCertificationService {
      * @return
      */
     List<AdminCertificationTableDTO> searchCertificated(Integer page, Integer pageSize, String searchKey, String orderColumn, String orderType);
+
+    List<AdminCertificationTableDTO> searchCertificating(Integer page, Integer pageSize, String searchKey, String orderColumn, String orderType);
+
+    RestResult updateCertificationState(Integer certificateId, String state);
 }

@@ -24,4 +24,8 @@ public interface CertificationService {
     Certification getCurrentUserCertificateState(HttpServletRequest request);
 
     RestResult deleteCertification(Integer certificateId);
+
+    Certification getCertificationDetail(int certificateId);
+
+    Certification getUserCertificationInfoByUserID(Integer userId);
 }

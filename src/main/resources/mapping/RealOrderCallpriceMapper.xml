@@ -94,4 +94,8 @@
       where a.real_call_id = #{realCallId}
       and a.real_order_id = b.real_order_id
     </select>
+    <select id="queryCurrentUserCallpriceState" resultType="com.mol.entity.RealOrderCallprice">
+      select * from t_real_order_callprice
+      where user_id = #{userId} and real_order_id = #{realOrderId}
+    </select>
 </mapper>
