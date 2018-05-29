@@ -41,13 +41,13 @@
     <div class="row1" id="row1">
         <div class="col-md-4 text-right"><a href="#realdiv">实单</a></div>
         <div class="col-md-4 text-center"><a href="#querydiv">询单</a></div>
-        <div class="col-md-4 text-left"><a class="authority" url="/material/materialBuyPage">原料采购</a></div>
+        <div class="col-md-4 text-left"><a class="authority publish" url="/material/materialBuyPage">原料采购</a></div>
     </div>
 
     <div class="row2" style="margin-top: 40px">
-        <div class="col-md-4 text-right"><a class="authority" url="/real/realPublishPage">发布实单</a></div>
-        <div class="col-md-4 text-center"><a class="authority" url="/enquiry/enquiryPublishPage">发布询单</a></div>
-        <div class="col-md-4 text-left"><a class="authority" url="/material/materialSupplyPage">原料供应</a></div>
+        <div class="col-md-4 text-right"><a class="authority publish" url="/real/realPublishPage">发布实单</a></div>
+        <div class="col-md-4 text-center"><a class="authority publish" url="/enquiry/enquiryPublishPage">发布询单</a></div>
+        <div class="col-md-4 text-left"><a class="authority publish" url="/material/materialSupplyPage">原料供应</a></div>
     </div>
 </div>
 <div id="myCarousel" class="carousel slide">
@@ -162,8 +162,13 @@
         //获得实单列表
         updateEndTime();
         $(".authority").click(function(){
+            var isPass = "${currentUser.isCertificated}";
             if($(".register").text() == '注册'){
                 layer.msg('请先登录');
+                return;
+            }
+            if($(this).hasClass('publish') && isPass == "false"){
+                layer.msg('实名认证过后才能发单');
                 return;
             }
             window.location.href = $(this).attr("url");

@@ -65,7 +65,7 @@
     function fun1(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/order/myPurchaseOrders/' + 'SEND',
+                'url': '/order/mySendOrders/' + 'SEND',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;
@@ -150,7 +150,7 @@
     function fun2(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/order/myPurchaseOrders/' + 'ORDER',
+                'url': '/order/mySendOrders/' + 'ORDER',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;
@@ -234,7 +234,7 @@
     function fun3(){
         $('#dataTable').DataTable({
             "ajax": {
-                'url': '/order/myPurchaseOrders/' + 'SUCCESS',
+                'url': '/order/mySendOrders/' + 'SUCCESS',
                 "data": function(d) {
                     var param = {};
                     param.page = d.start/d.length + 1;

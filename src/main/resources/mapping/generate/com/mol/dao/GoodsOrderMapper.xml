@@ -44,6 +44,12 @@
       <if test="goodsOrderId != null" >
         goods_order_id,
       </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
       <if test="callPriceId != null" >
         call_price_id,
       </if>
@@ -78,6 +84,12 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="goodsOrderId != null" >
         #{goodsOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsOrderId != null" >
+        #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="callPriceId != null" >
         #{callPriceId,jdbcType=INTEGER},

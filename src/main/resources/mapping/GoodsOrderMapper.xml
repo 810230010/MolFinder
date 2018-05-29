@@ -76,7 +76,7 @@
         left join t_certification d
         on b.user_id = d.user_id
         where a.order_type = 'REAL'
-        and b.user_id = #{userId}
+        and a.seller_id = #{userId}
         and a.state = #{state}
         UNION
         select
@@ -98,7 +98,7 @@
         left join t_certification d
         on b.user_id = d.user_id
         where a.order_type = 'QUERY'
-        and b.user_id = #{userId}
+        and a.seller_id = #{userId}
         and a.state = #{state}) rs
     </select>
     <select id="getRealOrderIdAndRealCallIdByGoodsOrderId" resultType="java.util.Map">

@@ -25,9 +25,9 @@ public class AdminGlobalHandler {
             Certification certification = certificationMapper.queryUserCertificateState(currentUser.getUserId());
             if(certification == null)
                 currentUser.setIsCertificated(false);
-            if(certification.getIsPass().equals("PASS"))
+            else if(certification.getIsPass().equals("PASS"))
                 currentUser.setIsCertificated(true);
-            if(certification.getIsPass().equals("NOTPASS"))
+            else if(certification.getIsPass().equals("NOTPASS"))
                 currentUser.setIsCertificated(false);
         }
         return currentUser;

@@ -10,10 +10,26 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2018-01-08 23:15:03
+Date: 2018-05-29 15:16:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `t_admin`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_admin`;
+CREATE TABLE `t_admin` (
+  `admin_id` int(11) NOT NULL DEFAULT '0',
+  `admin_name` varchar(255) DEFAULT NULL,
+  `admin_password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_admin
+-- ----------------------------
+INSERT INTO `t_admin` VALUES ('0', 'admin', '123');
 
 -- ----------------------------
 -- Table structure for `t_certification`
@@ -27,17 +43,18 @@ CREATE TABLE `t_certification` (
   `username` varchar(20) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `realname` varchar(20) DEFAULT NULL,
-  `qq` varchar(20) DEFAULT NULL,
-  `guaranteen_material` varchar(100) DEFAULT NULL,
-  `is_pass` varchar(10) DEFAULT '"CHECKING"',
+  `ID_number` varchar(20) DEFAULT NULL COMMENT '身份证号码',
+  `guaranteen_material` varchar(1024) DEFAULT NULL,
+  `is_pass` varchar(10) DEFAULT 'CHECKING',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`certificate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_certification
 -- ----------------------------
-INSERT INTO `t_certification` VALUES ('1', '2', 'COMPANY', 'alibaba', '啊阿斯顿', '12313543', '张三', null, null, '1', null);
+INSERT INTO `t_certification` VALUES ('7', '2', 'COMPANY', '阿里巴巴', 'Usher', '17858936109', '江建平', '342426199604231413', 'http://ouk4xua6o.bkt.clouddn.com/FpDLX1KcYH5cGwrwKi-eKRemvVZX', 'PASS', '2018-05-24 10:13:51');
+INSERT INTO `t_certification` VALUES ('9', '3', 'COMPANY', '阿里巴巴', 'jianaa', '17858936189', 'Usher', '32131231231', 'http://ouk4xua6o.bkt.clouddn.com/FpDLX1KcYH5cGwrwKi-eKRemvVZX', 'PASS', '2018-05-27 11:43:59');
 
 -- ----------------------------
 -- Table structure for `t_company`
@@ -45,7 +62,8 @@ INSERT INTO `t_certification` VALUES ('1', '2', 'COMPANY', 'alibaba', '啊阿斯
 DROP TABLE IF EXISTS `t_company`;
 CREATE TABLE `t_company` (
   `company_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `certificate_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `company_name` varchar(50) DEFAULT NULL,
   `company_intro` varchar(2048) DEFAULT NULL COMMENT '公司简介',
   `company_logo` varchar(50) DEFAULT NULL COMMENT '公司图标',
   `reg_no` varchar(30) DEFAULT NULL COMMENT '工商注册号',
@@ -66,38 +84,6 @@ CREATE TABLE `t_company` (
 
 -- ----------------------------
 -- Records of t_company
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_credit`
--- ----------------------------
-DROP TABLE IF EXISTS `t_credit`;
-CREATE TABLE `t_credit` (
-  `credit_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '积分id',
-  `rank` varchar(20) DEFAULT NULL,
-  `credit_amount` int(11) DEFAULT NULL,
-  `daily_max_credit` int(11) DEFAULT NULL,
-  PRIMARY KEY (`credit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_credit
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_credit_log`
--- ----------------------------
-DROP TABLE IF EXISTS `t_credit_log`;
-CREATE TABLE `t_credit_log` (
-  `credit_log_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '积分日志id',
-  `credit_id` int(11) DEFAULT NULL,
-  `credit_amount` int(11) DEFAULT NULL,
-  `create_time` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`credit_log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_credit_log
 -- ----------------------------
 
 -- ----------------------------
@@ -124,8 +110,23 @@ CREATE TABLE `t_goods_order` (
 -- ----------------------------
 -- Records of t_goods_order
 -- ----------------------------
-INSERT INTO `t_goods_order` VALUES ('90123asda', '1', '1', '2', '2', null, null, null, 'SUCCESS', null, 'REAL', '2017-11-18 11:00:21', '6000');
-INSERT INTO `t_goods_order` VALUES ('asdasd', '1', '1', '2', '2', null, null, null, 'ORDER', null, 'QUERY', '2017-11-18 11:00:21', '4000');
+INSERT INTO `t_goods_order` VALUES ('1000000354042646', '7', '21', '2', '3', '送货上门', '5', null, 'SUCCESS', 'ASDA', 'REAL', '2018-05-27 16:51:56', '4000');
+
+-- ----------------------------
+-- Table structure for `t_login_record`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_login_record`;
+CREATE TABLE `t_login_record` (
+  `login_id` int(11) NOT NULL DEFAULT '0',
+  `session_id` int(11) DEFAULT NULL,
+  `try_login_time` varchar(255) DEFAULT NULL,
+  `login_state` tinyint(4) DEFAULT NULL COMMENT '0:登录失败   1:登录成功  ',
+  PRIMARY KEY (`login_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_login_record
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `t_material_purchase`
@@ -252,14 +253,19 @@ CREATE TABLE `t_real_order` (
   `refer_doc` varchar(255) DEFAULT NULL COMMENT '参考文献',
   `remark` varchar(1024) DEFAULT NULL,
   `join_count` int(11) DEFAULT '0' COMMENT '参与人数',
-  `state` varchar(20) DEFAULT 'BIDDING' COMMENT 'BIDDING:抢单中 CLOSE:已删除 NOSEND:报价结束未派单 SENDED:已派单 FINISHED:已成单',
+  `state` varchar(20) DEFAULT 'BIDDING' COMMENT 'BIDDING:抢单中 CLOSE:已关闭 NOSEND:报价结束未派单 SEND:已派单 SUCCESS:已成单',
   PRIMARY KEY (`real_order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_real_order
 -- ----------------------------
-INSERT INTO `t_real_order` VALUES ('1', '2', 'as23123-2', 'ASD', '阿斯达啊', '25g', '97%', '4000-5000', '3-4', '2018-01-08 22:23:40', '2018-01-10 20:58:47', 'LCMS,FNMR', '不开发票', '0.50', '0.50', '/pic/d941673f802c4725ae5e2619956c5654.jpg', null, 'asdas啊aaa', '1', 'BIDDING');
+INSERT INTO `t_real_order` VALUES ('1', '2', 'as23123-2', 'ASD', '阿斯达啊', '25g', '97%', '4000-5000', '3-4', '2018-01-08 22:23:40', '2018-01-10 20:58:47', 'LCMS,FNMR', '不开发票', '0.50', '0.50', '/pic/d941673f802c4725ae5e2619956c5654.jpg', null, 'asdas啊aaa', '0', 'CLOSE');
+INSERT INTO `t_real_order` VALUES ('8', '2', 'aaa', 'aaa', '阿斯顿', '10g', '99', '111-112', '3-4', '2018-04-24 15:06:45', '2018-04-25 14:36:19', 'LCMS', '不开发票', null, null, '/pic/8b08ef9dede54517b0dfe3046c179506.png', null, null, '0', 'CLOSE');
+INSERT INTO `t_real_order` VALUES ('19', '2', '啊实打实', 'aaaa', '艾斯德斯', '16g', '99%', '3000-4000元', '3-4', '2018-05-17 13:58:28', '2018-05-18 13:58:27', 'MS', '不开发票', '0.50', '0.50', '/pic/6fbb9fe54f4a428fad4812f968fe7bed.jpg', null, '萨达', '0', 'CLOSE');
+INSERT INTO `t_real_order` VALUES ('20', '3', 'asda', 'asd', '阿斯达', '100g', '99%', '3000-4000元', '3-4', '2018-05-24 10:11:00', '2018-05-25 10:10:52', 'HPLC', '不开发票', null, null, '/pic/6c69b7fe616f4faaaa2d19fe20cbd2b9.jpg', null, '钱钱钱', '0', 'CLOSE');
+INSERT INTO `t_real_order` VALUES ('21', '3', 'CAS', 'CAS', '擦手', '20g', '99%', '3000-4000元', '3-4', '2018-05-27 12:01:04', '2018-05-28 12:01:00', 'LCMS', '不开发票', null, null, '/pic/fe199992afc64d5ea32c38797a6ff62d.jpg', null, '阿斯达', '1', 'SUCCESS');
+INSERT INTO `t_real_order` VALUES ('22', '3', 'asdas', 'asd', '啊实打实', '10g', '99%', '3000-4000元', '3-4', '2018-05-28 14:13:20', '2018-05-29 14:13:16', 'CNMR', '不开发票', null, null, '/pic/ff4245a31cfc4f3dbbfcd3ab4ea8e3ba.jpg', null, '阿斯达', '1', 'BIDDING');
 
 -- ----------------------------
 -- Table structure for `t_real_order_callprice`
@@ -287,28 +293,13 @@ CREATE TABLE `t_real_order_callprice` (
   `express_type` varchar(20) DEFAULT '快递到门',
   `create_time` datetime DEFAULT NULL COMMENT '报价/抢单时间',
   PRIMARY KEY (`real_call_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_real_order_callprice
 -- ----------------------------
-INSERT INTO `t_real_order_callprice` VALUES ('1', '1', '2', '2', '10g', '4000元', null, '98%', '3-4', 'HNMR,FNMR', '不开发票', 'asda', '1', null, '固体', '白色', '1', 'BIDDING', '送货上门', null);
-INSERT INTO `t_real_order_callprice` VALUES ('3', '1', '2', '2', '25g', '4000元', null, '97%', '3-4周', 'HNMR', '不开票', 'adasd', null, null, '固体', '白色', null, null, '送货上门', '2018-01-01 12:20:10');
-
--- ----------------------------
--- Table structure for `t_setting`
--- ----------------------------
-DROP TABLE IF EXISTS `t_setting`;
-CREATE TABLE `t_setting` (
-  `setting_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(50) DEFAULT NULL,
-  `content` text,
-  PRIMARY KEY (`setting_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_setting
--- ----------------------------
+INSERT INTO `t_real_order_callprice` VALUES ('7', '21', '3', '2', '20g', '4000元', null, '99%', '3-4周', 'LCMS', '不开票', 'ASDA', null, null, '固体', '白色', null, 'HERE', '送货上门', '2018-05-27 12:11:42');
+INSERT INTO `t_real_order_callprice` VALUES ('8', '22', '3', '2', '10g', '3000元', null, '99%', '3-4周', 'CNMR', '不开票', 'asd', null, null, '固体', '白色', null, 'BIDDING', '送货上门', '2018-05-28 14:14:58');
 
 -- ----------------------------
 -- Table structure for `t_user`
@@ -320,18 +311,17 @@ CREATE TABLE `t_user` (
   `email` varchar(20) DEFAULT NULL,
   `is_certificated` tinyint(1) DEFAULT '0' COMMENT '是否实名认证',
   `password` varchar(20) DEFAULT NULL,
-  `district` varchar(20) DEFAULT NULL,
-  `credit` int(11) DEFAULT NULL COMMENT '积分',
-  `credit_rank` varchar(6) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
+  `state` tinyint(1) DEFAULT '1' COMMENT '0:拉黑  1：正常',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', '123123', '12312', '0', null, null, '0', null, '2017-08-09 12:12:34');
-INSERT INTO `t_user` VALUES ('2', '17858936109', '810230010@qq.com', '0', '123', null, null, null, '2017-08-09 15:11:51');
+INSERT INTO `t_user` VALUES ('1', '123123', '12312', '0', '123', '2017-08-09 12:12:34', '1');
+INSERT INTO `t_user` VALUES ('2', '17858936109', '810230010@qq.com', '1', '123', '2017-08-09 15:11:51', '1');
+INSERT INTO `t_user` VALUES ('3', '123456', '810230010@qq.com', '1', '123', '2018-05-17 13:59:47', '1');
 
 -- ----------------------------
 -- Table structure for `t_user_accept_address`
@@ -346,7 +336,7 @@ CREATE TABLE `t_user_accept_address` (
   `add_time` varchar(20) DEFAULT NULL,
   `update_time` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_accept_address
@@ -354,6 +344,8 @@ CREATE TABLE `t_user_accept_address` (
 INSERT INTO `t_user_accept_address` VALUES ('1', '2', '江建平', '浙江杭州余杭闲林', '17858936109', '2017-10-29', '2017-10-29');
 INSERT INTO `t_user_accept_address` VALUES ('2', '2', '江建平', '北京西三旗小营东路5号院', '17858936109', '2017-10-29 21:06:20', '2017-10-29 21:06:20');
 INSERT INTO `t_user_accept_address` VALUES ('4', '2', '马云', '杭州alibaba', '17858112312', '2017-10-29 21:12:41', '2017-10-29 21:12:41');
+INSERT INTO `t_user_accept_address` VALUES ('5', '3', '江建平', '浙江大学', '17858936109', '2018-05-27 14:55:05', '2018-05-27 14:55:05');
+INSERT INTO `t_user_accept_address` VALUES ('6', '3', '啊实打实', '啊实打实的风格', '123123', '2018-05-27 15:18:30', '2018-05-27 15:18:30');
 DROP TRIGGER IF EXISTS `addJoinCount`;
 DELIMITER ;;
 CREATE TRIGGER `addJoinCount` AFTER INSERT ON `t_real_order_callprice` FOR EACH ROW update t_real_order set join_count = join_count+1 where real_order_id = new.real_order_id

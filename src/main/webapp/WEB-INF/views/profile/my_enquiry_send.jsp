@@ -84,7 +84,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
@@ -174,7 +174,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
@@ -267,7 +267,7 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },

@@ -13,5 +13,6 @@ public class CheckOrderJob {
     private IndexMapper indexMapper;
     public void execute(){
         indexMapper.updateInvalidOrder();
+        indexMapper.updateInvalidOrder2();
     }
 }

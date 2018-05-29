@@ -74,7 +74,8 @@
                         <th><fmt:formatDate value="${realCallpriceDetail.createTime}" pattern="yyyy-MM-dd"/></th>
                         <th>${realCallpriceDetail.casNo}</th>
                         <th>${realCallpriceDetail.chineseName}(${realCallpriceDetail.englishName})</th>
-                        <th colspan="2">${realCallpriceDetail.callPriceAmount}</th>
+                        <th>${realCallpriceDetail.callPriceAmount}</th>
+                        <th>快递类型</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -166,7 +167,7 @@
                 <div class="form-group" style="position: relative; top:20px">
                     <label class="col-sm-1 control-label">备注:</label>
                     <div class="col-sm-11">
-                        <textarea id="remark" class="form-control" style="height:120px"></textarea>
+                        <textarea id="remark" class="form-control" style="height:120px">${realCallpriceDetail.otherRequire}</textarea>
                     </div>
                 </div>
             </div>
@@ -179,7 +180,7 @@
                         <dl>
                             <dd>${item2.acceptGoodsUsername}(${item2.contactTel})</dd>
                             <dd>${item2.acceptGoodsAddress}</dd>
-                            <dd style="display: none;">${item2.id}</dd>
+                            <dd style="display: none;" id="accept_info_id">${item2.id}</dd>
                             <dd style="text-align: right;display: none" class="del_icon"><a onclick="deleteAddress($(this).parent().prev().text())"><img src="/static/img/icons/trash_fill.png"/></a></dd>
                         </dl>
                     </div>
@@ -285,6 +286,7 @@
              },
              success: function (result) {
                  $(".addresses").html("");
+                 alert(result[0].id)
                  for(var i=0; i<result.length; i++){
                      $(".addresses").append("  <div class=\"col-sm-4 address\">\n" +
                          "                        <dl>\n" +
@@ -389,16 +391,14 @@
                 })
                 var priceList = "${realCallpriceDetail.callPriceMoney}";
                 var total = 0;
-                for(var i=0; i<priceList.length; i++){
-                    total += parseInt(priceList[i]);
-                }
+                total = parseInt(priceList.substring(0, priceList.indexOf('元')));
                 $.ajax({
                     url: "/order/makeOrderBill",
                     data:{
                         buyerId: ${currentUser.userId},
                         callPriceId: ${realCallpriceDetail.realCallId},
                         orderId: ${realCallpriceDetail.realOrderId},
-                        expressWay: ${realCallpriceDetail.expressType},
+                        expressWay: '${realCallpriceDetail.expressType}',
                         remark: $("#remark").val(),
                         orderType: "REAL",
                         acceptGoodsInfoId: accept_goods_info_id,

@@ -32,4 +32,6 @@ public interface UserMapper extends BaseDao<User, Integer> {
      * @return
      */
     User selectUserByPhoneAndPassword(@Param("phone") String phone, @Param("password") String password);
+
+    void updateUserCertificateState(@Param("userId") int userId, @Param("state") String state);
 }

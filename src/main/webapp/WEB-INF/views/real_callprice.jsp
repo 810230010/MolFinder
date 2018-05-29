@@ -405,7 +405,7 @@
                       if(result.code == 200){
                           layer.msg("实单报价成功!");
                           setTimeout(function () {
-                              window.location.href = "real/realDetailPage?realOrderId" + ${realDetail.realOrderId};
+                              window.location.href = "/real/realDetailPage?realOrderId=" + ${realDetail.realOrderId} + "&userId=" + ${realDetail.userId};
                           },2000)
                       }
                   },

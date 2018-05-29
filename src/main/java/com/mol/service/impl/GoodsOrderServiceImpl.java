@@ -6,9 +6,11 @@ import com.mol.common.util.DateUtil;
 import com.mol.common.util.OrderUtil;
 import com.mol.dao.GoodsOrderMapper;
 import com.mol.dao.QueryOrderMapper;
+import com.mol.dao.RealOrderCallpriceMapper;
 import com.mol.dao.RealOrderMapper;
 import com.mol.dto.GoodsOrderDTO;
 import com.mol.entity.GoodsOrder;
+import com.mol.entity.RealOrderCallprice;
 import com.mol.service.GoodsOrderService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +31,25 @@ public class GoodsOrderServiceImpl implements GoodsOrderService {
     private RealOrderMapper realOrderMapper;
     @Autowired
     private QueryOrderMapper queryOrderMapper;
+    @Autowired
+    private RealOrderCallpriceMapper realOrderCallpriceMapper;
     @Override
     public int createOrderBill(GoodsOrder goodsOrder) {
         String orderId = OrderUtil.generateOrderId();
         goodsOrder.setGoodsOrderId(orderId);
         String date = DateUtil.convertCurrentDatetimeToString();
         goodsOrder.setCreateTime(date);
+        int callPriceId = goodsOrder.getCallPriceId();
         //下单，改变实单状态为已派单SEND
         if(goodsOrder.getOrderType().equals("REAL")){
+            //改变实单状态为已发单
             realOrderMapper.changeRealOrderState(goodsOrder.getOrderId(), GlobalConstant.REAL_ORDER_SEND);
+            //改变实单报价状态
+            RealOrderCallprice callprice = realOrderCallpriceMapper.selectByPrimaryKey(callPriceId);
+            int sellerId = callprice.getUserId();
+            int realOrderId = callprice.getRealOrderId();
+            realOrderCallpriceMapper.changeRealOrderCallpriceStateOfHere(realOrderId, sellerId);
+            realOrderCallpriceMapper.changeRealOrderCallpriceStateOfOther(realOrderId, sellerId);
         }else{
             queryOrderMapper.changeQueryOrderState(goodsOrder.getOrderId(), GlobalConstant.QUERY_ORDER_SEND);
         }
@@ -65,6 +77,6 @@ public class GoodsOrderServiceImpl implements GoodsOrderService {
 
     @Override
     public List<GoodsOrderDTO> searchMySendOrdersWithStatus(Integer page, Integer pageSize, String orderColumn, String orderType, String searchKey, Integer userId, String state) {
-        return goodsOrderMapper.listMyPurchaseOrdersWithStatus(orderColumn, orderType, searchKey, userId, state);
+        return goodsOrderMapper.listMySendOrdersWithStatus(orderColumn, orderType, searchKey, userId, state);
     }
 }

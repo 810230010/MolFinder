@@ -12,6 +12,7 @@ public class RealCallpriceDetailDTO {
     private Integer realCallId;
     private Integer realOrderId;
     private Integer userId;
+    private Integer buyerId;
     private String casNo;
     private String englishName;
     private String chineseName;

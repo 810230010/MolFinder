@@ -17,6 +17,7 @@ public class RealOrderCallpriceDTO {
     private String companyName;
     private String casNo;
     private String callPriceMoney;
+    private String callPriceAmount;
     private String callSubmitDeadline;
     private BigDecimal vilationMoneyAmount;
     private BigDecimal prepayedMoneyAmount;

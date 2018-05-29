@@ -92,24 +92,16 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
-                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
-                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false,
                     "render": function (data, type, row) {
-                         var str = '';
-                         if(row.prepayedMoneyAmount != null)
-                          str = "预:" + row.prepayedMoneyAmount + '%\n';
-                         if(row.vilationMoneyAmount != null)
-                             str += "违:" + row.vilationMoneyAmount + "%";
-                         if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
-                             str = '无';
-                         return str;
+                        return row.callPriceMoney + "/" + row.callPriceAmount;
                     }
                 },
+                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
                 {
                     "data":"createTime",
                     "width": "10%",
@@ -128,7 +120,6 @@
                        return "抢单中";
                     }
                 },
-                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
                 {
                     "data":"realCallId",
                     "width": "15%",
@@ -190,24 +181,16 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
-                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
-                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false,
                     "render": function (data, type, row) {
-                        var str = '';
-                        if(row.prepayedMoneyAmount != null)
-                            str = "预:" + row.prepayedMoneyAmount + '%\n';
-                        if(row.vilationMoneyAmount != null)
-                            str += "违:" + row.vilationMoneyAmount + "%";
-                        if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
-                            str = '无';
-                        return str;
+                        return row.callPriceMoney + "/" + row.callPriceAmount;
                     }
                 },
+                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
                 {
                     "data":"createTime",
                     "width": "10%",
@@ -226,7 +209,6 @@
                         return "派单中";
                     }
                 },
-                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
             ],
             "searching": true,
             "ordering":true,
@@ -262,8 +244,6 @@
                 },
             },
             "columns": [
-                {"data":"realCallId","width":"7%","title":"报价编号"},
-                {"data":"realOrderId","width":"7%","title":"实单编号"},
                 {"data":"prepayedMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"vilationMoneyAmount","width":"7%","title":"","visible": false},
                 {"data":"companyName","width": "10%","title":"发单者","orderable": false},
@@ -274,29 +254,21 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
-                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
-                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false,
                     "render": function (data, type, row) {
-                        var str = '';
-                        if(row.prepayedMoneyAmount != null)
-                            str = "预:" + row.prepayedMoneyAmount + '%\n';
-                        if(row.vilationMoneyAmount != null)
-                            str += "违:" + row.vilationMoneyAmount + "%";
-                        if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
-                            str = '无';
-                        return str;
+                        return row.callPriceMoney + "/" + row.callPriceAmount;
                     }
                 },
+                {"data":"submitDeadline1","width": "10%","title":"交货期","orderable": false},
                 {
                     "data":"createTime",
                     "width": "10%",
                     "title":"报价时间",
-                    "orderable": true,
+                    "orderable": false,
                     "render": function (data, type, row) {
                         return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
                     }
@@ -305,35 +277,25 @@
                     "data":"state",
                     "width": "10%",
                     "title":"是否中标",
-                    "orderable": true,
+                    "orderable": false,
                     "render": function (data, type, row) {
-                        if(data == 'HERE'){
+                        if(row.state == 'HERE'){
                             return "已派单到这里";
                         }else
                             return "派单至别处";
                     }
                 },
-                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
                 {
                     "data":"realCallId",
                     "width": "10%",
                     "title":"操作",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        if(row.state == 'HERE'){
-                            return [
-                                '<a class="btn btn-primary btn-xs block table-action scan" href="javascript:void(0)">',
-                                '订单确认 <i class="fa fa-eye"></i>',
-                                '</a>'
-                            ].join('');
-                        }else{
-                            return [
-                                '<a class="table-button btn btn-danger btn-xs block table-action delete" href="javascript:void(0)">',
-                                '删除 <i class="fa fa-trash-o"></i>',
-                                '</a>',
-                            ].join('');
-                        }
-
+                        return [
+                            '<a class="table-button btn btn-danger btn-xs block table-action delete" href="javascript:void(0)">',
+                            '删除 <i class="fa fa-trash-o"></i>',
+                            '</a>',
+                        ].join('');
                     }
                 },
             ],
@@ -383,24 +345,16 @@
                     "title":"结构式",
                     "orderable": false,
                     "render": function (data, type, row) {
-                        var html = '<div class="pull-left"><img src="' + row.pic + '" style="width: 60px;height: 60px;"></div>';
+                        var html = '<div class="pull-left"><img src="' + row.image + '" style="width: 60px;height: 60px;"></div>';
                         return html;
                     }
                 },
-                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false},
-                {"data":"submitDeadline","width": "10%","title":"交货期","orderable": false},
-                {"data":"casNo","width": "10%","title":"其他设置","orderable": false,
+                {"data":"callPriceMoney","width": "10%","title":"价格/含量","orderable": false,
                     "render": function (data, type, row) {
-                        var str = '';
-                        if(row.prepayedMoneyAmount != null)
-                            str = "预:" + row.prepayedMoneyAmount + '%\n';
-                        if(row.vilationMoneyAmount != null)
-                            str += "违:" + row.vilationMoneyAmount + "%";
-                        if(row.prepayedMoneyAmount == null && row.vilationMoneyAmount == null)
-                            str = '无';
-                        return str;
+                        return row.callPriceMoney + "/" + row.callPriceAmount;
                     }
                 },
+                {"data":"submitDeadline","width": "10%","title":"交货期","orderable": false},
                 {
                     "data":"createTime",
                     "width": "10%",
@@ -421,7 +375,6 @@
                             return '买家已取消';
                     }
                 },
-                {"data":"casNo","width": "10%","title":"积分奖励","orderable": false},
                 {
                     "data":"realCallId",
                     "width": "10%",

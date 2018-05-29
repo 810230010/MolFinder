@@ -12,10 +12,27 @@
         set state = 'CLOSE'
         where real_order_id = #{realOrderId}
     </update>
-    <!--根据报价实单状态查询当前用户报价的实单列表-->
+  <!--更改实单报价为发单到这里-->
+  <update id="changeRealOrderCallpriceStateOfHere">
+    update t_real_order_callprice
+    set state = 'HERE'
+    where real_order_id = #{realOrderId}
+    and user_id = #{sellerId}
+  </update>
+  <!--更改实单报价为发单到别处-->
+  <update id="changeRealOrderCallpriceStateOfOther">
+    update t_real_order_callprice
+    set state = 'OTHER'
+    where real_order_id = #{realOrderId}
+    and user_id != #{sellerId}
+  </update>
+  <!--根据报价实单状态查询当前用户报价的实单列表-->
   <select id="listCallpriceRealOrdersWithStatus" resultType="com.mol.dto.RealOrderCallpriceDTO">
-    select a.real_call_id, a.real_order_id, a.call_price_money, a.call_submit_deadline, a.prepayed_money_amount, a.vilation_money_amount,a.create_time, a.state,c.company_name,b.cas_no,b.user_id, b.image
-    from t_real_order_callprice a, t_real_order b, t_certification c
+    select a.real_call_id, a.real_order_id, a.call_price_money, a.call_submit_deadline, a.call_price_amount,a.create_time, a.state,c.company_name,b.cas_no,b.user_id, b.image
+    from t_real_order_callprice a left join t_real_order b
+    on a.real_order_id = b.real_order_id
+    left join t_certification c
+    on a.buyer_id = c.user_id
     <where>
       <choose>
         <when test="status == 'SENDED'">
@@ -28,7 +45,6 @@
           a.state = #{status}
         </otherwise>
       </choose>
-      and a.user_id = #{userId} and b.user_id = c.user_id and a.real_order_id = b.real_order_id
       <if test="searchKey != null and searchKey != '' ">
         and (b.cas_no like CONCAT('%', #{searchKey, jdbcType=VARCHAR}, '%'))
       </if>
@@ -70,6 +86,7 @@
     <select id="getRealOrderCallpriceDetail" resultType="com.mol.dto.RealCallpriceDetailDTO">
       select
       a.user_id,
+      a.buyer_id,
       a.real_call_id,
       a.real_order_id,
       b.cas_no,
